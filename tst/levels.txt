@@ -28,3 +28,4 @@ door        1500  crowdus/crowdus014sdc              -                 -
 belt        1500  crowdus/crowdus015sdc              -                 -
 teleporter  1500  crowdus/crowdus005sdc              -                 -
 iceblock    1500  crowdus/crowdus012sdc              -                 -
+walljump    1200  xskat/new/stone3-marcotte          200:0:climber,480:0:jumper  -

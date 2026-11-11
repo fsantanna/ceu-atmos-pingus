@@ -37,5 +37,5 @@ cannot happen by construction), **open**, or **out** (out of scope).
 | bug of the WORLD_UPDATE needed | gone | `:tick` is an event of the game, emitted by its clock |
 | bridger offset | open | the bridger is drawn at the pingu, with no extra offset |
 | test climber, wall-mode activation | fixed | `tst/levels.txt`: climber |
-| test previous action: Climber->Jumper->..., Blocker->Faller->Blocker | open | the previous action is an argument of the next action (the jumper jumps off a wall after a climber, the faller lands as a blocker after a blocker); no test yet |
+| test previous action: Climber->Jumper->..., Blocker->Faller->Blocker | partly | the previous action is an argument of the next action; the wall jump (climber, then jumper) is tested (`walljump` in `tst/levels.txt`); blocker, faller, blocker is not |
 | SDL_DT for pingus/actions/sprites | gone | world sprites use `:tick`, screen sprites use `:clock` |
