@@ -1,0 +1,9 @@
+:pingus.sprite [
+    image = "../climber.png",
+    offset = [1, 0],
+    position = [0, 32],
+    speed = 100,
+    loop = true,
+    array = [8, 1],
+    size = [32, 32],
+]

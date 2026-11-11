@@ -1,0 +1,16 @@
+:pingus.controller [
+    standard_pointer = [
+        :xinput.pointer [device = "gstylus"],
+    ],
+    primary_button = [],
+    secondary_button = [],
+    pause_button = [],
+    fast_forward_button = [],
+    armageddon_button = [],
+    escape_button = [
+        :sdl.keyboard_button [key = "escape"],
+    ],
+    action_axis = [],
+    action_up_button = [],
+    action_down_button = [],
+]

@@ -1,0 +1,10 @@
+[
+    :level [name = "xskat/ok/desertwaste1-grumbel"],
+    :pingu_action [time = 360, id = 0, action = :basher],
+    :pingu_action [time = 508, id = 1, action = :basher],
+    :pingu_action [time = 1116, id = 2, action = :blocker],
+    :pingu_action [time = 1141, id = 1, action = :digger],
+    :pingu_action [time = 1760, id = 1, action = :basher],
+    :pingu_action [time = 1987, id = 10, action = :miner],
+    :pingu_action [time = 6457, id = 2, action = :miner],
+]

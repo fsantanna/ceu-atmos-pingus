@@ -1,0 +1,9 @@
+:pingus.sprite [
+    image = "../bridger.png",
+    offset = [0, 2],
+    position = [0, 32],
+    speed = 66,
+    loop = false,
+    array = [15, 1],
+    size = [32, 32],
+]

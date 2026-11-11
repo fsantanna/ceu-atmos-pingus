@@ -1,0 +1,8 @@
+[
+    :level [name = "xskat/new/space-11-rz+eriksoe"],
+    :pingu_action [time = 179, id = 0, action = :jumper],
+    :pingu_action [time = 834, id = 9, action = :miner],
+    :pingu_action [time = 834, id = 0, action = :miner],
+    :pingu_action [time = 2534, id = 28, action = :miner],
+    :pingu_action [time = 2534, id = 9, action = :miner],
+]

@@ -1,0 +1,13 @@
+[
+    :level [name = "xskat/ok/rockhopping"],
+    :pingu_action [time = 186, id = 0, action = :blocker],
+    :pingu_action [time = 222, id = 1, action = :basher],
+    :pingu_action [time = 636, id = 7, action = :blocker],
+    :pingu_action [time = 712, id = 1, action = :blocker],
+    :pingu_action [time = 794, id = 3, action = :bridger],
+    :pingu_action [time = 1809, id = 7, action = :basher],
+    :pingu_action [time = 4946, id = 0, action = :digger],
+    :pingu_action [time = 5196, id = 0, action = :bridger],
+    :pingu_action [time = 5363, id = 0, action = :basher],
+    :pingu_action [time = 5502, id = 1, action = :basher],
+]

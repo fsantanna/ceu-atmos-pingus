@@ -1,0 +1,17 @@
+[
+    :level [name = "xskat/ok/desert3-tflavel"],
+    :pingu_action [time = 374, id = 1, action = :miner],
+    :pingu_action [time = 404, id = 3, action = :bridger],
+    :pingu_action [time = 561, id = 2, action = :blocker],
+    :pingu_action [time = 667, id = 0, action = :bridger],
+    :pingu_action [time = 972, id = 6, action = :blocker],
+    :pingu_action [time = 1609, id = 39, action = :basher],
+    :pingu_action [time = 1699, id = 28, action = :bridger],
+    :pingu_action [time = 2465, id = 28, action = :bridger],
+    :pingu_action [time = 3229, id = 28, action = :bridger],
+    :pingu_action [time = 3996, id = 28, action = :bridger],
+    :pingu_action [time = 4089, id = 17, action = :blocker],
+    :pingu_action [time = 4365, id = 2, action = :jumper],
+    :pingu_action [time = 4588, id = 6, action = :jumper],
+    :pingu_action [time = 6170, id = 17, action = :jumper],
+]

@@ -1,0 +1,9 @@
+[
+    :level [name = "xskat/ok/stone5-grumbel"],
+    :pingu_action [time = 339, id = 2, action = :blocker],
+    :pingu_action [time = 360, id = 0, action = :basher],
+    :pingu_action [time = 909, id = 0, action = :basher],
+    :pingu_action [time = 1444, id = 0, action = :bridger],
+    :pingu_action [time = 2328, id = 0, action = :bridger],
+    :pingu_action [time = 2845, id = 2, action = :basher],
+]

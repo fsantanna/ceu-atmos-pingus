@@ -1,0 +1,7 @@
+:pingus.sprite [
+    image = "spike.png",
+    speed = 100,
+    loop = false,
+    array = [14, 1],
+    size = [32, 32],
+]

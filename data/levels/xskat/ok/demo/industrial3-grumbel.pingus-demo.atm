@@ -1,0 +1,8 @@
+[
+    :level [name = "xskat/ok/industrial3-grumbel"],
+    :pingu_action [time = 240, id = 1, action = :bridger],
+    :pingu_action [time = 449, id = 0, action = :bridger],
+    :pingu_action [time = 849, id = 6, action = :bridger],
+    :pingu_action [time = 2539, id = 45, action = :bridger],
+    :pingu_action [time = 3313, id = 45, action = :climber],
+]

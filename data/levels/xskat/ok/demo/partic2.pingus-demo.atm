@@ -1,0 +1,12 @@
+[
+    :level [name = "xskat/ok/partic2"],
+    :pingu_action [time = 193, id = 0, action = :blocker],
+    :pingu_action [time = 250, id = 1, action = :blocker],
+    :pingu_action [time = 1269, id = 65, action = :digger],
+    :pingu_action [time = 2673, id = 78, action = :blocker],
+    :pingu_action [time = 2673, id = 80, action = :digger],
+    :pingu_action [time = 3149, id = 1, action = :digger],
+    :pingu_action [time = 3149, id = 0, action = :digger],
+    :pingu_action [time = 3149, id = 0, action = :floater],
+    :pingu_action [time = 3263, id = 78, action = :digger],
+]

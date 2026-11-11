@@ -1,0 +1,8 @@
+[
+    :level [name = "xskat/new/panic-cbrucher"],
+    :pingu_action [time = 220, id = 0, action = :blocker],
+    :pingu_action [time = 290, id = 1, action = :blocker],
+    :pingu_action [time = 906, id = 0, action = :slider],
+    :pingu_action [time = 953, id = 1, action = :jumper],
+    :pingu_action [time = 1113, id = 1, action = :jumper],
+]

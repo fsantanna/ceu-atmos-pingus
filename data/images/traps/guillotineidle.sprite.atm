@@ -1,0 +1,7 @@
+:pingus.sprite [
+    image = "guillotineidle.png",
+    speed = 100,
+    loop = true,
+    array = [7, 1],
+    size = [80, 96],
+]

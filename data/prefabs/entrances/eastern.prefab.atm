@@ -1,0 +1,18 @@
+:pingus.prefab [
+    version = 3,
+    overrides = [owner_id = 0, direction = :misc, release_rate = 50],
+    objects = [
+        :hotspot [
+            surface = [image = "entrances/easter", modifier = :ROT0],
+            position = [-44, -69, 100],
+            speed = 0,
+            parallax = 0,
+        ],
+        :entrance [
+            position = [0, 0, 110],
+            owner_id = 0,
+            direction = :misc,
+            release_rate = 150,
+        ],
+    ],
+]

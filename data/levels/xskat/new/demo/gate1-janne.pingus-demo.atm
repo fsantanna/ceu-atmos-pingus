@@ -1,0 +1,5 @@
+[
+    :level [name = "xskat/new/gate1-janne"],
+    :pingu_action [time = 545, id = 1, action = :jumper],
+    :pingu_action [time = 1339, id = 0, action = :jumper],
+]

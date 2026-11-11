@@ -1,0 +1,47 @@
+:pingus.controller [
+    standard_pointer = [
+        :sdl.mouse_pointer [],
+        :core.axis_pointer [
+            x_axis = [
+                :wiimote.axis [axis = "nunchuk:x"],
+            ],
+            y_axis = [
+                :wiimote.axis [axis = "nunchuk:y"],
+            ],
+        ],
+    ],
+    standard_scroller = [
+        :core.axis_scroller [
+            x_axis = [
+                :wiimote.axis [axis = "nunchuk:x"],
+            ],
+            y_axis = [
+                :wiimote.axis [axis = "nunchuk:y"],
+            ],
+        ],
+    ],
+    primary_button = [
+        :wiimote.button [button = "a"],
+    ],
+    secondary_button = [
+        :wiimote.button [button = "nunchuk:z"],
+    ],
+    pause_button = [
+        :wiimote.button [button = "plus"],
+    ],
+    fast_forward_button = [
+        :wiimote.button [button = "minus"],
+    ],
+    armageddon_button = [
+        :wiimote.button [button = "home"],
+    ],
+    escape_button = [
+        :sdl.keyboard_button [key = "escape"],
+    ],
+    action_up_button = [
+        :wiimote.button [button = "up"],
+    ],
+    action_down_button = [
+        :wiimote.button [button = "down"],
+    ],
+]

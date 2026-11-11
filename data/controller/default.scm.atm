@@ -1,0 +1,84 @@
+:pingus.controller [
+    standard_keyboard = [
+        :sdl.keyboard [],
+    ],
+    standard_pointer = [
+        :sdl.mouse_pointer [],
+    ],
+    standard_scroller = [
+        :core.button_scroller [
+            up = [
+                :sdl.keyboard_button [key = "up"],
+            ],
+            down = [
+                :sdl.keyboard_button [key = "down"],
+            ],
+            left = [
+                :sdl.keyboard_button [key = "left"],
+            ],
+            right = [
+                :sdl.keyboard_button [key = "right"],
+            ],
+        ],
+    ],
+    primary_button = [
+        :sdl.mouse_button [button = 1],
+    ],
+    secondary_button = [
+        :sdl.mouse_button [button = 2],
+        :sdl.mouse_button [button = 3],
+    ],
+    pause_button = [
+        :sdl.keyboard_button [key = "p"],
+    ],
+    fast_forward_button = [
+        :sdl.keyboard_button [key = "f"],
+        :sdl.keyboard_button [key = "space"],
+    ],
+    single_step_button = [
+        :sdl.keyboard_button [key = "s"],
+    ],
+    armageddon_button = [
+        :sdl.keyboard_button [key = "a"],
+    ],
+    escape_button = [
+        :sdl.keyboard_button [key = "escape"],
+    ],
+    action_up_button = [
+        :sdl.mouse_button [button = 4],
+    ],
+    action_down_button = [
+        :sdl.keyboard_button [key = "tab"],
+        :sdl.mouse_button [button = 5],
+    ],
+    action_1_button = [
+        :sdl.keyboard_button [key = "1"],
+    ],
+    action_2_button = [
+        :sdl.keyboard_button [key = "2"],
+    ],
+    action_3_button = [
+        :sdl.keyboard_button [key = "3"],
+    ],
+    action_4_button = [
+        :sdl.keyboard_button [key = "4"],
+    ],
+    action_5_button = [
+        :sdl.keyboard_button [key = "5"],
+    ],
+    action_6_button = [
+        :sdl.keyboard_button [key = "6"],
+    ],
+    action_7_button = [
+        :sdl.keyboard_button [key = "7"],
+    ],
+    action_8_button = [
+        :sdl.keyboard_button [key = "8"],
+    ],
+    action_9_button = [
+        :sdl.keyboard_button [key = "9"],
+    ],
+    action_10_button = [
+        :sdl.keyboard_button [key = "0"],
+    ],
+]

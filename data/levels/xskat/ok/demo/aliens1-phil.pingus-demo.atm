@@ -1,0 +1,15 @@
+[
+    :level [name = "xskat/ok/aliens1-phil"],
+    :pingu_action [time = 192, id = 0, action = :floater],
+    :pingu_action [time = 337, id = 0, action = :bridger],
+    :pingu_action [time = 799, id = 0, action = :basher],
+    :pingu_action [time = 1045, id = 12, action = :bridger],
+    :pingu_action [time = 1711, id = 29, action = :bridger],
+    :pingu_action [time = 1840, id = 32, action = :bridger],
+    :pingu_action [time = 2606, id = 32, action = :bridger],
+    :pingu_action [time = 2825, id = 42, action = :basher],
+    :pingu_action [time = 3098, id = 47, action = :bridger],
+    :pingu_action [time = 3098, id = 42, action = :bridger],
+    :pingu_action [time = 3640, id = 44, action = :basher],
+    :pingu_action [time = 3685, id = 44, action = :bridger],
+]

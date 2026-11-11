@@ -1,0 +1,10 @@
+[
+    :level [name = "xskat/new/hellmouth-11-rz"],
+    :pingu_action [time = 201, id = 1, action = :miner],
+    :pingu_action [time = 267, id = 0, action = :jumper],
+    :pingu_action [time = 321, id = 0, action = :blocker],
+    :pingu_action [time = 481, id = 2, action = :floater],
+    :pingu_action [time = 533, id = 1, action = :bridger],
+    :pingu_action [time = 2950, id = 9, action = :digger],
+    :pingu_action [time = 3454, id = 0, action = :basher],
+]

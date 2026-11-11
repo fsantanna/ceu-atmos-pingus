@@ -1,0 +1,7 @@
+:pingus.sprite [
+    image = "hammer.png",
+    speed = 60,
+    loop = false,
+    array = [13, 1],
+    size = [151, 181],
+]

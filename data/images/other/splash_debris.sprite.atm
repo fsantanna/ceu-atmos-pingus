@@ -1,0 +1,7 @@
+:pingus.sprite [
+    image = "/images/pingus/common/splash_debris.png",
+    speed = 100,
+    loop = true,
+    array = [6, 2],
+    size = [32, 32],
+]

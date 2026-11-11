@@ -1,0 +1,51 @@
+:pingus.controller [
+    standard_pointer = [
+        :core.axis_pointer [
+            x_axis = [
+                :sdl.joystick_axis [device = 1, axis = 0],
+            ],
+            y_axis = [
+                :sdl.joystick_axis [device = 1, axis = 1],
+            ],
+        ],
+    ],
+    standard_scroller = [
+        :core.axis_scroller [
+            x_axis = [
+                :sdl.joystick_axis [device = 1, axis = 4],
+            ],
+            y_axis = [
+                :sdl.joystick_axis [device = 1, axis = 3],
+            ],
+        ],
+    ],
+    primary_button = [
+        :sdl.joystick_button [device = 1, button = 0],
+    ],
+    secondary_button = [
+        :sdl.joystick_button [device = 1, button = 1],
+    ],
+    pause_button = [
+        :sdl.joystick_button [device = 1, button = 6],
+        :sdl.joystick_button [device = 1, button = 5],
+    ],
+    fast_forward_button = [
+        :sdl.joystick_button [device = 1, button = 10],
+        :sdl.joystick_button [device = 1, button = 4],
+    ],
+    armageddon_button = [
+        :sdl.joystick_button [device = 1, button = 7],
+    ],
+    escape_button = [
+        :sdl.keyboard_button [key = "escape"],
+    ],
+    action_axis = [
+        :sdl.joystick_axis [device = 1, axis = 7],
+    ],
+    action_up_button = [
+        :sdl.joystick_button [device = 1, button = 2],
+    ],
+    action_down_button = [
+        :sdl.joystick_button [device = 1, button = 3],
+    ],
+]

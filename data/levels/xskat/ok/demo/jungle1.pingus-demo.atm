@@ -1,0 +1,6 @@
+[
+    :level [name = "xskat/ok/jungle1"],
+    :pingu_action [time = 223, id = 0, action = :blocker],
+    :pingu_action [time = 1144, id = 1, action = :digger],
+    :pingu_action [time = 1540, id = 1, action = :blocker],
+]

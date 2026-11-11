@@ -1,0 +1,6 @@
+:pingus.sprite [
+    image = "smasher.png",
+    loop = false,
+    array = [6, 1],
+    size = [282, 189],
+]

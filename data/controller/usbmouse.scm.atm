@@ -1,0 +1,29 @@
+:pingus.controller [
+    standard_pointer = [
+        :usbmouse.pointer [device = "/dev/input/mx500"],
+    ],
+    standard_scroller = [
+        :usbmouse.scroller [device = "/dev/input/marblemouse"],
+    ],
+    primary_button = [
+        :usbmouse.button [device = "/dev/input/mx500", button = 0],
+    ],
+    secondary_button = [
+        :usbmouse.button [device = "/dev/input/mx500", button = 1],
+    ],
+    pause_button = [
+        :usbmouse.button [device = "/dev/input/mx500", button = 4],
+    ],
+    fast_forward_button = [
+        :usbmouse.button [device = "/dev/input/mx500", button = 3],
+    ],
+    escape_button = [
+        :sdl.keyboard_button [key = "escape"],
+    ],
+    action_up_button = [
+        :usbmouse.button [device = "/dev/input/mx500", button = 6],
+    ],
+    action_down_button = [
+        :usbmouse.button [device = "/dev/input/mx500", button = 5],
+    ],
+]

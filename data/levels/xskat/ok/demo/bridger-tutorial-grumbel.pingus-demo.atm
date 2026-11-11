@@ -1,0 +1,7 @@
+[
+    :level [name = "xskat/ok/bridger-tutorial-grumbel"],
+    :pingu_action [time = 238, id = 0, action = :bridger],
+    :pingu_action [time = 324, id = 1, action = :bridger],
+    :pingu_action [time = 448, id = 2, action = :bridger],
+    :pingu_action [time = 509, id = 3, action = :bridger],
+]

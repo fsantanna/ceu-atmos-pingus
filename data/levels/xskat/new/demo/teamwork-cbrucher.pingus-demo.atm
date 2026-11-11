@@ -1,0 +1,17 @@
+[
+    :level [name = "xskat/new/teamwork-cbrucher"],
+    :pingu_action [time = 323, id = 0, action = :bridger],
+    :pingu_action [time = 387, id = 1, action = :miner],
+    :pingu_action [time = 528, id = 1, action = :bridger],
+    :pingu_action [time = 695, id = 1, action = :miner],
+    :pingu_action [time = 811, id = 1, action = :bridger],
+    :pingu_action [time = 1272, id = 0, action = :bridger],
+    :pingu_action [time = 2032, id = 0, action = :bridger],
+    :pingu_action [time = 2793, id = 0, action = :bridger],
+    :pingu_action [time = 3552, id = 0, action = :bridger],
+    :pingu_action [time = 4311, id = 0, action = :bridger],
+    :pingu_action [time = 5466, id = 0, action = :bridger],
+    :pingu_action [time = 6222, id = 0, action = :bridger],
+    :pingu_action [time = 6383, id = 27, action = :bridger],
+    :pingu_action [time = 6893, id = 0, action = :digger],
+]

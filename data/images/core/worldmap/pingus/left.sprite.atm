@@ -1,0 +1,8 @@
+:pingus.sprite [
+    image = "../pingus.png",
+    offset = [0, 2],
+    speed = 60,
+    loop = true,
+    array = [8, 1],
+    size = [24, 24],
+]

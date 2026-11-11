@@ -1,0 +1,6 @@
+[
+    :level [name = "xskat/ok/desert1"],
+    :pingu_action [time = 357, id = 0, action = :basher],
+    :pingu_action [time = 1152, id = 0, action = :bridger],
+    :pingu_action [time = 1917, id = 0, action = :bridger],
+]

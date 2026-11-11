@@ -1,0 +1,10 @@
+[
+    :level [name = "xskat/ok/longway"],
+    :pingu_action [time = 203, id = 0, action = :miner],
+    :pingu_action [time = 371, id = 1, action = :basher],
+    :pingu_action [time = 515, id = 1, action = :miner],
+    :pingu_action [time = 903, id = 4, action = :miner],
+    :pingu_action [time = 1151, id = 6, action = :miner],
+    :pingu_action [time = 1431, id = 16, action = :basher],
+    :pingu_action [time = 1883, id = 13, action = :miner],
+]

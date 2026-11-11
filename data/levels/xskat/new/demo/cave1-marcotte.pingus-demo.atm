@@ -1,0 +1,12 @@
+[
+    :level [name = "xskat/new/cave1-marcotte"],
+    :pingu_action [time = 228, id = 0, action = :climber],
+    :pingu_action [time = 1574, id = 0, action = :basher],
+    :pingu_action [time = 2002, id = 0, action = :bridger],
+    :pingu_action [time = 4430, id = 0, action = :basher],
+    :pingu_action [time = 4891, id = 0, action = :basher],
+    :pingu_action [time = 5670, id = 0, action = :basher],
+    :pingu_action [time = 6070, id = 0, action = :basher],
+    :pingu_action [time = 7006, id = 0, action = :basher],
+    :pingu_action [time = 7154, id = 6, action = :bomber],
+]

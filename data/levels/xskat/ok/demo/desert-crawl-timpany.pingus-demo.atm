@@ -1,0 +1,15 @@
+[
+    :level [name = "xskat/ok/desert-crawl-timpany"],
+    :pingu_action [time = 302, id = 0, action = :climber],
+    :pingu_action [time = 1008, id = 0, action = :digger],
+    :pingu_action [time = 1469, id = 7, action = :climber],
+    :pingu_action [time = 2056, id = 0, action = :digger],
+    :pingu_action [time = 2304, id = 0, action = :bridger],
+    :pingu_action [time = 2374, id = 7, action = :basher],
+    :pingu_action [time = 2459, id = 0, action = :digger],
+    :pingu_action [time = 2605, id = 0, action = :bridger],
+    :pingu_action [time = 2658, id = 7, action = :bridger],
+    :pingu_action [time = 3518, id = 0, action = :bridger],
+    :pingu_action [time = 3779, id = 17, action = :basher],
+    :pingu_action [time = 4084, id = 7, action = :basher],
+]

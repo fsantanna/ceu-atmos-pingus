@@ -1,0 +1,6 @@
+[
+    :level [name = "xskat/ok/bomber-tutorial-grumbel"],
+    :pingu_action [time = 438, id = 0, action = :bomber],
+    :pingu_action [time = 678, id = 1, action = :bomber],
+    :pingu_action [time = 996, id = 2, action = :bomber],
+]

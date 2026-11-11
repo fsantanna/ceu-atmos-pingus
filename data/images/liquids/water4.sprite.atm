@@ -1,0 +1,7 @@
+:pingus.sprite [
+    image = "water4.png",
+    speed = 100,
+    loop = true,
+    array = [8, 1],
+    size = [64, 64],
+]

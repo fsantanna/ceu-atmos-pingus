@@ -1,0 +1,20 @@
+:pingus.levelset [
+    title = "The Eight Pingus",
+    description = "Eight Pingus get separated from the others.",
+    image = "levelsets/mysteryisland",
+    levels = [
+        :level [filename = "crowdus/crowdus012sdc"],
+        :level [filename = "crowdus/crowdus001sdc"],
+        :level [filename = "crowdus/crowdus005sdc"],
+        :level [filename = "crowdus/crowdus024sdc"],
+        :level [filename = "crowdus/crowdus014sdc"],
+        :level [filename = "crowdus/crowdus006sdc"],
+        :level [filename = "crowdus/crowdus018sdc"],
+        :level [filename = "crowdus/crowdus015sdc"],
+        :level [filename = "crowdus/crowdus007Asdc"],
+        :level [filename = "crowdus/crowdus022sdc"],
+        :level [filename = "crowdus/crowdus003Asdc"],
+        :level [filename = "crowdus/crowdus021sdc"],
+        :level [filename = "crowdus/crowdus013sdc"],
+    ],
+]

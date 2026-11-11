@@ -1,0 +1,13 @@
+[
+    :level [name = "xskat/ok/parallel"],
+    :pingu_action [time = 217, id = 0, action = :miner],
+    :pingu_action [time = 228, id = 3, action = :floater],
+    :pingu_action [time = 260, id = 3, action = :digger],
+    :pingu_action [time = 652, id = 5, action = :digger],
+    :pingu_action [time = 1415, id = 27, action = :basher],
+    :pingu_action [time = 2184, id = 52, action = :digger],
+    :pingu_action [time = 2598, id = 4, action = :basher],
+    :pingu_action [time = 2598, id = 5, action = :digger],
+    :pingu_action [time = 3606, id = 4, action = :digger],
+    :pingu_action [time = 4150, id = 4, action = :basher],
+]

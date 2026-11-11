@@ -1,0 +1,7 @@
+:pingus.sprite [
+    image = "animcross.png",
+    offset = [-18, -18],
+    speed = 100,
+    loop = true,
+    array = [10, 1],
+]

@@ -1,0 +1,13 @@
+[
+    :level [name = "xskat/ok/block-timpany"],
+    :pingu_action [time = 353, id = 0, action = :miner],
+    :pingu_action [time = 390, id = 1, action = :basher],
+    :pingu_action [time = 730, id = 1, action = :jumper],
+    :pingu_action [time = 877, id = 15, action = :basher],
+    :pingu_action [time = 877, id = 14, action = :blocker],
+    :pingu_action [time = 1463, id = 15, action = :miner],
+    :pingu_action [time = 1567, id = 15, action = :digger],
+    :pingu_action [time = 2296, id = 15, action = :miner],
+    :pingu_action [time = 2527, id = 15, action = :bridger],
+    :pingu_action [time = 2757, id = 14, action = :basher],
+]

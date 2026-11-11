@@ -1,0 +1,11 @@
+[
+    :level [name = "xskat/new/jungle-13-rz+eriksoe"],
+    :pingu_action [time = 317, id = 0, action = :digger],
+    :pingu_action [time = 540, id = 0, action = :bridger],
+    :pingu_action [time = 647, id = 2, action = :floater],
+    :pingu_action [time = 647, id = 1, action = :climber],
+    :pingu_action [time = 647, id = 2, action = :climber],
+    :pingu_action [time = 1246, id = 1, action = :miner],
+    :pingu_action [time = 1299, id = 0, action = :jumper],
+    :pingu_action [time = 1379, id = 0, action = :bridger],
+]

@@ -1,0 +1,15 @@
+[
+    :level [name = "xskat/ok/headbang"],
+    :pingu_action [time = 320, id = 2, action = :climber],
+    :pingu_action [time = 635, id = 2, action = :bridger],
+    :pingu_action [time = 1415, id = 2, action = :bridger],
+    :pingu_action [time = 2752, id = 2, action = :basher],
+    :pingu_action [time = 2752, id = 27, action = :climber],
+    :pingu_action [time = 3190, id = 27, action = :bridger],
+    :pingu_action [time = 3998, id = 27, action = :basher],
+    :pingu_action [time = 3998, id = 6, action = :climber],
+    :pingu_action [time = 4448, id = 6, action = :bridger],
+    :pingu_action [time = 4495, id = 30, action = :climber],
+    :pingu_action [time = 4954, id = 30, action = :basher],
+    :pingu_action [time = 4954, id = 7, action = :bridger],
+]
