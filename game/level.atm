@@ -21,6 +21,15 @@ func level_load (path) {
         n ?? :table  => vector.join(n, '"')
         else         => n
     }
+    ;; texts in many strings, or with none
+    loop _, k in [:description, :author, :comment] {
+        val v = lvl.head@(k)
+        set lvl.head@(k) = ifs {
+            v == nil    => ""
+            v ?? :table => vector.join(v, "")
+            else        => tostring(v)
+        }
+    }
     lvl
 }
 

@@ -1,0 +1,23 @@
+# Scripted levels: name, frames of 25ms (with fast forward), level,
+# orders (tick:pingu:action), and more keys. "-" for none.
+#
+# The output is the trace of the actions of the pingus, compared with
+# tst/golden/NAME.out.
+
+walk        800   tutorial/snow7-grumbel             -                 -
+armageddon  1500  tutorial/snow7-grumbel             -                 300:dn:A
+basher      1200  tutorial/basher-tutorial-grumbel   500:0:basher      -
+blocker     800   tutorial/solid-tutorial-grumbel    300:0:blocker     -
+bomber      800   tutorial/bomber-tutorial2-grumbel  250:0:bomber      -
+bridger     1200  tutorial/snow21-grumbel            200:0:bridger     -
+climber     1200  xskat/ok/climber-tutorial-lukis    200:0:climber     -
+digger      1200  tutorial/digger-tutorial2-grumbel  230:0:digger      -
+floater     1200  tutorial/floater-tutorial-grumbel  200:0:floater     -
+jumper      800   tutorial/jumper-tutorial-grumbel   340:0:jumper      -
+miner       800   tutorial/miner-tutorial2-grumbel   300:0:miner       -
+slider      400   crowdus/crowdus013sdc              200:0:slider      -
+drown       1500  tutorial/snow20-grumbel            -                 -
+spike       700   crystal/crystal5                   -                 -
+guillotine  1000  incoming/les2-jcasek               -                 -
+smasher     800   hellmouth/hellmouth04-grumbel      -                 -
+laserkill   1000  crowdus/crowdus001sdc              -                 -
