@@ -11,7 +11,7 @@ task Guillotine (g, o) {
                     val q = t.pub
                     if (q.x > pos.x+38) && (q.x < pos.x+42) && (q.y > pos.y+90) && (q.y < pos.y+98) {
                         val d = q.dir
-                        emit @t :pingu.go [act=:dead]
+                        emit @t :pingu.set [act=:dead]
                         emit :guillotine.kill [dir=d]
                     }
                 }

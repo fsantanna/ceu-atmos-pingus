@@ -39,8 +39,10 @@ task Orders (g) {
     loop _, o in string.split(s, ",") {
         val f = string.split(o, ":")
         val t, n, act = tonumber(f@0), tonumber(f@1), f@2
+        ;; after the whole tick, as the original applies the events of
+        ;; a demo after the update of the world
         if g.time < t {
-            await :tick until g.time >= t
+            await :tock until g.time >= t
         }
         loop _, k in g.pingus {
             if k.pub.id == n {

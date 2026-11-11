@@ -184,6 +184,14 @@ task Pingu (g, x, y, dir, owner) {
         id = g.counter.released - 1,
     ]
     val p = pub
+    ;; tests: the position of the first pingu at each tick
+    spawn {
+        if (os.getenv("PINGUS_TRACE") == "2") && (p.id == 0) {
+            loop on :tock {
+                print(string.format("tick %d %.3f %.3f %.3f %.3f %d %s", g.time, p.x, p.y, p.vx, p.vy, p.dir, p.act))
+            }
+        }
+    }
     ;; the actions, until the end, or until a danger forces one
     val end = par :any {
         await Danger(p)
@@ -195,7 +203,13 @@ task Pingu (g, x, y, dir, owner) {
             val nxt = par :any {
                 await ACTIONS@(act)(p, g, prev)
             } with {
+                ;; the orders of the player, if the action allows them
                 await Go(p, g)
+            } with {
+                ;; the orders of the world (exits, traps), whatever the
+                ;; action is, as the original
+                val e = await :pingu.set
+                e.act
             }
             until (nxt == :dead) || (nxt == :exited), nxt
             set act, prev = nxt, act

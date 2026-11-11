@@ -180,7 +180,7 @@ task FakeExit (g, o) {
             await :frame until it.n == 4
             loop _, t in g.pingus {
                 if zone(t.pub) {
-                    emit @t :pingu.go [act=:splashed]
+                    emit @t :pingu.set [act=:splashed]
                 }
             }
             await(false)
@@ -197,7 +197,7 @@ task Hammer (g, o) {
         loop _, t in g.pingus {
             val q = t.pub
             if (q.act != :splashed) && in_zone(pos, q, 55, 146, 77, 185) {
-                emit @t :pingu.go [act=:splashed]
+                emit @t :pingu.set [act=:splashed]
             }
         }
         await Sprite("traps/hammer", pos, one ++ [back=true])

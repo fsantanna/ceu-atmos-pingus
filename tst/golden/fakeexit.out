@@ -16,8 +16,7 @@ view 404 17
   184 pingu  0 exiter    1034  161
   186 pingu  3 walker     659  206
   187 pingu  3 exiter     658  206
-  191 pingu  5 walker     899  217
-  191 pingu  5 exiter     899  217
+  190 pingu  5 exiter     899  216
   194 pingu  4 walker     242  355
   196 pingu  1 exited     773  304
   197 pingu  4 exiter     245  355
@@ -26,7 +25,7 @@ view 404 17
   202 pingu  6 walker     429  352
   204 pingu  3 exited     658  206
   204 pingu  6 exiter     431  352
-  208 pingu  5 exited     899  217
+  207 pingu  5 exited     899  216
   214 pingu  4 exited     245  355
   221 pingu  6 exited     431  352
   227 pingu  7 faller    1821  897

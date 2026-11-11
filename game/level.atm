@@ -51,8 +51,10 @@ func level_flatten (objs, dx, dy, ov, out) {
                 set c.tag = obj.tag
                 if c.position {
                     set c.position = [
-                        math.floor(c.position@0 + dx),
-                        math.floor(c.position@1 + dy),
+                        ;; reals, as the original: a pingu starts at the
+                        ;; real position of its entrance
+                        c.position@0 + dx,
+                        c.position@1 + dy,
                         c.position@2 || 0,
                     ]
                 }

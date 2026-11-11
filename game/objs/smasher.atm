@@ -33,7 +33,7 @@ task Smasher (g, o) {
         loop _, t in g.pingus {
             val q = t.pub
             if (q.x > pos.x+30) && (q.x < pos.x+250) && (q.y > pos.y+90) && (q.y < pos.y+190) {
-                emit @t :pingu.go [act=:splashed]
+                emit @t :pingu.set [act=:splashed]
             }
         }
 

@@ -58,7 +58,7 @@ game/               the game screen
     level.atm       levels, prefabs, groups
     ground.atm      groundpieces
     pingu/          the Pingu task, the mover, particles
-        actions/    one file per action (17)
+        actions/    one file per action (21)
     objs/           one file per object (10 of Céu), extra.atm (12 more)
 screens/            menu, start, result, story, credits, levels,
                     worldmap, options
@@ -66,6 +66,8 @@ data/               converted data, images, sounds, music
 tools/convert.py    s-expressions to Atmos data, with its checks
 tools/check.atm     loads every data file with X.load
 tools/measure.py    peak memory and CPU of a run
+tools/compare.sh    a demo of the original in both games, the traces compared
+tools/bench/        the patch of the official game for the comparisons
 tst/                tests with no screen
 doc/                the case study: C++, Céu, Atmos
 ```
@@ -74,18 +76,25 @@ doc/                the case study: C++, Céu, Atmos
 
 The data files of the game are in `data/`, as Atmos data
 (`*.pingus.atm`, `*.sprite.atm`, ...). They are generated, once, from
-the s-expression files of the 2018 repository:
+the s-expression files of the 2018 repository (images and sprite
+descriptions) and of the official game (levels, levelsets, worldmaps,
+prefabs, stories):
 
 ```
 git clone https://github.com/fsantanna/pingus /tmp/pingus
 git -C /tmp/pingus checkout 036852a
-tools/convert.py /tmp/pingus/data data
+git clone https://github.com/Pingus/pingus /tmp/official
+git -C /tmp/official checkout ffe3851
+tools/merge-data.sh /tmp/pingus/data /tmp/official/data /tmp/src
+tools/convert.py /tmp/src data
+tools/po.py /tmp/pingus/data/po data/po
 ```
 
 The header of `tools/convert.py` describes the mapping and what the
 conversion loses. `data/levels.atm` is the index of the levels, with
 the objects and actions that each one needs: the game offers only the
-levels it supports (446 of 447).
+levels it supports (522 of 523; the last one needs a rocket launcher,
+which no version of the game has).
 
 ## Test
 
@@ -117,9 +126,11 @@ fixed random seed, and scripted keys and mouse:
 - [x] P5 Pingu core
 - [x] P6 Actions and traps
 - [x] P7 The rest of the game: pause, fast forward, options, progress
-- [x] P8 Case study ([doc/](doc/README.md)); the baseline of the
-      official game is still to be measured again ([doc/bench.md](doc/bench.md))
-- [x] P9 Later items: the 12 objects that Céu did not have
+- [x] P8 Case study ([doc/](doc/README.md)), with the benchmark against
+      the official game ([doc/bench.md](doc/bench.md))
+- [x] P9 Later items: the 12 objects and 4 actions that Céu did not have
+- [x] The levels of the official game, and its timings: compared tick by
+      tick on its demos ([doc/fidelity.md](doc/fidelity.md))
 - [x] Translations: the `.po` files of the game, chosen in the options
 - [ ] The full options screen, input configuration, controllers
 

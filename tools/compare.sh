@@ -22,7 +22,7 @@ ORIG=$(find "$OFFICIAL/data/levels" -name "$NAME.pingus-demo" | head -1)
 
 UD=$(mktemp -d)
 (cd "$OFFICIAL" && SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy PINGUS_TRACE=1 \
-    timeout 600 ./build/pingus -d data -u "$UD" -s -m --no-cfg-file -t 1 -Q "$ORIG") \
+    timeout 240 ./build/pingus -d data -u "$UD" -s -m --no-cfg-file -t 1 -Q "$ORIG") \
     2>/dev/null | grep ' pingu ' > "$OUT/$NAME.official"
 rm -rf "$UD"
 

@@ -9,7 +9,7 @@ task LaserExit (g, o) {
                 loop _, t in g.pingus {
                     val q = t.pub
                     if (q.x < pos.x+34+10) && (q.x > pos.x+34) && (q.y < pos.y+43+20) && (q.y > pos.y+43) {
-                        emit @t :pingu.go [act=:laserkill]
+                        emit @t :pingu.set [act=:laserkill]
                         emit :laser.kill
                     }
                 }

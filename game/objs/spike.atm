@@ -24,7 +24,7 @@ task Spike (g, o) {
         } with {
             await :frame until it.n == 3
             await :tick until spike_over(pos, q, 12)
-            emit @t :pingu.go [act=:dead]
+            emit @t :pingu.set [act=:dead]
             await(false)
         }
     }

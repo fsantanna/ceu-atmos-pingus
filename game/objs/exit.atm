@@ -16,8 +16,10 @@ task Exit (g, o) {
     loop on :tock {
         loop _, t in g.pingus {
             val q = t.pub
-            if (q.x > pos.x-1) && (q.x < pos.x+1) && (q.y > pos.y-5) && (q.y < pos.y+5) {
-                emit @t :pingu.go [act=:exiter]
+            if (q.x > pos.x-1) && (q.x < pos.x+1) && (q.y > pos.y-5) && (q.y < pos.y+5) &&
+               (q.act != :exiter)
+            {
+                emit @t :pingu.set [act=:exiter]
             }
         }
     }
