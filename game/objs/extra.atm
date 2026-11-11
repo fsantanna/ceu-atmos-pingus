@@ -237,7 +237,8 @@ task TeleporterTarget (g, o) {
 ;; IceBlock: a block of ground that melts while pingus walk over it, and
 ;; goes away when it has melted. The thickness is the data of the
 ;; drawing; the melting is the position in the code: it goes on while
-;; a pingu touched it in the last second (50 ticks).
+;; a pingu touched it in the last 1000 ticks (the original compares its
+;; time in ticks with "1000", meant as milliseconds).
 task IceBlock (g, o) {
     val pos = [x=o.position@0, y=o.position@1]
     val cmap = res_surface("worldobjs/iceblock_cmap")
@@ -256,11 +257,11 @@ task IceBlock (g, o) {
     }
     loop {
         await :tock until contact()
-        ;; melts, until no contact for a second
+        ;; melts, until no contact for 1000 ticks
         par :any {
             loop {
                 val again = par :any {
-                    await Ticks(50)
+                    await Ticks(1000)
                     false
                 } with {
                     await :tock until contact()

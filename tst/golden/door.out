@@ -37,16 +37,17 @@ view 615 402
   330 pingu  7 walker     243 1140
   331 pingu  0 faller     207  390
   340 pingu  4 walker     217  248
-  340 pingu  5 walker    1824  202
   341 pingu  4 faller     216  248
   345 pingu  0 walker     207  403
   346 pingu  0 faller     206  403
   351 pingu  4 walker     216  254
   352 pingu  4 faller     215  254
+  356 pingu  5 splashed  1824  344
   363 pingu  0 walker     206  426
   364 pingu  0 faller     205  426
   364 pingu  4 walker     215  264
   365 pingu  4 faller     214  264
+  372 pingu  5 dead      1824  344
   380 pingu  0 walker     205  446
   381 pingu  0 faller     204  446
   386 pingu  4 walker     214  298
@@ -74,8 +75,4 @@ view 615 402
   532 pingu  4 faller     204  446
   550 pingu  4 walker     204  472
   581 pingu  1 faller    1594  419
-  604 pingu  5 faller    1560  269
   617 pingu  1 walker    1594  531
-  641 pingu  5 walker    1560  391
-  732 pingu  5 faller    1594  419
-  768 pingu  5 walker    1594  531

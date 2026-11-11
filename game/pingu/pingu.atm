@@ -86,13 +86,15 @@ val ACTION_MODE = [ climber = :wall, floater = :fall ]
 ;; Actions that are not shown nor clicked.
 val ACTION_UNCATCHABLE = [ drown=true, laserkill=true, smashed=true, splashed=true, dead=true ]
 
-;; Whether a pingu may change from action `a` to `b`, as the table
-;; `CHANGE_ALLOWED` of the original.
+;; Whether a pingu may change from action `a` to `b`, as the
+;; `change_allowed` of the actions of the official game (the table
+;; `CHANGE_ALLOWED` of the Céu rewrite was stricter).
 func allowed (a, b) {
     ifs {
-        X.xin(a, [:bomber, :drown, :exiter, :splashed, :smashed]) => b == :dead
-        a == :faller  => X.xin(b, [:dead, :bomber, :climber, :floater])
-        a == :floater => X.xin(b, [:dead, :bomber])
+        X.xin(a, [:bomber, :splashed]) => false
+        a == :faller  => X.xin(b, [:floater, :climber, :bomber])
+        a == :floater => b == :bomber
+        a == :climber => X.xin(b, [:floater, :bomber, :jumper])
         else => true
     }
 }

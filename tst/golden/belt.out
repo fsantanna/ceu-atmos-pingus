@@ -6,11 +6,7 @@ view 0 600
   307 pingu  0 exiter    1744  511
   324 pingu  0 exited    1744  511
   706 pingu  1 faller     117  866
-  735 pingu  1 walker     117  939
-  756 pingu  1 faller    1658  475
-  777 pingu  1 walker    1658  511
-  863 pingu  1 exiter    1744  511
-  880 pingu  1 exited    1744  511
+  751 pingu  1 walker     117 1049
  1262 pingu  2 faller     117  866
  1307 pingu  2 walker     117 1049
  1818 pingu  3 faller     117  866
