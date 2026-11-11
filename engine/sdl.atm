@@ -117,6 +117,9 @@ val pg = [
     map_put = func (img, x, y, type) {
         `pg_map_put(pg_int($img), pg_int($x), pg_int($y), pg_int($type));`
     },
+    map_col = func (img, x, y, type) {
+        `pg_map_col(pg_int($img), pg_int($x), pg_int($y), pg_int($type));`
+    },
     map_remove = func (gfx, col, x, y) {
         `pg_map_remove(pg_int($gfx), pg_int($col), pg_int($x), pg_int($y));`
     },

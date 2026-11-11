@@ -30,6 +30,10 @@ check () {     # name, file
 
 [ "$1" = "update" ] && UPDATE=1
 
+# one build of the game for all the tests
+./run.sh -o "$OUT/pingus" main.atm || exit 1
+export PINGUS_BIN="$OUT/pingus"
+
 # data
 find data -name '*.atm' | sort > "$OUT/files.txt"
 ./run.sh tools/check.atm "$OUT/files.txt" | sed 's/slowest.*//' > "$OUT/data.out" 2>&1
@@ -45,9 +49,9 @@ HD=$(mktemp -d)
 PINGUS_HOME=$HD PINGUS_FRAMES=150:25 \
 PINGUS_MOUSE="60:dn:275:350:1,61:up:275:350:1,100:mv:300:250,110:dn:300:250:1,111:up:300:250:1" \
 PINGUS_SHOT="50:$OUT/menu.png,90:$OUT/levelsets.png,140:$OUT/start.png" \
-    ./run.sh main.atm > "$OUT/screens.out" 2>&1
+    "$PINGUS_BIN" > "$OUT/screens.out" 2>&1
 PINGUS_HOME=$HD PINGUS_FRAMES=300:25 PINGUS_KEYS="2:dn:Return" PINGUS_SHOT="290:$OUT/game.png" \
-    ./run.sh main.atm data/levels/tutorial/snow7-grumbel.pingus.atm >> "$OUT/screens.out" 2>&1
+    "$PINGUS_BIN" data/levels/tutorial/snow7-grumbel.pingus.atm >> "$OUT/screens.out" 2>&1
 rm -rf "$HD"
 for s in menu levelsets start game; do
     if [ "$UPDATE" = 1 ]; then

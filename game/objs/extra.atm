@@ -1,0 +1,376 @@
+;; The objects that the Céu rewrite did not have, after the official
+;; game (Pingus/pingus@ffe3851, src/pingus/ecs/): backgrounds of solid
+;; color and of stars, snow and rain, the fake exit, the hammer, the
+;; teleporter, the ice block, the conveyor belt, and the switch door.
+
+;; Whether a pingu is in the zone `x1,y1,x2,y2` relative to `pos`.
+func in_zone (pos, q, x1, y1, x2, y2) {
+    (q.x > pos.x + x1) && (q.x < pos.x + x2) && (q.y > pos.y + y1) && (q.y < pos.y + y2)
+}
+
+;; Whether any pingu is in a zone.
+func zone_any (g, pos, x1, y1, x2, y2) {
+    loop _, t in g.pingus {
+        until in_zone(pos, t.pub, x1, y1, x2, y2), true
+    } || false
+}
+
+;;; BACKGROUNDS ;;;
+
+task SolidColorBackground (g, o) {
+    val c = o.colori || [0, 0, 0, 255]
+    val rgba = (c@0 << 24) | (c@1 << 16) | (c@2 << 8) | c@3
+    loop on :sdl.draw {
+        pg.fill(rgba, 0, 0, W, H)
+    }
+}
+
+;; Stars that move to the right, and come back at the left. The stars
+;; are data: one task moves and draws them all.
+task StarfieldBackground (g, o) {
+    val stars = []
+    loop _, k in [:small, :middle, :large] {
+        val img = res_surface("game/stars/" ++ k ++ "_star")
+        loop _ in o@(k ++ "_stars") || 0 {
+            vector.insert(stars, [img=img, x=math.random(0, g.w - 1),
+                                  y=math.random(0, g.h - 1), dx=math.random(1, 5)])
+        }
+    }
+    par {
+        loop on :tick {
+            loop _, s in stars {
+                set s.x += s.dx
+                if s.x > g.w {
+                    set s.x = -32
+                    set s.y = math.random(0, g.h - 1)
+                }
+            }
+        }
+    } with {
+        loop on :sdl.draw {
+            loop _, s in stars {
+                pg.draw(s.img, s.x - CAM.x, s.y - CAM.y)
+            }
+        }
+    }
+}
+
+;;; WEATHER ;;;
+
+;; A flake of snow, which falls, drifts, and may pile on the ground.
+task SnowFlake (g, x, colliding) {
+    val k = math.random(0, 9)
+    val name = ifs {
+        k == 0 => "particles/snow1"
+        k == 1 => "particles/snow2"
+        k <= 3 => "particles/snow3"
+        (k == 5) || (k == 6) => "particles/snow4"
+        else => "particles/snow5"
+    }
+    val pos = [x=x, y=-32]
+    var vx = 0.0
+    val vy = 1 + (math.random() * 3.5)
+    spawn Sprite(name, pos, [world=true])
+    loop on :tick {
+        set pos.x += vx
+        set pos.y += vy
+        until pos.y > g.h
+        set vx += (math.random() - 0.5) / 10
+        if colliding {
+            val px = pg.map_get(trunc(pos.x), trunc(pos.y))
+            if (px != GP.nothing) && (px != GP.water) && (px != GP.outofscreen) {
+                ground_put(res_surface("particles/ground_snow"), trunc(pos.x) - 1,
+                           trunc(pos.y) - 1, GP.transparent)
+                break
+            }
+        }
+    }
+}
+
+;; Snow: flakes at each tick, as many as the intensity.
+task SnowGenerator (g, o) {
+    val n = if o.intensity == nil => 1.0 => o.intensity
+    loop on :tick {
+        loop _ in math.floor(n) + (if (n - math.floor(n)) > math.random() => 1 => 0) {
+            spawn @(g.weather) SnowFlake(g, math.random(0, g.w - 1), math.random(0, 2) == 0)
+        }
+    }
+}
+
+;; A drop of rain, which falls in diagonal and splashes on the ground.
+task RainDrop (g, x) {
+    val pos = [x=x, y=-32]
+    val m = 1.0 + (math.random() * 3.0)
+    val name = if math.random(0, 2) == 0 => "particles/rain2" => "particles/rain1"
+    val hit = \{
+        val px = pg.map_get(trunc(pos.x), trunc(pos.y))
+        ((px != GP.nothing) && (px != GP.outofscreen) && (math.random(0, 1) == 0)) || (pos.y > g.h)
+    }
+    par :any {
+        await Sprite(name, pos, [world=true])
+    } with {
+        loop on :tick {
+            until hit()
+            set pos.x -= 5 * m
+            set pos.y += 16 * m
+        }
+    }
+    ;; the splash lasts 4 ticks, as the original
+    if pos.y <= g.h {
+        par :any {
+            await Sprite("particles/rain_splash", pos, [world=true, still=true])
+        } with {
+            await Ticks(4)
+        }
+    }
+}
+
+;; Rain: 16 drops per tick, and thunder from time to time.
+task RainGenerator (g, o) {
+    spawn {
+        loop {
+            ;; at least 2 ticks between thunders, then one chance in 150
+            await Ticks(2)
+            await :tick until math.random(0, 149) == 0
+            sound "thunder"
+            ;; the flash fades in 4 ticks
+            val a = [v=255]
+            par :any {
+                loop _ in 4 {
+                    await :tick
+                    set a.v -= 64
+                }
+            } with {
+                loop on :sdl.draw {
+                    pg.fill(0xFFFFFF00 | math.max(0, a.v), 0, 0, W, H)
+                }
+            }
+        }
+    }
+    loop on :tick {
+        loop _ in 16 {
+            spawn @(g.weather) RainDrop(g, math.random(0, (g.w * 2) - 1))
+        }
+    }
+}
+
+;;; TRAPS ;;;
+
+;; FakeExit: looks like an exit, and smashes the pingus that enter it.
+task FakeExit (g, o) {
+    val pos = [x=o.position@0, y=o.position@1]
+    val zone = \(q) { in_zone(pos, q, -7, -56, 8, 0) && (q.act != :splashed) }
+    loop {
+        par :any {
+            await Sprite("traps/fake_exit", pos, [world=true, still=true])
+        } with {
+            await :tick until do {
+                loop _, t in g.pingus {
+                    until zone(t.pub), true
+                }
+            }
+        }
+        pin s = spawn Sprite("traps/fake_exit", pos, [world=true, once=true])
+        par :any {
+            await(s)
+        } with {
+            await :frame until it.n == 4
+            loop _, t in g.pingus {
+                if zone(t.pub) {
+                    emit @t :pingu.go [act=:splashed]
+                }
+            }
+            await(false)
+        }
+    }
+}
+
+;; Hammer: swings down and up, forever, and smashes the pingus under it.
+task Hammer (g, o) {
+    val pos = [x=o.position@0, y=o.position@1]
+    val one = [world=true, speed=33, once=true]
+    loop {
+        await Sprite("traps/hammer", pos, one)
+        loop _, t in g.pingus {
+            val q = t.pub
+            if (q.act != :splashed) && in_zone(pos, q, 55, 146, 77, 185) {
+                emit @t :pingu.go [act=:splashed]
+            }
+        }
+        await Sprite("traps/hammer", pos, one ++ [back=true])
+    }
+}
+
+;;; TELEPORTER ;;;
+
+;; Teleporter: moves the pingus that enter it to its target. It tells
+;; the target with `:teleport [id]`, through the game.
+task Teleporter (g, o, target) {
+    val pos = [x=o.position@0, y=o.position@1]
+    if !target {
+        await Sprite("worldobjs/teleporter", pos, [world=true, still=true])
+    }
+    loop {
+        par :any {
+            await Sprite("worldobjs/teleporter", pos, [world=true, still=true])
+        } with {
+            await :tick until do {
+                loop _, t in g.pingus {
+                    until in_zone(pos, t.pub, -3, -52, 3, 0), true
+                }
+            }
+            loop _, t in g.pingus {
+                if in_zone(pos, t.pub, -3, -52, 3, 0) {
+                    set t.pub.x = target.position@0
+                    set t.pub.y = target.position@1
+                }
+            }
+            emit @(:parent) :teleport [id=target.id]
+        }
+        await Sprite("worldobjs/teleporter", pos, [world=true, once=true])
+    }
+}
+
+task TeleporterTarget (g, o) {
+    val pos = [x=o.position@0, y=o.position@1]
+    loop {
+        watching :teleport until it.id == o.id {
+            await Sprite("worldobjs/teleportertarget", pos, [world=true, still=true])
+        }
+        await Sprite("worldobjs/teleportertarget", pos, [world=true, once=true])
+    }
+}
+
+;;; ICE BLOCK ;;;
+
+;; IceBlock: a block of ground that melts while pingus walk over it, and
+;; goes away when it has melted. The thickness is the data of the
+;; drawing; the melting is the position in the code: it goes on while
+;; a pingu touched it in the last second (50 ticks).
+task IceBlock (g, o) {
+    val pos = [x=o.position@0, y=o.position@1]
+    val cmap = res_surface("worldobjs/iceblock_cmap")
+    val w, h = pg.size(cmap)
+    ground_put(cmap, pos.x, pos.y, GP.ground)
+    val contact = \{ zone_any(g, pos, 0, -4, w, h) }
+    val ice = [thick=1.0]
+    spawn {
+        val d = res_desc("worldobjs/iceblock")
+        val n = d.array@0 * d.array@1
+        loop on :sdl.draw {
+            val k = look(d, nil)
+            val f = trunc((1.0 - ice.thick) * (n - 1))
+            pg.part(k.img, k.fw * f, 0, k.fw, k.fh, pos.x - CAM.x, pos.y - CAM.y)
+        }
+    }
+    loop {
+        await :tick until contact()
+        ;; melts, until no contact for a second
+        par :any {
+            loop {
+                val again = par :any {
+                    await Ticks(50)
+                    false
+                } with {
+                    await :tick until contact()
+                    true
+                }
+                until !again
+            }
+        } with {
+            loop on :tick {
+                set ice.thick -= 0.01
+                if ice.thick < 0 {
+                    ground_remove(cmap, cmap, pos.x, pos.y)
+                    return nil
+                }
+            }
+        }
+    }
+}
+
+;;; CONVEYOR BELT ;;;
+
+;; ConveyorBelt: solid ground that carries the pingus to the left.
+task ConveyorBelt (g, o) {
+    val pos = [x=o.position@0, y=o.position@1]
+    val n = o.repeat || 1
+    val speed = o.speed || 0
+    val cmap = res_surface("worldobjs/conveyorbelt_cmap")
+    loop i in n + 2 {
+        ground_put(cmap, pos.x + (15 * i), pos.y, GP.solid)
+    }
+    val lw, _ = res_frame_size("worldobjs/conveyorbelt_left")
+    val mw, _ = res_frame_size("worldobjs/conveyorbelt_middle")
+    pin ss = tasks()
+    spawn @ss Sprite("worldobjs/conveyorbelt_left", pos, [world=true])
+    loop i in n {
+        spawn @ss Sprite("worldobjs/conveyorbelt_middle", [x=pos.x + lw + (i*mw), y=pos.y], [world=true])
+    }
+    spawn @ss Sprite("worldobjs/conveyorbelt_right", [x=pos.x + lw + (n*mw), y=pos.y], [world=true])
+    ;; the pingus move in whole pixels: the fraction is kept for later
+    var frac = 0.0
+    loop on :tick {
+        set frac += speed * 0.025
+        val dx = trunc(frac)
+        set frac -= dx
+        if dx != 0 {
+            loop _, t in g.pingus {
+                if in_zone(pos, t.pub, 0, -2, 15 * (n + 2), 10) {
+                    set t.pub.x -= dx
+                }
+            }
+        }
+    }
+}
+
+;;; SWITCH DOOR ;;;
+
+;; SwitchDoorSwitch: the first pingu that passes it opens its door, with
+;; `:door.open [id]` through the game.
+task SwitchDoorSwitch (g, o) {
+    val pos = [x=o.position@0, y=o.position@1]
+    spawn Sprite("worldobjs/switchdoor_switch", pos, [world=true])
+    await :tick until zone_any(g, pos, 0, 0, 15, 40)
+    emit @(:parent) :door.open [id=o.target_id]
+    await(false)
+}
+
+;; SwitchDoor: a door of solid ground, which goes up when opened, and
+;; leaves the ground when a pingu fits under it. The door is in the
+;; collision map only: this task draws it, at its current height.
+task SwitchDoor (g, o) {
+    val pos = [x=o.position@0, y=o.position@1]
+    val n = o.height || 1
+    val box = res_surface("worldobjs/switchdoor_box")
+    val tile = res_surface("worldobjs/switchdoor_tile")
+    val tcmap = res_surface("worldobjs/switchdoor_tile_cmap")
+    val _, bh = pg.size(box)
+    val _, th = pg.size(tcmap)
+    val _, tth = pg.size(tile)
+    val col = \(type) {
+        pg.map_col(box, pos.x, pos.y, type)
+        loop i in n {
+            pg.map_col(tcmap, pos.x, pos.y + (i * th) + bh, type)
+        }
+    }
+    col(GP.solid)
+    val door = [h=n]
+    spawn {
+        loop on :sdl.draw {
+            pg.draw(box, pos.x - CAM.x, pos.y - CAM.y)
+            loop i in door.h {
+                pg.draw(tile, pos.x - CAM.x, pos.y + (i * tth) + bh - CAM.y)
+            }
+        }
+    }
+    await :door.open until it.id == o.id
+    loop on :tick {
+        until door.h == 0
+        set door.h -= 1
+        if door.h + 10 < n {
+            col(GP.nothing)
+        }
+    }
+    await(false)
+}

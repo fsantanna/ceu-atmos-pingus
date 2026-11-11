@@ -85,7 +85,7 @@
     ],
     [
         file = "levels/alien/space-11-rz+eriksoe.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -96,7 +96,7 @@
             :switchdoor_switch,
         ],
         actions = [:bomber, :jumper, :miner],
-        missing = [:switchdoor_door, :switchdoor_switch],
+        missing = [],
     ],
     [
         file = "levels/alien/space-9-tom.pingus.atm",
@@ -180,7 +180,7 @@
     ],
     [
         file = "levels/crowdus/crowdus003Asdc.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -202,11 +202,11 @@
             :miner,
             :slider,
         ],
-        missing = [:rain_generator],
+        missing = [],
     ],
     [
         file = "levels/crowdus/crowdus005sdc.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -218,7 +218,7 @@
             :teleporter,
         ],
         actions = [:digger, :jumper, :miner, :slider],
-        missing = [:teleporter],
+        missing = [],
     ],
     [
         file = "levels/crowdus/crowdus006sdc.pingus.atm",
@@ -229,7 +229,7 @@
     ],
     [
         file = "levels/crowdus/crowdus007Asdc.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -244,11 +244,11 @@
             :surface_background,
         ],
         actions = [:basher, :bridger, :digger, :floater, :jumper, :miner, :slider],
-        missing = [:fake_exit, :hammer],
+        missing = [],
     ],
     [
         file = "levels/crowdus/crowdus012sdc.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -261,7 +261,7 @@
             :teleporter_target,
         ],
         actions = [:miner],
-        missing = [:iceblock, :solidcolor_background, :teleporter, :teleporter_target],
+        missing = [],
     ],
     [
         file = "levels/crowdus/crowdus013sdc.pingus.atm",
@@ -272,7 +272,7 @@
     ],
     [
         file = "levels/crowdus/crowdus014sdc.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -289,17 +289,11 @@
             :teleporter_target,
         ],
         actions = [:bridger, :climber, :digger, :floater, :jumper, :miner, :slider],
-        missing = [
-            :iceblock,
-            :switchdoor_door,
-            :switchdoor_switch,
-            :teleporter,
-            :teleporter_target,
-        ],
+        missing = [],
     ],
     [
         file = "levels/crowdus/crowdus015sdc.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :conveyorbelt,
             :entrance,
@@ -316,19 +310,11 @@
             :teleporter_target,
         ],
         actions = [:bridger, :climber, :jumper, :slider],
-        missing = [
-            :conveyorbelt,
-            :iceblock,
-            :snow_generator,
-            :switchdoor_door,
-            :switchdoor_switch,
-            :teleporter,
-            :teleporter_target,
-        ],
+        missing = [],
     ],
     [
         file = "levels/crowdus/crowdus018sdc.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -342,17 +328,11 @@
             :teleporter_target,
         ],
         actions = [:bridger, :climber, :floater, :jumper],
-        missing = [
-            :iceblock,
-            :switchdoor_door,
-            :switchdoor_switch,
-            :teleporter,
-            :teleporter_target,
-        ],
+        missing = [],
     ],
     [
         file = "levels/crowdus/crowdus021sdc.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -368,17 +348,11 @@
             :teleporter_target,
         ],
         actions = [:basher, :bridger, :climber, :digger, :floater, :miner],
-        missing = [
-            :iceblock,
-            :switchdoor_door,
-            :switchdoor_switch,
-            :teleporter,
-            :teleporter_target,
-        ],
+        missing = [],
     ],
     [
         file = "levels/crowdus/crowdus022sdc.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -391,11 +365,11 @@
             :switchdoor_switch,
         ],
         actions = [:slider],
-        missing = [:iceblock, :switchdoor_door, :switchdoor_switch],
+        missing = [],
     ],
     [
         file = "levels/crowdus/crowdus024sdc.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -410,17 +384,11 @@
             :teleporter_target,
         ],
         actions = [:jumper],
-        missing = [
-            :iceblock,
-            :switchdoor_door,
-            :switchdoor_switch,
-            :teleporter,
-            :teleporter_target,
-        ],
+        missing = [],
     ],
     [
         file = "levels/crystal/cave-crystal1-mw.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -430,11 +398,11 @@
             :surface_background,
         ],
         actions = [:basher, :bridger, :digger, :floater, :jumper],
-        missing = [:fake_exit],
+        missing = [],
     ],
     [
         file = "levels/crystal/cave-crystal2-mw.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -444,7 +412,7 @@
             :surface_background,
         ],
         actions = [:basher, :bomber, :bridger, :digger, :jumper],
-        missing = [:fake_exit],
+        missing = [],
     ],
     [
         file = "levels/crystal/crystal-phil1.pingus.atm",
@@ -796,7 +764,7 @@
     ],
     [
         file = "levels/desert/indiana-yingwan.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -807,7 +775,7 @@
             :surface_background,
         ],
         actions = [:basher, :blocker, :bomber, :bridger, :digger, :jumper, :miner],
-        missing = [:hammer],
+        missing = [],
     ],
     [
         file = "levels/easter/easter1-grumbel.pingus.atm",
@@ -1015,7 +983,7 @@
     ],
     [
         file = "levels/factorycampaign/factory_campaign1.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -1026,7 +994,7 @@
             :solidcolor_background,
         ],
         actions = [:basher, :blocker, :bridger, :floater, :jumper],
-        missing = [:snow_generator, :solidcolor_background],
+        missing = [],
     ],
     [
         file = "levels/factorycampaign/factory_campaign10.pingus.atm",
@@ -1037,7 +1005,7 @@
     ],
     [
         file = "levels/factorycampaign/factory_campaign11.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -1048,7 +1016,7 @@
             :surface_background,
         ],
         actions = [:basher, :blocker, :bomber, :bridger, :climber, :jumper],
-        missing = [:hammer],
+        missing = [],
     ],
     [
         file = "levels/factorycampaign/factory_campaign12.pingus.atm",
@@ -1066,7 +1034,7 @@
     ],
     [
         file = "levels/factorycampaign/factory_campaign13.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -1076,11 +1044,11 @@
             :solidcolor_background,
         ],
         actions = [:basher, :blocker, :bomber, :bridger, :digger, :floater, :jumper],
-        missing = [:solidcolor_background],
+        missing = [],
     ],
     [
         file = "levels/factorycampaign/factory_campaign2.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -1091,7 +1059,7 @@
             :solidcolor_background,
         ],
         actions = [:basher, :blocker, :bomber, :bridger],
-        missing = [:snow_generator, :solidcolor_background],
+        missing = [],
     ],
     [
         file = "levels/factorycampaign/factory_campaign3.pingus.atm",
@@ -1118,7 +1086,7 @@
     ],
     [
         file = "levels/factorycampaign/factory_campaign4.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -1139,7 +1107,7 @@
             :miner,
             :slider,
         ],
-        missing = [:solidcolor_background],
+        missing = [],
     ],
     [
         file = "levels/factorycampaign/factory_campaign5.pingus.atm",
@@ -1442,7 +1410,7 @@
     ],
     [
         file = "levels/halloween2011/halloween15-grumbel.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -1454,7 +1422,7 @@
             :switchdoor_switch,
         ],
         actions = [:basher, :blocker, :bomber, :bridger, :climber, :jumper],
-        missing = [:switchdoor_door, :switchdoor_switch],
+        missing = [],
     ],
     [
         file = "levels/halloween2011/halloween16-grumbel.pingus.atm",
@@ -1523,7 +1491,7 @@
     ],
     [
         file = "levels/hellmouth/hellmouth01-grumbel.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -1534,7 +1502,7 @@
             :switchdoor_switch,
         ],
         actions = [:blocker, :bomber, :bridger, :digger, :floater],
-        missing = [:switchdoor_door, :switchdoor_switch],
+        missing = [],
     ],
     [
         file = "levels/hellmouth/hellmouth02-grumbel.pingus.atm",
@@ -1561,7 +1529,7 @@
     ],
     [
         file = "levels/hellmouth/hellmouth03-grumbel.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -1575,12 +1543,7 @@
             :teleporter_target,
         ],
         actions = [:blocker, :bomber, :bridger, :digger, :slider],
-        missing = [
-            :switchdoor_door,
-            :switchdoor_switch,
-            :teleporter,
-            :teleporter_target,
-        ],
+        missing = [],
     ],
     [
         file = "levels/hellmouth/hellmouth04-grumbel.pingus.atm",
@@ -1635,7 +1598,7 @@
     ],
     [
         file = "levels/hellmouth/hellmouth08-grumbel.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -1647,7 +1610,7 @@
             :switchdoor_switch,
         ],
         actions = [:basher, :blocker, :bomber, :digger, :miner, :slider],
-        missing = [:switchdoor_door, :switchdoor_switch],
+        missing = [],
     ],
     [
         file = "levels/hellmouth/hellmouth09-grumbel.pingus.atm",
@@ -1848,7 +1811,7 @@
     ],
     [
         file = "levels/incoming/christmas4-cbarratt.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -1860,7 +1823,7 @@
             :surface_background,
         ],
         actions = [:basher, :blocker, :bomber, :bridger, :digger, :jumper, :miner],
-        missing = [:snow_generator],
+        missing = [],
     ],
     [
         file = "levels/incoming/climber-georg.pingus.atm",
@@ -1900,7 +1863,7 @@
     ],
     [
         file = "levels/incoming/desert-cbarratt.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -1912,11 +1875,11 @@
             :switchdoor_switch,
         ],
         actions = [:basher, :blocker, :bomber, :bridger, :digger],
-        missing = [:switchdoor_door, :switchdoor_switch],
+        missing = [],
     ],
     [
         file = "levels/incoming/desert11-cbarratt.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -1941,11 +1904,11 @@
             :miner,
             :slider,
         ],
-        missing = [:iceblock, :switchdoor_door, :switchdoor_switch],
+        missing = [],
     ],
     [
         file = "levels/incoming/desert3-cbarratt.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -1957,7 +1920,7 @@
             :switchdoor_switch,
         ],
         actions = [:basher, :blocker, :bomber, :bridger, :digger, :miner],
-        missing = [:switchdoor_door, :switchdoor_switch],
+        missing = [],
     ],
     [
         file = "levels/incoming/desert6-cbarratt.pingus.atm",
@@ -2003,7 +1966,7 @@
     ],
     [
         file = "levels/incoming/fire2-cbarratt.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -2015,11 +1978,11 @@
             :switchdoor_switch,
         ],
         actions = [:basher, :blocker, :bomber, :bridger, :digger, :floater, :jumper],
-        missing = [:switchdoor_door, :switchdoor_switch],
+        missing = [],
     ],
     [
         file = "levels/incoming/free-fall-cbarratt.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -2030,7 +1993,7 @@
             :switchdoor_switch,
         ],
         actions = [:basher, :bomber, :floater],
-        missing = [:switchdoor_door, :switchdoor_switch],
+        missing = [],
     ],
     [
         file = "levels/incoming/freefall-cbarratt.pingus.atm",
@@ -2073,7 +2036,7 @@
     ],
     [
         file = "levels/incoming/gletcher1-darune.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -2085,11 +2048,11 @@
             :surface_background,
         ],
         actions = [:basher, :blocker, :bridger, :climber, :digger, :jumper],
-        missing = [:snow_generator],
+        missing = [],
     ],
     [
         file = "levels/incoming/gletcher2-darune.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -2110,7 +2073,7 @@
             :jumper,
             :miner,
         ],
-        missing = [:snow_generator],
+        missing = [],
     ],
     [
         file = "levels/incoming/green-lina.pingus.atm",
@@ -2129,7 +2092,7 @@
     ],
     [
         file = "levels/incoming/ice3-cbarratt.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -2143,7 +2106,7 @@
             :surface_background,
         ],
         actions = [:basher, :blocker, :bomber, :bridger, :digger, :floater],
-        missing = [:fake_exit, :snow_generator],
+        missing = [],
     ],
     [
         file = "levels/incoming/intohell1-magicblue.pingus.atm",
@@ -2183,7 +2146,7 @@
     ],
     [
         file = "levels/incoming/les3-jcasek.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -2195,7 +2158,7 @@
             :surface_background,
         ],
         actions = [:basher, :blocker, :bomber, :bridger, :floater, :jumper, :miner],
-        missing = [:rain_generator],
+        missing = [],
     ],
     [
         file = "levels/incoming/les4-jcasek.pingus.atm",
@@ -2268,7 +2231,7 @@
     ],
     [
         file = "levels/incoming/sky2-afeef.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :exit,
             :groundpiece,
@@ -2288,11 +2251,11 @@
             :jumper,
             :miner,
         ],
-        missing = [:starfield_background],
+        missing = [],
     ],
     [
         file = "levels/incoming/snow-cbarratt.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -2304,7 +2267,7 @@
             :spike,
         ],
         actions = [:basher, :bomber, :bridger, :climber, :digger, :miner],
-        missing = [:snow_generator, :solidcolor_background],
+        missing = [],
     ],
     [
         file = "levels/incoming/stone1-darune.pingus.atm",
@@ -2339,7 +2302,7 @@
     ],
     [
         file = "levels/incoming/tester.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -2351,7 +2314,7 @@
             :surface_background,
         ],
         actions = [:basher, :blocker, :bomber, :bridger, :climber, :digger, :jumper],
-        missing = [:snow_generator],
+        missing = [],
     ],
     [
         file = "levels/jungle/cave-jungle1-mw.pingus.atm",
@@ -2544,7 +2507,7 @@
     ],
     [
         file = "levels/mysteryisland/hall-of-illusion-lac.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -2558,7 +2521,7 @@
             :teleporter_target,
         ],
         actions = [:basher, :blocker, :bomber, :bridger],
-        missing = [:teleporter, :teleporter_target],
+        missing = [],
     ],
     [
         file = "levels/mysteryisland/lavapit3.pingus.atm",
@@ -2597,7 +2560,7 @@
     ],
     [
         file = "levels/mysteryisland/rainy1-lac.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -2619,18 +2582,18 @@
             :miner,
             :slider,
         ],
-        missing = [:rain_generator],
+        missing = [],
     ],
     [
         file = "levels/mysteryisland/revenge1-lac.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [:entrance, :groundpiece, :hammer, :hotspot, :surface_background],
         actions = [:blocker, :bomber, :bridger, :climber],
-        missing = [:hammer],
+        missing = [],
     ],
     [
         file = "levels/mysteryisland/revenge2-lac.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -2640,11 +2603,11 @@
             :surface_background,
         ],
         actions = [:blocker, :bomber, :bridger, :climber],
-        missing = [:hammer],
+        missing = [],
     ],
     [
         file = "levels/mysteryisland/snow2-lac.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -2655,7 +2618,7 @@
             :surface_background,
         ],
         actions = [:basher, :blocker, :bridger],
-        missing = [:snow_generator],
+        missing = [],
     ],
     [
         file = "levels/mysteryisland/theend-lac.pingus.atm",
@@ -2815,7 +2778,7 @@
     ],
     [
         file = "levels/playable/egypt1-judit.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -2826,11 +2789,11 @@
             :teleporter_target,
         ],
         actions = [:bomber, :bridger, :climber],
-        missing = [:teleporter, :teleporter_target],
+        missing = [],
     ],
     [
         file = "levels/playable/future3-jgoebbert.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -2842,7 +2805,7 @@
             :teleporter_target,
         ],
         actions = [:blocker, :bridger, :climber, :floater],
-        missing = [:teleporter, :teleporter_target],
+        missing = [],
     ],
     [
         file = "levels/playable/novelty-jings.pingus.atm",
@@ -2871,7 +2834,7 @@
     ],
     [
         file = "levels/playable/pingustemple2-pacho.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -2883,7 +2846,7 @@
             :teleporter_target,
         ],
         actions = [:basher, :blocker, :bridger, :digger, :miner],
-        missing = [:teleporter, :teleporter_target],
+        missing = [],
     ],
     [
         file = "levels/playable/pyramid1-yingwan.pingus.atm",
@@ -2953,7 +2916,7 @@
     ],
     [
         file = "levels/playable/sno1-marcotte.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -2963,7 +2926,7 @@
             :surface_background,
         ],
         actions = [:bridger, :miner, :slider],
-        missing = [:snow_generator],
+        missing = [],
     ],
     [
         file = "levels/playable/sortie1.pingus.atm",
@@ -3030,7 +2993,7 @@
     ],
     [
         file = "levels/space-adventure/mountain-1-richard.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -3043,11 +3006,11 @@
             :switchdoor_switch,
         ],
         actions = [:basher, :blocker, :digger],
-        missing = [:snow_generator, :switchdoor_door, :switchdoor_switch],
+        missing = [],
     ],
     [
         file = "levels/space-adventure/mountain-2-richard.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -3058,11 +3021,11 @@
             :surface_background,
         ],
         actions = [:basher, :blocker, :climber, :jumper],
-        missing = [:snow_generator],
+        missing = [],
     ],
     [
         file = "levels/space-adventure/mountain-3-richard.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -3073,11 +3036,11 @@
             :surface_background,
         ],
         actions = [:basher, :blocker, :bridger, :climber, :jumper, :miner, :slider],
-        missing = [:hammer],
+        missing = [],
     ],
     [
         file = "levels/space-adventure/mountain-4-richard.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -3091,17 +3054,11 @@
             :teleporter_target,
         ],
         actions = [:basher, :bridger, :floater, :jumper, :miner],
-        missing = [
-            :snow_generator,
-            :switchdoor_door,
-            :switchdoor_switch,
-            :teleporter,
-            :teleporter_target,
-        ],
+        missing = [],
     ],
     [
         file = "levels/space-adventure/mountain-5-richard.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -3114,11 +3071,11 @@
             :teleporter_target,
         ],
         actions = [:blocker, :bridger, :digger, :floater, :jumper],
-        missing = [:snow_generator, :teleporter, :teleporter_target],
+        missing = [],
     ],
     [
         file = "levels/space-adventure/mountain-6-richard.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -3135,11 +3092,11 @@
             :teleporter_target,
         ],
         actions = [:basher, :blocker, :bomber, :bridger, :digger, :floater, :miner],
-        missing = [:hammer, :teleporter, :teleporter_target],
+        missing = [],
     ],
     [
         file = "levels/space-adventure/mountain-7-richard.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -3153,11 +3110,11 @@
             :switchdoor_switch,
         ],
         actions = [:basher, :blocker, :bomber, :climber, :jumper],
-        missing = [:iceblock, :snow_generator, :switchdoor_door, :switchdoor_switch],
+        missing = [],
     ],
     [
         file = "levels/space-adventure/mountain-8-richard.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -3176,11 +3133,11 @@
             :jumper,
             :miner,
         ],
-        missing = [:snow_generator],
+        missing = [],
     ],
     [
         file = "levels/space-adventure/space-1-richard.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -3191,11 +3148,11 @@
             :switchdoor_switch,
         ],
         actions = [:basher, :climber, :jumper, :miner],
-        missing = [:switchdoor_door, :switchdoor_switch],
+        missing = [],
     ],
     [
         file = "levels/space-adventure/space-2-richard.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -3208,12 +3165,7 @@
             :teleporter_target,
         ],
         actions = [:bomber, :bridger, :climber],
-        missing = [
-            :switchdoor_door,
-            :switchdoor_switch,
-            :teleporter,
-            :teleporter_target,
-        ],
+        missing = [],
     ],
     [
         file = "levels/space-adventure/space-3-richard.pingus.atm",
@@ -3224,7 +3176,7 @@
     ],
     [
         file = "levels/space-adventure/space-4-richard.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -3238,16 +3190,11 @@
             :teleporter_target,
         ],
         actions = [:basher, :blocker, :bomber, :bridger, :digger, :miner, :slider],
-        missing = [
-            :switchdoor_door,
-            :switchdoor_switch,
-            :teleporter,
-            :teleporter_target,
-        ],
+        missing = [],
     ],
     [
         file = "levels/test/actions.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [:entrance, :groundpiece, :solidcolor_background],
         actions = [
             :basher,
@@ -3261,7 +3208,7 @@
             :miner,
             :slider,
         ],
-        missing = [:solidcolor_background],
+        missing = [],
     ],
     [
         file = "levels/test/background-test.pingus.atm",
@@ -3295,7 +3242,7 @@
     ],
     [
         file = "levels/test/bg-test.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :conveyorbelt,
             :entrance,
@@ -3315,7 +3262,7 @@
             :jumper,
             :miner,
         ],
-        missing = [:conveyorbelt, :switchdoor_door, :switchdoor_switch],
+        missing = [],
     ],
     [
         file = "levels/test/blitter.pingus.atm",
@@ -3337,7 +3284,7 @@
     ],
     [
         file = "levels/test/blocker.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [:entrance, :groundpiece, :solidcolor_background],
         actions = [
             :basher,
@@ -3351,7 +3298,7 @@
             :miner,
             :slider,
         ],
-        missing = [:solidcolor_background],
+        missing = [],
     ],
     [
         file = "levels/test/bridger.pingus.atm",
@@ -3372,7 +3319,7 @@
     ],
     [
         file = "levels/test/chink.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [:entrance, :groundpiece, :solidcolor_background],
         actions = [
             :basher,
@@ -3386,11 +3333,11 @@
             :miner,
             :slider,
         ],
-        missing = [:solidcolor_background],
+        missing = [],
     ],
     [
         file = "levels/test/climber.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [:entrance, :groundpiece, :liquid, :solidcolor_background],
         actions = [
             :basher,
@@ -3403,11 +3350,11 @@
             :jumper,
             :miner,
         ],
-        missing = [:solidcolor_background],
+        missing = [],
     ],
     [
         file = "levels/test/conveyorbelt.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [:conveyorbelt, :entrance, :surface_background],
         actions = [
             :basher,
@@ -3420,7 +3367,7 @@
             :jumper,
             :miner,
         ],
-        missing = [:conveyorbelt],
+        missing = [],
     ],
     [
         file = "levels/test/exit.pingus.atm",
@@ -3459,7 +3406,7 @@
     ],
     [
         file = "levels/test/faller.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [:entrance, :groundpiece, :solidcolor_background],
         actions = [
             :basher,
@@ -3472,11 +3419,11 @@
             :jumper,
             :miner,
         ],
-        missing = [:solidcolor_background],
+        missing = [],
     ],
     [
         file = "levels/test/highfall.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [:entrance, :groundpiece, :solidcolor_background],
         actions = [
             :basher,
@@ -3490,7 +3437,7 @@
             :miner,
             :slider,
         ],
-        missing = [:solidcolor_background],
+        missing = [],
     ],
     [
         file = "levels/test/jumper.pingus.atm",
@@ -3511,10 +3458,10 @@
     ],
     [
         file = "levels/test/jumper2.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [:entrance, :groundpiece, :solidcolor_background],
         actions = [:jumper],
-        missing = [:solidcolor_background],
+        missing = [],
     ],
     [
         file = "levels/test/jumperbounce.pingus.atm",
@@ -3560,10 +3507,10 @@
     ],
     [
         file = "levels/test/rotation.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [:groundpiece, :solidcolor_background],
         actions = [],
-        missing = [:solidcolor_background],
+        missing = [],
     ],
     [
         file = "levels/test/smallmap.pingus.atm",
@@ -3639,7 +3586,7 @@
     ],
     [
         file = "levels/test/test6.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :fake_exit,
@@ -3662,11 +3609,11 @@
             :jumper,
             :miner,
         ],
-        missing = [:fake_exit, :hammer],
+        missing = [],
     ],
     [
         file = "levels/test/test8.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :conveyorbelt,
             :entrance,
@@ -3687,13 +3634,7 @@
             :jumper,
             :miner,
         ],
-        missing = [
-            :conveyorbelt,
-            :iceblock,
-            :solidcolor_background,
-            :switchdoor_door,
-            :switchdoor_switch,
-        ],
+        missing = [],
     ],
     [
         file = "levels/test/walker.pingus.atm",
@@ -3904,7 +3845,7 @@
     ],
     [
         file = "levels/tutorial/snow9-grumbel.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -3915,7 +3856,7 @@
             :surface_background,
         ],
         actions = [:basher, :digger],
-        missing = [:snow_generator],
+        missing = [],
     ],
     [
         file = "levels/tutorial/solid-tutorial-grumbel.pingus.atm",
@@ -3964,7 +3905,7 @@
     ],
     [
         file = "levels/wip/belt1-grumbel.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [:conveyorbelt, :entrance, :groundpiece],
         actions = [
             :basher,
@@ -3977,7 +3918,7 @@
             :jumper,
             :miner,
         ],
-        missing = [:conveyorbelt],
+        missing = [],
     ],
     [
         file = "levels/wip/block.pingus.atm",
@@ -4034,7 +3975,7 @@
     ],
     [
         file = "levels/wip/cave-cave1-mw.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [:entrance, :exit, :fake_exit, :groundpiece, :surface_background],
         actions = [
             :basher,
@@ -4047,7 +3988,7 @@
             :jumper,
             :miner,
         ],
-        missing = [:fake_exit],
+        missing = [],
     ],
     [
         file = "levels/wip/cave-cave2-mw.pingus.atm",
@@ -4114,7 +4055,7 @@
     ],
     [
         file = "levels/wip/cave-tubes1-mw.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -4124,11 +4065,11 @@
             :surface_background,
         ],
         actions = [:bomber, :bridger, :jumper],
-        missing = [:fake_exit],
+        missing = [],
     ],
     [
         file = "levels/wip/conv.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [:conveyorbelt],
         actions = [
             :basher,
@@ -4141,7 +4082,7 @@
             :jumper,
             :miner,
         ],
-        missing = [:conveyorbelt],
+        missing = [],
     ],
     [
         file = "levels/wip/desert-crawl-ralph.pingus.atm",
@@ -4355,7 +4296,7 @@
     ],
     [
         file = "levels/wip/hellmouth23-grumbel.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [:entrance, :exit, :fake_exit, :groundpiece, :surface_background],
         actions = [
             :basher,
@@ -4369,7 +4310,7 @@
             :miner,
             :slider,
         ],
-        missing = [:fake_exit],
+        missing = [],
     ],
     [
         file = "levels/wip/hotmush-gordon.pingus.atm",
@@ -4388,7 +4329,7 @@
     ],
     [
         file = "levels/wip/iceblock-grumbel1.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [:entrance, :groundpiece, :iceblock, :liquid, :surface_background],
         actions = [
             :basher,
@@ -4401,7 +4342,7 @@
             :jumper,
             :miner,
         ],
-        missing = [:iceblock],
+        missing = [],
     ],
     [
         file = "levels/wip/industrial1-grumbel.pingus.atm",
@@ -4544,7 +4485,7 @@
     ],
     [
         file = "levels/wip/level2.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -4563,7 +4504,7 @@
             :floater,
             :miner,
         ],
-        missing = [:fake_exit],
+        missing = [],
     ],
     [
         file = "levels/wip/level3.pingus.atm",
@@ -4622,7 +4563,7 @@
     ],
     [
         file = "levels/wip/level8.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -4641,7 +4582,7 @@
             :floater,
             :miner,
         ],
-        missing = [:hammer],
+        missing = [],
     ],
     [
         file = "levels/wip/mud1-grumbel.pingus.atm",
@@ -4859,7 +4800,7 @@
     ],
     [
         file = "levels/wip/sept-snow1-mw.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [:entrance, :exit, :fake_exit, :groundpiece, :surface_background],
         actions = [
             :basher,
@@ -4871,7 +4812,7 @@
             :floater,
             :miner,
         ],
-        missing = [:fake_exit],
+        missing = [],
     ],
     [
         file = "levels/wip/sept-space1-mw.pingus.atm",
@@ -5078,7 +5019,7 @@
     ],
     [
         file = "levels/wip/space3.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -5098,11 +5039,11 @@
             :jumper,
             :miner,
         ],
-        missing = [:solidcolor_background, :starfield_background],
+        missing = [],
     ],
     [
         file = "levels/wip/space4-grumbel.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -5123,11 +5064,11 @@
             :jumper,
             :miner,
         ],
-        missing = [:starfield_background],
+        missing = [],
     ],
     [
         file = "levels/wip/stone-brinkmann.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -5137,7 +5078,7 @@
             :surface_background,
         ],
         actions = [:basher, :blocker, :bridger, :miner],
-        missing = [:hammer],
+        missing = [],
     ],
     [
         file = "levels/wip/stone.pingus.atm",
@@ -5174,7 +5115,7 @@
     ],
     [
         file = "levels/wip/stone11-grumbel.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -5185,7 +5126,7 @@
             :switchdoor_switch,
         ],
         actions = [:bomber, :bridger, :climber, :slider],
-        missing = [:switchdoor_door, :switchdoor_switch],
+        missing = [],
     ],
     [
         file = "levels/wip/stone12-grumbel.pingus.atm",
@@ -5224,7 +5165,7 @@
     ],
     [
         file = "levels/wip/stone3-grumbel.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :conveyorbelt,
             :entrance,
@@ -5244,7 +5185,7 @@
             :jumper,
             :miner,
         ],
-        missing = [:conveyorbelt],
+        missing = [],
     ],
     [
         file = "levels/wip/stone4-grumbel.pingus.atm",
@@ -5306,7 +5247,7 @@
     ],
     [
         file = "levels/wip/test-luki.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -5326,7 +5267,7 @@
             :jumper,
             :miner,
         ],
-        missing = [:fake_exit],
+        missing = [],
     ],
     [
         file = "levels/wip/volcano3-grumbel.pingus.atm",
@@ -5355,7 +5296,7 @@
     ],
     [
         file = "levels/wip/volcano4-grumbel.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -5377,7 +5318,7 @@
             :miner,
             :slider,
         ],
-        missing = [:switchdoor_door, :switchdoor_switch],
+        missing = [],
     ],
     [
         file = "levels/xmas2011/xmas01-grumbel.pingus.atm",
@@ -5437,7 +5378,7 @@
     ],
     [
         file = "levels/xmas2011/xmas05-grumbel.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -5448,7 +5389,7 @@
             :surface_background,
         ],
         actions = [:basher, :blocker, :bomber, :bridger, :climber, :digger, :jumper],
-        missing = [:snow_generator],
+        missing = [],
     ],
     [
         file = "levels/xmas2011/xmas06-grumbel.pingus.atm",
@@ -5536,7 +5477,7 @@
     ],
     [
         file = "levels/xskat/new/alle.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -5546,11 +5487,11 @@
             :solidcolor_background,
         ],
         actions = [:basher, :bridger, :digger, :miner],
-        missing = [:solidcolor_background],
+        missing = [],
     ],
     [
         file = "levels/xskat/new/avaritia-cbrucher.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -5560,11 +5501,11 @@
             :solidcolor_background,
         ],
         actions = [:basher, :blocker, :bomber, :bridger, :digger, :floater],
-        missing = [:solidcolor_background],
+        missing = [],
     ],
     [
         file = "levels/xskat/new/blue1-marcotte.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -5574,7 +5515,7 @@
             :surface_background,
         ],
         actions = [:bridger, :miner],
-        missing = [:rain_generator],
+        missing = [],
     ],
     [
         file = "levels/xskat/new/blue2-marcotte.pingus.atm",
@@ -5606,7 +5547,7 @@
     ],
     [
         file = "levels/xskat/new/columns-luca.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -5616,7 +5557,7 @@
             :surface_background,
         ],
         actions = [:basher, :blocker, :bomber, :bridger, :floater],
-        missing = [:rain_generator],
+        missing = [],
     ],
     [
         file = "levels/xskat/new/dangerseasons-chekov.pingus.atm",
@@ -5634,14 +5575,14 @@
     ],
     [
         file = "levels/xskat/new/dig1-marcotte.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [:entrance, :exit, :groundpiece, :solidcolor_background],
         actions = [:blocker, :bomber, :jumper, :slider],
-        missing = [:solidcolor_background],
+        missing = [],
     ],
     [
         file = "levels/xskat/new/dschungel.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -5660,7 +5601,7 @@
             :floater,
             :jumper,
         ],
-        missing = [:solidcolor_background, :switchdoor_door, :switchdoor_switch],
+        missing = [],
     ],
     [
         file = "levels/xskat/new/egypt1-moredhel.pingus.atm",
@@ -5703,7 +5644,7 @@
     ],
     [
         file = "levels/xskat/new/gate1-janne.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -5714,7 +5655,7 @@
             :switchdoor_switch,
         ],
         actions = [:basher, :blocker, :bomber, :digger, :jumper],
-        missing = [:switchdoor_door, :switchdoor_switch],
+        missing = [],
     ],
     [
         file = "levels/xskat/new/hellmouth-11-rz.pingus.atm",
@@ -5755,7 +5696,7 @@
     ],
     [
         file = "levels/xskat/new/job_switching.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -5765,11 +5706,11 @@
             :surface_background,
         ],
         actions = [:blocker, :bomber, :bridger, :climber, :floater, :jumper, :miner],
-        missing = [:snow_generator],
+        missing = [],
     ],
     [
         file = "levels/xskat/new/mauern.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :conveyorbelt,
             :entrance,
@@ -5788,11 +5729,11 @@
             :floater,
             :miner,
         ],
-        missing = [:conveyorbelt, :solidcolor_background],
+        missing = [],
     ],
     [
         file = "levels/xskat/new/panic-cbrucher.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -5803,7 +5744,7 @@
             :solidcolor_background,
         ],
         actions = [:blocker, :bomber, :jumper, :slider],
-        missing = [:iceblock, :snow_generator, :solidcolor_background],
+        missing = [],
     ],
     [
         file = "levels/xskat/new/paratrooper-janne.pingus.atm",
@@ -5821,7 +5762,7 @@
     ],
     [
         file = "levels/xskat/new/pingusworld1-pacho.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -5836,11 +5777,11 @@
             :surface_background,
         ],
         actions = [:basher, :blocker, :bomber, :bridger, :digger, :floater, :miner],
-        missing = [:snow_generator],
+        missing = [],
     ],
     [
         file = "levels/xskat/new/pingusworld2-pacho.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -5852,11 +5793,11 @@
             :surface_background,
         ],
         actions = [:basher, :blocker, :bomber, :bridger, :climber, :digger, :jumper],
-        missing = [:rain_generator],
+        missing = [],
     ],
     [
         file = "levels/xskat/new/pingusworld3-pacho.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -5868,7 +5809,7 @@
             :surface_background,
         ],
         actions = [:basher, :blocker, :bomber, :bridger],
-        missing = [:rain_generator, :snow_generator],
+        missing = [],
     ],
     [
         file = "levels/xskat/new/sand1-marcotte.pingus.atm",
@@ -5879,14 +5820,14 @@
     ],
     [
         file = "levels/xskat/new/sand2-marcotte.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [:entrance, :exit, :groundpiece, :solidcolor_background],
         actions = [:blocker, :bridger, :digger],
-        missing = [:solidcolor_background],
+        missing = [],
     ],
     [
         file = "levels/xskat/new/snow1-marcotte.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -5896,14 +5837,14 @@
             :surface_background,
         ],
         actions = [:bridger, :miner, :slider],
-        missing = [:snow_generator],
+        missing = [],
     ],
     [
         file = "levels/xskat/new/stairway1-valar.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [:entrance, :exit, :groundpiece, :iceblock, :solidcolor_background],
         actions = [:blocker, :bomber, :bridger, :climber, :floater, :jumper],
-        missing = [:iceblock, :solidcolor_background],
+        missing = [],
     ],
     [
         file = "levels/xskat/new/stone-1-rz.pingus.atm",
@@ -5942,7 +5883,7 @@
     ],
     [
         file = "levels/xskat/new/superunknown1-valar.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -5954,11 +5895,11 @@
             :solidcolor_background,
         ],
         actions = [:basher, :blocker, :bomber, :bridger, :climber, :digger, :floater],
-        missing = [:iceblock, :snow_generator, :solidcolor_background],
+        missing = [],
     ],
     [
         file = "levels/xskat/new/teamwork-cbrucher.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -5969,7 +5910,7 @@
             :solidcolor_background,
         ],
         actions = [:basher, :bridger, :climber, :digger, :jumper, :miner],
-        missing = [:iceblock, :solidcolor_background],
+        missing = [],
     ],
     [
         file = "levels/xskat/new/theway-mips.pingus.atm",
@@ -5980,7 +5921,7 @@
     ],
     [
         file = "levels/xskat/new/winter1-chei.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :conveyorbelt,
             :entrance,
@@ -5992,11 +5933,11 @@
             :surface_background,
         ],
         actions = [:blocker, :bomber, :bridger, :digger, :jumper],
-        missing = [:conveyorbelt, :hammer, :snow_generator],
+        missing = [],
     ],
     [
         file = "levels/xskat/new/winter2-chei.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -6006,11 +5947,11 @@
             :surface_background,
         ],
         actions = [:floater, :jumper, :slider],
-        missing = [:snow_generator],
+        missing = [],
     ],
     [
         file = "levels/xskat/ok/blockers-timpany-tutorial.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -6022,7 +5963,7 @@
             :surface_background,
         ],
         actions = [:basher, :blocker, :bridger],
-        missing = [:rain_generator, :snow_generator],
+        missing = [],
     ],
     [
         file = "levels/xskat/ok/bomber-tutorial-grumbel.pingus.atm",
@@ -6106,7 +6047,7 @@
     ],
     [
         file = "levels/xskat/ok/doors-grumbel.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -6128,11 +6069,11 @@
             :jumper,
             :miner,
         ],
-        missing = [:switchdoor_door, :switchdoor_switch],
+        missing = [],
     ],
     [
         file = "levels/xskat/ok/doors2-grumbel.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -6153,7 +6094,7 @@
             :jumper,
             :miner,
         ],
-        missing = [:switchdoor_door, :switchdoor_switch],
+        missing = [],
     ],
     [
         file = "levels/xskat/ok/future1-jgoebbert.pingus.atm",
@@ -6164,7 +6105,7 @@
     ],
     [
         file = "levels/xskat/ok/future2-jgoebbert.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -6174,7 +6115,7 @@
             :teleporter_target,
         ],
         actions = [:basher, :blocker, :bridger, :digger, :miner],
-        missing = [:teleporter, :teleporter_target],
+        missing = [],
     ],
     [
         file = "levels/xskat/ok/industrial-plumber-timpany.pingus.atm",
@@ -6185,7 +6126,7 @@
     ],
     [
         file = "levels/xskat/ok/industrial3-grumbel.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -6197,7 +6138,7 @@
             :switchdoor_switch,
         ],
         actions = [:bridger, :climber],
-        missing = [:switchdoor_door, :switchdoor_switch],
+        missing = [],
     ],
     [
         file = "levels/xskat/ok/industrial4-grumbel.pingus.atm",
@@ -6229,7 +6170,7 @@
     ],
     [
         file = "levels/xskat/ok/level9.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -6242,7 +6183,7 @@
             :teleporter_target,
         ],
         actions = [:basher, :blocker, :bomber, :bridger],
-        missing = [:teleporter, :teleporter_target],
+        missing = [],
     ],
     [
         file = "levels/xskat/ok/miner-tutorial-grumbel.pingus.atm",
@@ -6341,10 +6282,10 @@
     ],
     [
         file = "levels/xskat/ok/stone-castle-timpany.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [:entrance, :exit, :groundpiece, :hammer, :surface_background],
         actions = [:basher, :bomber, :bridger, :climber, :digger, :miner],
-        missing = [:hammer],
+        missing = [],
     ],
     [
         file = "levels/xskat/ok/stone5-grumbel.pingus.atm",
@@ -6393,7 +6334,7 @@
     ],
     [
         file = "levels/xskat/ok/stone9-grumbel.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -6404,7 +6345,7 @@
             :switchdoor_switch,
         ],
         actions = [:bomber, :bridger, :climber, :slider],
-        missing = [:switchdoor_door, :switchdoor_switch],
+        missing = [],
     ],
     [
         file = "levels/xskat/ok/sweets-phil2.pingus.atm",
@@ -6415,7 +6356,7 @@
     ],
     [
         file = "levels/xskat/ok/teleporter1-grumbel.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -6426,11 +6367,11 @@
             :teleporter_target,
         ],
         actions = [:blocker, :bomber, :bridger, :digger],
-        missing = [:teleporter, :teleporter_target],
+        missing = [],
     ],
     [
         file = "levels/xskat/ok/teleporter2-grumbel.pingus.atm",
-        ok = false,
+        ok = true,
         objects = [
             :entrance,
             :exit,
@@ -6444,7 +6385,7 @@
             :teleporter_target,
         ],
         actions = [:basher, :blocker, :bomber, :bridger, :digger, :floater],
-        missing = [:teleporter, :teleporter_target],
+        missing = [],
     ],
     [
         file = "levels/xskat/ok/xmas-blockblow-timpany.pingus.atm",

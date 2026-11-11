@@ -132,6 +132,7 @@ task Game (path) {
     pin pingus = tasks()
     pin front = tasks()
     pin traps = tasks()
+    pin weather = tasks()
 
     ;; the actions in the level, in the order of the buttons
     val acts = do {
@@ -145,7 +146,7 @@ task Game (path) {
     }
 
     pin g = [
-        pingus = pingus, particles = parts, smoke = smoke,
+        pingus = pingus, particles = parts, smoke = smoke, weather = weather,
         w = head.levelsize@0, h = head.levelsize@1,
         counter = [
             released = 0, alive = 0, exited = 0, killed = 0,
@@ -158,7 +159,13 @@ task Game (path) {
         marks = [],
     ]
 
-    ;; the objects of the level
+    ;; the objects of the level, and the targets of teleporters by id
+    val ids = []
+    loop _, o in objs {
+        if o.id {
+            set ids@(o.id) = o
+        }
+    }
     loop _, o in objs {
         match o {
             :surface_background => spawn @bgs SurfaceBackground(g, o)
@@ -181,6 +188,21 @@ task Game (path) {
             :smasher     => spawn @traps Smasher(g, o)
             :spike       => spawn @traps Spike(g, o)
             :laser_exit  => spawn @traps LaserExit(g, o)
+            :solidcolor_background => spawn @bgs SolidColorBackground(g, o)
+            :starfield_background  => spawn @bgs StarfieldBackground(g, o)
+            :snow_generator    => spawn @traps SnowGenerator(g, o)
+            :rain_generator    => spawn @traps RainGenerator(g, o)
+            :fake_exit         => do {
+                vector.insert(g.marks, :exit [x=o.position@0, y=o.position@1])
+                spawn @back FakeExit(g, o)
+            }
+            :hammer            => spawn @traps Hammer(g, o)
+            :teleporter        => spawn @back Teleporter(g, o, ids@(o.target_id))
+            :teleporter_target => spawn @back TeleporterTarget(g, o)
+            :iceblock          => spawn @back IceBlock(g, o)
+            :conveyorbelt      => spawn @back ConveyorBelt(g, o)
+            :switchdoor_switch => spawn @back SwitchDoorSwitch(g, o)
+            :switchdoor_door   => spawn @back SwitchDoor(g, o)
             else => nil
         }
     }

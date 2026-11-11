@@ -72,6 +72,11 @@ ENUMS = { 'modifier', 'type', 'direction', 'origin', 'action' }
 OBJECTS = {
     'entrance', 'exit', 'groundpiece', 'guillotine', 'hotspot',
     'laser_exit', 'liquid', 'smasher', 'spike', 'surface_background',
+    # after the official game, not in the Céu rewrite
+    'solidcolor_background', 'starfield_background', 'snow_generator',
+    'rain_generator', 'fake_exit', 'hammer', 'teleporter',
+    'teleporter_target', 'iceblock', 'conveyorbelt', 'switchdoor_switch',
+    'switchdoor_door',
 }
 ACTIONS = {
     'basher', 'blocker', 'bomber', 'bridger', 'climber', 'digger',

@@ -507,6 +507,30 @@ static void pg_map_put (int i, int x0, int y0, int type) {
     }
 }
 
+// Sets the type of the opaque pixels of an image in the collision map
+// only, whatever is there (to close or open a door).
+static void pg_map_col (int i, int x0, int y0, int type) {
+    PgMap* m = &PG_MAP;
+    PgImg* img = pg_img(i);
+    if (img==NULL || m->col==NULL) {
+        return;
+    }
+    m->serial++;
+    uint8_t* src = img->sfc->pixels;
+    int pitch = img->sfc->pitch;
+    for (int y=0; y<img->h; y++) {
+        int yy = y + y0;
+        if (yy<0 || yy>=m->h) continue;
+        for (int x=0; x<img->w; x++) {
+            int xx = x + x0;
+            if (xx<0 || xx>=m->w) continue;
+            if (src[y*pitch + 4*x + 3] == 255) {
+                m->col[yy*m->w + xx] = type;
+            }
+        }
+    }
+}
+
 // Removes from the ground map the opaque pixels of `gi`, and from the
 // collision map those of `ci`, except where the ground is solid.
 static void pg_map_remove (int gi, int ci, int x0, int y0) {

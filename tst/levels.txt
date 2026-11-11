@@ -21,3 +21,10 @@ spike       700   crystal/crystal5                   -                 -
 guillotine  1000  incoming/les2-jcasek               -                 -
 smasher     800   hellmouth/hellmouth04-grumbel      -                 -
 laserkill   1000  crowdus/crowdus001sdc              -                 -
+snow        800   tutorial/snow9-grumbel             -                 -
+rain        600   incoming/les3-jcasek               -                 -
+fakeexit    800   crowdus/crowdus007Asdc             -                 -
+door        1500  crowdus/crowdus014sdc              -                 -
+belt        1500  crowdus/crowdus015sdc              -                 -
+teleporter  1500  crowdus/crowdus005sdc              -                 -
+iceblock    1500  crowdus/crowdus012sdc              -                 -
