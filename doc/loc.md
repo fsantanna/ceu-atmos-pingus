@@ -40,3 +40,66 @@ each kind of file.
   C++ reader in Céu, tables of `X.load` in Atmos), the declarations of
   types (`data`, `var&`, aliases), and the RRect layout system of Céu,
   which Atmos does not need.
+
+## Only what was ported, against the C++ of the official game
+
+`tools/loc.py OFFICIAL CEU` counts, per unit, the files of the official
+game (`Pingus/pingus@ffe3851`, `.cpp` and `.hpp`), of the Céu rewrite,
+and of the port that do the same job. Lines as above, with the lines of
+the preprocessor left out too; tokens are identifiers, numbers,
+strings, tags, and operators, with the comments removed. Left out of
+all three: the editor, the recording of demos, the add-on, font and
+sprite screens, the configuration files.
+
+| Unit | C++ lines | Céu lines | Atmos lines | C++ tokens | Céu tokens | Atmos tokens |
+|------|-----------|-----------|-------------|------------|------------|--------------|
+| action basher | 133 | 94 | 62 | 653 | 649 | 391 |
+| action blocker | 80 | 40 | 16 | 453 | 345 | 136 |
+| action bomber | 64 | 36 | 34 | 413 | 317 | 255 |
+| action bridger | 192 | 134 | 47 | 929 | 954 | 292 |
+| action climber | 83 | 33 | 22 | 455 | 313 | 127 |
+| action digger | 93 | 52 | 39 | 453 | 374 | 236 |
+| action drown | 37 | 11 | 4 | 172 | 104 | 24 |
+| action exiter | 40 | 12 | 5 | 181 | 116 | 26 |
+| action faller | 114 | 69 | 40 | 714 | 557 | 333 |
+| action floater | 58 | 17 | 12 | 281 | 143 | 67 |
+| action jumper | 41 | 28 | 11 | 230 | 237 | 84 |
+| action laser_kill | 37 | 12 | 4 | 176 | 67 | 27 |
+| action miner | 87 | 64 | 34 | 516 | 576 | 254 |
+| action slider | 58 | 36 | 20 | 350 | 296 | 147 |
+| action splashed | 38 | 13 | 6 | 184 | 105 | 35 |
+| action waiter | 40 | 15 | 5 | 180 | 99 | 29 |
+| action walker | 125 | 88 | 63 | 733 | 733 | 414 |
+| action angel | 40 | --- | 11 | 230 | --- | 104 |
+| action boarder | 71 | --- | 28 | 470 | --- | 237 |
+| action smashed | 37 | --- | 4 | 177 | --- | 27 |
+| action superman | 40 | --- | 8 | 218 | --- | 81 |
+| pingu core | 1773 | 663 | 221 | 10047 | 5257 | 1529 |
+| world objects, weather | 1767 | 744 | 540 | 13600 | 5579 | 4436 |
+| game: world, panel, playfield, level, ground | 2965 | 663 | 640 | 17883 | 4914 | 4671 |
+| screens: menu, start, result, story, credits, levels, worldmap | 4781 | 2409 | 830 | 27672 | 17013 | 6200 |
+| **total, game logic** | **12794** | **5233** | **2706** | **77370** | **38748** | **20162** |
+| options (reduced in the port) | 652 | 598 | 63 | 4811 | 4615 | 481 |
+| engine (C++ engine / Céu engine / C + Atmos) | 7838 | 532 | 1189 | 47054 | 3365 | 10090 |
+
+17 actions in common: C++ 1320 / Céu 754 / Atmos 424 lines, 7073 / 5985 / 2877 tokens
+
+- On the game logic, the port has 0.21x the lines and 0.26x the tokens
+  of the C++, and 0.52x the lines and tokens of Céu (the Céu column is
+  smaller than the C++ also because the Céu rewrite called the C++ to
+  read levels, and had 17 actions and 10 objects).
+- Tokens are a fairer measure than lines: the C++ splits a statement
+  over more lines. By tokens, an action of the port is 0.41x its C++
+  (17 actions in common) and 0.48x its Céu.
+- The unit with the largest gain is the pingu core (0.15x the tokens of
+  the C++): the action holder, the action names, the pingu holder,
+  and the virtual dispatch of `PinguAction` become one loop of `par`
+  in `Pingu`, a table of modes, and the pool `g.pingus`
+  (`doc/dispatching.md`).
+- The level reading of the port is in two parts: `tools/convert.py`
+  turns the s-expressions into Atmos data once (380 lines of Python,
+  not counted), and `X.load` reads them. The C++ counts include its
+  readers (`pingus_level`, `plf_res_mgr`, `prefab_file`).
+- The engine is not like for like: the C++ engine does more (OpenGL
+  renderer, GUI, input configuration, sound backends); the port has
+  its C over SDL2 and the Atmos wrappers.
