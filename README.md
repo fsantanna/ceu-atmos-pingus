@@ -113,7 +113,7 @@ fixed random seed, and scripted keys and mouse:
 - screenshots of the menu, the levelsets, the start screen, and a game,
   compared with `tst/shots/`;
 - the game played with the mouse only (`tst/clicks.sh`);
-- 24 scripted levels (`tst/levels.txt`), one per action and per object,
+- 25 scripted levels (`tst/levels.txt`), one per action and per object,
   whose traces of actions are compared with `tst/golden/`.
 
 ## Status
@@ -130,7 +130,8 @@ fixed random seed, and scripted keys and mouse:
       the official game ([doc/bench.md](doc/bench.md))
 - [x] P9 Later items: the 12 objects and 4 actions that Céu did not have
 - [x] The levels of the official game, and its timings: compared tick by
-      tick on its demos ([doc/fidelity.md](doc/fidelity.md))
+      tick on its demos, 142 of 154 with the same trace
+      ([doc/fidelity.md](doc/fidelity.md))
 - [x] Translations: the `.po` files of the game, chosen in the options
 - [ ] The full options screen, input configuration, controllers
 
