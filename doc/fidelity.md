@@ -31,13 +31,10 @@ does it for all 159 demos. `PINGUS_TRACE=2` with `PINGUS_TRACE_ID`
 prints one pingu each tick, in both, to find the first tick where they
 differ.
 
-| Build | Same trace | Differ | Official cannot load |
-|-------|-----------|--------|----------------------|
-| first comparison (fixes above) | 17 | 137 | 5 |
-| float mover, real object positions, orders after the tick | 98 | 56 | 5 |
-| timings of digger, miner, basher, bridger, bomber, waiter, slider | 125 | 29 | 5 |
-| forced actions, the change rules of the official game, ice, spike | 138 | 16 | 5 |
-| teleporters every tick, objects in the order of their depth | **142** | 12 | 5 |
+| Build | Same trace | Differ | No official trace |
+|-------|-----------|--------|-------------------|
+| float mover, before the old level paths were linked | 39 | 33 | 87 |
+| all the fixes below | **142** | 12 | 5 |
 
 So 142 of the 154 demos that the official game plays give the same
 trace in the port: every pingu, every change of action, at the same
