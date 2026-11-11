@@ -20,3 +20,9 @@ ninja -C official/build
 
 Then `OFFICIAL=path/to/official tools/compare.sh DEMO` replays a demo in
 both games and compares the traces.
+
+The demos of the official game name some levels by old paths:
+`tools/bench/link-levels.sh path/to/official` links them.
+
+`tools/compare-all.sh` compares all the demos; `PINGUS_TRACE=2` prints
+the first pingu at each tick, in both games, to find where they part.
