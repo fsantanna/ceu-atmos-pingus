@@ -42,7 +42,7 @@ justified in a comment, or removed.
 | Drown | sprite | dual | awaits end | awaits the sprite |
 | Exiter | sound_played | control | on start | on start |
 | Faller | faller, tumbler | dual | `await dt until tumbling` | `watching :tick until tumbling(p)` |
-| | mover | data | `Mover` signals `ok_collided` | `Mover` signals `:collided` |
+| | mover | data | `Mover` signals `ok_collided`, handled a tick later | `move(p)` in the tick, the landing decided at once (the bomber keeps a `Mover` task) |
 | Floater | sprite | data | spawn | `Sprite` |
 | Jumper | sprite | data | spawn | `Sprite` |
 | Laserkill | sprite | dual | awaits end | awaits the sprite |
