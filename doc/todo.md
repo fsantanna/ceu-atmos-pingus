@@ -14,7 +14,7 @@ cannot happen by construction), **open**, or **out** (out of scope).
 | TODO: cursor | open | the system cursor is used |
 | TODO: fast forward in the worldmap | open | |
 | TODO: border of the worldmap | open | |
-| TODO: read/write inputs (demos) | out | demos are out of the plan |
+| TODO: read/write inputs (demos) | partly | the demos of the original are read: `tools/demo.py` turns them into the orders of the test mode (`PINGUS_ORDERS`); recording is out |
 | cache of sprites, or performance is not viable | fixed | images are loaded once, in a cache of `engine/pingus.h`; sprite descriptions in `DESCS` |
 | countdown action disable from the original | gone | no countdown actions in the data |
 | walker behind all | fixed | draw order is the order of the pools in the game |
@@ -23,7 +23,7 @@ cannot happen by construction), **open**, or **out** (out of scope).
 | BUG: clicks on the pingus | fixed | the nearest pingu under the mouse, as the original (tested) |
 | BUG: background of the pingu counter fixed | fixed | it is drawn at the top center |
 | BUG: small map behind the water of snow20 | gone | the panel is spawned after all the layers of the world |
-| BUG: the fall of the pingu out of the entrance is slightly off | open | to compare with the original |
+| BUG: the fall of the pingu out of the entrance is slightly off | fixed | float mover and real object positions; the traces match the official game, pixel by pixel, in 142 demos (`doc/fidelity.md`) |
 | BUG: periodic glitch in the smallmap related to RENDER | gone | the small map is a texture rebuilt when the collision map changes |
 | BUG: small glitch in the smallmap at the start of the level | gone | same |
 | z-order front entrance snow-tutorial, front entrance behind the pingu | fixed | hotspots with z >= 100 go to the front layer, after the pingus |
@@ -32,7 +32,7 @@ cannot happen by construction), **open**, or **out** (out of scope).
 | idle laser_exit | fixed | the laser exit is still, until a pingu enters it |
 | EXIT/LASER_EXIT take only 1 at a time | fixed | each tick checks all the pingus |
 | EXITER/LASERKILL in pingu.ceu | fixed | they are actions, as the others |
-| BUG: climber center | open | to compare with the original |
+| BUG: climber center | open | the positions match the official game (`doc/fidelity.md`); the drawing offset is not compared |
 | global:world.pingus will simplify min.ceu | gone | the pingus are a pool of the game, which receive the game `g` |
 | bug of the WORLD_UPDATE needed | gone | `:tick` is an event of the game, emitted by its clock |
 | bridger offset | open | the bridger is drawn at the pingu, with no extra offset |

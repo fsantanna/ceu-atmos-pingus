@@ -49,15 +49,15 @@ justified in a comment, or removed.
 | Miner | delay_count | period | `i%4`, `i%2` | `await :tick`, `Ticks(3)` |
 | Slider | speed | data | var | var |
 | Splashed | particle_thrown | control | on start | on start |
-| Waiter | countdown | period | var, `-0.025` per update | `Ticks(81)` |
+| Waiter | countdown | period | var, `-0.025` per update | `Ticks(82)` |
 | Walker | floaterlayer | dual | `await dt until fall_action` | `await :tick until p.fall` |
 
 ## World objects
 
 | Unit | Variable (C++) | Class | Céu | Atmos |
 |------|----------------|-------|-----|-------|
-| Spike | surface | dual | awaits | `await(s)` |
-| | killing | control | --- | `par :any`, the kill at `:frame 3` |
+| Spike | surface | dual | awaits | the sprite, in `par :any` with its clock |
+| | killing | control | --- | a loop over the ticks of its clock (14 frames of 100 ms): kills at frame 3, rests at 13 |
 | Guillotine | sprite_kill_r/l, sprite_idle | dual | awaits | awaits |
 | | direction | data | --- | the result of the idle phase |
 | | killing | control | --- | sequence: idle, then kill |
@@ -69,10 +69,10 @@ justified in a comment, or removed.
 | Hammer (new) | down, count | control | (none in Céu) | sequence: down, smash, up |
 | FakeExit (new) | smashing | control | (none in Céu) | sequence: idle, then smash |
 | IceBlock (new) | thickness | data | (none in Céu) | `ice.thick`, drawn |
-| | last_contact, finished | control | (none in Céu) | a loop that awaits 50 ticks with no contact; `return` |
+| | last_contact, finished | control | (none in Céu) | a loop of `par :any`: 1000 ticks with no contact, or a contact again; `return` |
 | SwitchDoor (new) | opening, current_height | control, data | (none in Céu) | `await :door.open`; `door.h`, drawn |
 | SwitchDoorSwitch (new) | triggered | control | (none in Céu) | sequence: one `await`, then forever |
-| Teleporter (new) | clock | dual | (none in Céu) | awaits the sprite |
+| Teleporter (new) | clock | dual | (none in Céu) | `loop on :tock` checks the pingus; the sprite restarts on `:tele.go`, under `watching` |
 
 ## Particles, panel, game
 

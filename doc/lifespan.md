@@ -80,5 +80,5 @@ ends with its time, and is gone.
   lives longer than it.
 - The tasks of a pool are only referred to while iterating it
   (`loop _, t in g.pingus`), or by a local of a task that lives inside
-  the game. The spike keeps the pingu it hurts, and also awaits its end
-  (`await(t)`), so that it never acts on a pingu that is gone.
+  the game. The traps (spike, teleporter) iterate the pool at the tick
+  they act, and keep no reference to a pingu across ticks.
