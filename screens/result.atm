@@ -1,0 +1,86 @@
+;; Result: how the level went. On success, ok goes on; on failure, the
+;; player retries or gives up. Returns whether to retry.
+
+func result_message (r) {
+    if r.saved >= r.needed {
+        ifs {
+            (r.killed == 0) && (r.saved == r.total) => "Perfect! You saved everyone possible - great!"
+            r.killed == 0 => "No-one got killed, pretty good work."
+            r.saved == r.needed => "You saved exactly what you needed - you made it, but\nmaybe you can do better?"
+            r.killed >= 5 => "Not everybody was saved, but still good work!"
+            else => "What can I say, you made it - congratulations!"
+        }
+    } else {
+        ifs {
+            r.killed == r.total => "You killed everybody, not good."
+            r.saved == 0 => "No-one got saved - I know you can do better."
+            r.saved + 1 >= r.needed => "Only one more and you would have made it - try again!"
+            r.saved + 5 >= r.needed => "Only a handful more and you would have made it - try again!"
+            else => "You didn't save enough, but you saved a few.  Next\ntime you might do better."
+        }
+    }
+}
+
+task Result (r) {
+    val ok = r.saved >= r.needed
+    val msg = result_message(r)
+    val left = if r.limit < 0 => "-" => time_str(math.max(0, r.limit - r.time))
+    spawn Board()
+    music(if ok => "success_1.it" => "pingus-2.it")
+    spawn {
+        val f = FONT.chalk_normal
+        val cx, cy = W//2, H//2
+        loop on :sdl.draw {
+            text(FONT.chalk_large, r.name, cx, cy - 200, :center)
+            text(FONT.chalk_large, if ok => "Success!" => "Failure!", cx, cy - 140, :center)
+            text(f, msg, cx, cy - 70, :center)
+            text(f, "Saved: ", cx - 100, cy + 10)
+            text(f, r.saved ++ "/" ++ r.needed, cx + 100, cy + 10, :right)
+            text(f, "Died: ", cx - 100, cy + 40)
+            text(f, r.killed, cx + 100, cy + 40, :right)
+            text(f, "Time left: ", cx - 100, cy + 70)
+            text(f, left, cx + 100, cy + 70, :right)
+        }
+    }
+    if ok {
+        par :any {
+            await Ok()
+            sound "yipee"
+        } with {
+            await :sdl.key.dn until X.xin(it.name, ["P", "F", "Space", "Return", "Escape"])
+        }
+        false
+    } else {
+        spawn Label("Retry", OK_R.x + (OK_R.w//2), OK_R.y - 24)
+        spawn Label("Give Up", BACK_R.x + (BACK_R.w//2), BACK_R.y - 4)
+        par :any {
+            await Ok()
+            true
+        } with {
+            await Back()
+            false
+        } with {
+            await :sdl.key.dn until X.xin(it.name, ["P", "F", "Space", "Return"])
+            true
+        } with {
+            await Key("Escape")
+            false
+        }
+    }
+}
+
+;; Play(path): the start screen, then the game and its result, again
+;; and again while the player retries. Returns whether it was solved.
+task Play (path) {
+    val lvl = level_load(path)
+    if await Start(lvl) {
+        loop {
+            val r = await Game(path)
+            level_store(path, r)
+            val again = await Result(r)
+            until !again, r.saved >= r.needed
+        }
+    } else {
+        false
+    }
+}

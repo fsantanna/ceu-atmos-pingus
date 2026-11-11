@@ -1,0 +1,52 @@
+;; Options: a reduced screen of options, saved with the progress.
+;;
+;; Each option is a check box: its value is data of the player, which
+;; the box shows and changes.
+
+val OPTIONS_DEFAULT = [ music = true, sound = true ]
+
+func options_apply () {
+    val o = SAVE.options
+    pg.volume(if o.sound => 1.0 => 0.0, if o.music => 1.0 => 0.0)
+}
+
+set SAVE.options = OPTIONS_DEFAULT ++ (SAVE.options || [])
+options_apply()
+
+;; CheckBox(key, s, x, y): a check box for the option `key`.
+task CheckBox (key, s, x, y) {
+    val yes = res_surface("core/menu/checkbox_marked_small")
+    val no  = res_surface("core/menu/checkbox_small")
+    val w, h = pg.size(yes)
+    val r = [x=x, y=y, w=w, h=h]
+    par {
+        loop {
+            await Click(r)
+            set SAVE.options@(key) = !SAVE.options@(key)
+            options_apply()
+            save()
+        }
+    } with {
+        loop on :sdl.draw {
+            pg.draw(if SAVE.options@(key) => yes => no, x, y)
+            text(FONT.chalk_normal, s, x + w + 15, y)
+        }
+    }
+}
+
+task Options () {
+    spawn Board()
+    spawn {
+        loop on :sdl.draw {
+            text(FONT.chalk_large, "Options", BOARD.x + (BOARD.w//2), BOARD.y + 40, :center)
+        }
+    }
+    spawn CheckBox(:music, "Music", BOARD.x + 120, BOARD.y + 150)
+    spawn CheckBox(:sound, "Sound effects", BOARD.x + 120, BOARD.y + 190)
+    spawn Label("Back", BACK_R.x + (BACK_R.w//2), BACK_R.y)
+    par :any {
+        await Back()
+    } with {
+        await Key("Escape")
+    }
+}

@@ -1,12 +1,82 @@
 ;; Pingus in Atmos.
 ;;
 ;;      ./run.sh                    the menu
-;;      ./run.sh main.atm LEVEL     a level: data/levels/.../x.pingus.atm
+;;      ./run.sh main.atm FILE      a level (.pingus.atm), a worldmap
+;;                                  (.worldmap.atm), a story (.story.atm),
+;;                                  or a levelset (.levelset.atm)
+;;
+;; The main is a sequence of screens: each screen is a task, and what
+;; it returns selects the next one.
+;;
+;; The options are global: F5, or the button of the menu, pause the
+;; screens (a `toggle` block) and show the options over them.
 
 include "engine/engine.atm"
 include "game/game.atm"
+include "screens/common.atm"
+include "screens/start.atm"
+include "screens/result.atm"
+include "screens/menu.atm"
+include "screens/story.atm"
+include "screens/credits.atm"
+include "screens/levels.atm"
+include "screens/worldmap.atm"
+include "screens/options.atm"
+
+if pg.testing() {
+    math.randomseed(0)
+} else {
+    math.randomseed(os.time())
+}
+
+func ends (s, suffix) {
+    (#s >= #suffix) && (string.sub(s, #s - #suffix) == suffix)
+}
 
 val args = [...]
-val path = args@0 || "data/levels/tutorial/snow11-grumbel.pingus.atm"
-val r = await Game(path)
-X.print(r)
+val file = args@0
+
+par :any {
+    toggle on :screens {
+        ifs {
+            file == nil => {
+                loop {
+                    val opt = await Menu()
+                    match opt {
+                        :story     => await Worldmap("data/worldmaps/tutorial.worldmap.atm")
+                        :credits   => await Credits()
+                        :levelsets => await LevelsetsMenu()
+                        :exit      => break
+                    }
+                }
+            }
+            ends(file, ".worldmap.atm") => await Worldmap(file)
+            ends(file, ".story.atm")    => await Story(file)
+            ends(file, ".levelset.atm") => do {
+                val ls = data_load(file)
+                set ls.paths = []
+                loop _, l in ls.levels {
+                    vector.insert(ls.paths, "data/levels/" ++ l.filename ++ ".pingus.atm")
+                }
+                loop {
+                    val j = await Levels(ls)
+                    until j == nil
+                    await Play(ls.paths@j)
+                }
+            }
+            else => do {
+                val r = await Play(file)
+                print(if r => "solved" => "not solved")
+            }
+        }
+    }
+} with {
+    loop {
+        await <:go.options || :sdl.key.dn [name="F5"]>
+        emit :screens [false]
+        await Options()
+        emit :screens [true]
+    }
+} with {
+    await :sdl.quit
+}

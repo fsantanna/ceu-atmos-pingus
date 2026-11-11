@@ -1,0 +1,57 @@
+;; Credits: the names, scrolling up over the blackboard. Fast forward
+;; scrolls faster.
+
+task Credits () {
+    val lines = []
+    loop l in io.lines("data/credits/pingus.credits") {
+        vector.insert(lines, l)
+    }
+    spawn Board()
+    spawn Sprite("core/misc/creditpingu", [x=W//2, y=(H//2) - 20], [anchor=:center])
+    val y = [v=H - 50]
+    spawn {
+        val cx = W // 2
+        loop on :sdl.draw {
+            var yy = trunc(y.v)
+            loop _, l in lines {
+                val c = string.sub(l, 0, 0)
+                val s = string.sub(l, 1)
+                ifs {
+                    c == "-" => {
+                        if (yy > BOARD.y) && (yy < BOARD.y + BOARD.h - 40) {
+                            text(FONT.chalk_normal, s, cx, yy, :center)
+                        }
+                        set yy += 25
+                    }
+                    c == "_" => {
+                        if (yy > BOARD.y) && (yy < BOARD.y + BOARD.h - 60) {
+                            text(FONT.chalk_large, s, cx, yy, :center)
+                        }
+                        set yy += 45
+                    }
+                    else => set yy += 50
+                }
+            }
+        }
+    }
+    par :any {
+        await Ok()
+        sound "yipee"
+    } with {
+        await Key("Escape")
+    } with {
+        ;; the speed: slow, or fast while fast forward is on
+        loop {
+            watching :sdl.key.dn until X.xin(it.name, ["F", "Space"]) {
+                loop us on :clock {
+                    set y.v -= (us / 1000) * 0.035
+                }
+            }
+            watching :sdl.key.dn until X.xin(it.name, ["F", "Space"]) {
+                loop us on :clock {
+                    set y.v -= (us / 1000) * 0.45
+                }
+            }
+        }
+    }
+}

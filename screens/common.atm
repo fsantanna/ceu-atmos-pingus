@@ -1,0 +1,122 @@
+;; What the screens share: the blackboard, its buttons, and the saved
+;; progress.
+
+;; The blackboard in the middle of the screen, as a rectangle.
+val BOARD = do {
+    val w, h = res_frame_size("core/menu/blackboard")
+    [x=(W-w)//2, y=(H-h)//2, w=w, h=h]
+}
+
+;; Board(): the wood and the blackboard, forever.
+task Board () {
+    spawn Wood()
+    await Sprite("core/menu/blackboard", BOARD)
+}
+
+;; A rectangle of the size of a resource, at a corner of the board:
+;; `dx,dy` from the corner `:left_bottom` or `:right_bottom`.
+func board_at (name, corner, dx, dy) {
+    val w, h = res_frame_size(name)
+    val x = if corner == :left_bottom => BOARD.x + dx => BOARD.x + BOARD.w + dx - w
+    [x=x, y=BOARD.y + BOARD.h + dy - h, w=w, h=h]
+}
+
+;; The buttons of the board: ok at the right, and back at the left.
+val OK_R   = board_at("core/start/ok",   :right_bottom, -50, -60)
+val BACK_R = board_at("core/start/back", :left_bottom,   70, -2)
+
+task Ok () {
+    await Button(OK_R, "core/start/ok", "core/start/ok_hover", "core/start/ok_clicked")
+}
+
+task Back () {
+    await Button(BACK_R, "core/start/back", "core/start/back_hover", "core/start/back_clicked")
+}
+
+;; Label(r, s): a text with a label under `r`, forever.
+task Label (s, x, y, f) {
+    loop on :sdl.draw {
+        text(f || FONT.chalk_normal, s, x, y, :center)
+    }
+}
+
+;; LabelButton(s, x, y): a text that is a button, at the top left `x,y`.
+task LabelButton (s, x, y) {
+    val f = FONT.chalk_small
+    val r = [x=x, y=y, w=text_width(f, s), h=16]
+    par :any {
+        await Click(r)
+    } with {
+        loop {
+            await :sdl.mouse.motion until inside(r, it.x, it.y)
+            sound "tick"
+            await :sdl.mouse.motion until !inside(r, it.x, it.y)
+        }
+    } with {
+        loop on :sdl.draw {
+            text(f, s, x, y)
+        }
+    }
+}
+
+;; A key, by its name in SDL.
+task Key (name) {
+    await :sdl.key.dn until it.name == name
+}
+
+;;; PROGRESS ;;;
+
+;; The progress of the player, saved with `X.dump`: the levels solved,
+;; and the dots of the worldmaps.
+val SAVE_PATH = (os.getenv("PINGUS_HOME") || os.getenv("HOME") || "/tmp") ++ "/.pingus-atmos.atm"
+
+val SAVE = do {
+    val f = io.open(SAVE_PATH)
+    if f {
+        val s = io.read(f, :all)
+        io.close(f)
+        val ok, v = catch true {
+            X.load(s)
+        }
+        if ok && (v ?? :table) => v => [levels=[]]
+    } else {
+        [levels=[]]
+    }
+}
+
+func save () {
+    val f = io.open(SAVE_PATH, "w")
+    if f {
+        io.write(f, X.dump(SAVE), "\n")
+        io.close(f)
+    }
+}
+
+;; A level is solved, or only played.
+func level_store (path, r) {
+    val old = SAVE.levels@(path) || [solved=false]
+    val ok = r.saved >= r.needed
+    set SAVE.levels@(path) = [
+        solved = old.solved || ok,
+        saved  = math.max(old.saved || 0, r.saved),
+    ]
+    save()
+}
+
+func level_solved (path) {
+    val l = SAVE.levels@(path)
+    l && l.solved
+}
+
+;; The index of the levels that the game supports (see tools/convert.py).
+val LEVELS_OK = do {
+    val t = []
+    val idx = data_load("data/levels.atm")
+    loop i in #idx {
+        val l = idx@i
+        if l.ok {
+            set t@(l.file) = true
+        }
+    }
+    t
+}

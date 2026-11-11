@@ -326,6 +326,7 @@ static void pg_font_draw (int fi, const char* s, int x, int y, int origin, int a
 // SOUNDS AND MUSIC
 ///////////////////////////////////////////////////////////////////////////////
 
+static double PG_SND_VOL;
 static void pg_sound (const char* path, double volume) {
     static struct { char* path; Mix_Chunk* snd; } SNDS[64];
     static int N = 0;
@@ -349,10 +350,21 @@ static void pg_sound (const char* path, double volume) {
     if (snd != NULL) {
         int ch = Mix_PlayChannel(-1, snd, 0);
         if (ch >= 0) {
-            Mix_Volume(ch, (int)(volume * MIX_MAX_VOLUME));
+            Mix_Volume(ch, (int)(volume * PG_SND_VOL * MIX_MAX_VOLUME));
         }
     }
 }
+
+// The volumes of the sounds and of the music, from 0 to 1.
+static void pg_volume (double snd, double mus) {
+    PG_SND_VOL = snd;
+    if (PG_SND) {
+        Mix_Volume(-1, (int)(snd * MIX_MAX_VOLUME));
+        Mix_VolumeMusic((int)(mus * MIX_MAX_VOLUME));
+    }
+}
+
+static double PG_SND_VOL = 1.0;
 
 static Mix_Music* PG_MUS = NULL;
 static char*      PG_MUS_PATH = NULL;

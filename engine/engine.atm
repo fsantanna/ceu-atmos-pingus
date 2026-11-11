@@ -160,6 +160,7 @@ func look (d, anchor) {
 ;; Options in `o`, all optional:
 ;;  - world:  the sprite is in the level: it moves with `CAM`, and its
 ;;            time is the time of the world (`:tick`), not of the screen;
+;;  - cam:    the sprite moves with `CAM`, in the time of the screen;
 ;;  - anchor: the point of the frame at `pos` (`:top_left`, `:center`,
 ;;            `:bottom_center`, ...), besides the origin of the sprite;
 ;;  - turn:   `name` has the variants `name/left` and `name/right`, and
@@ -185,7 +186,7 @@ task Sprite (name, pos, o) {
         opt.cycle => true
         else      => d.loop
     }
-    val cam = if opt.world => CAM => ZERO
+    val cam = if opt.world || opt.cam => CAM => ZERO
 
     ;; the frame is the data of the drawing, which the time advances
     var frame = if opt.back => n - 1 - (opt.frame || 0) => opt.frame || 0

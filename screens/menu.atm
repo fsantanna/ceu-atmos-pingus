@@ -1,0 +1,81 @@
+;; Menu: the start menu, with its moving background of icebergs.
+
+;; The layers of the background, which move at their own speeds.
+task MenuBackground () {
+    val layers = [
+        [img=res_surface("core/menu/layer1"), y=0,   v=12],
+        [img=res_surface("core/menu/layer2"), y=150, v=25],
+        [img=res_surface("core/menu/layer3"), y=200, v=50],
+        [img=res_surface("core/menu/layer4"), y=429, v=100],
+        [img=res_surface("core/menu/layer5"), y=500, v=200],
+    ]
+    var t = 0
+    par {
+        loop us on :clock {
+            set t += us
+        }
+    } with {
+        loop on :sdl.draw {
+            loop _, l in layers {
+                val x = trunc((l.v * t) // 1000000) % W
+                pg.draw(l.img, x, l.y)
+                pg.draw(l.img, x - W, l.y)
+            }
+        }
+    }
+}
+
+;; MenuButton(x, y, s): a button of the menu, at `x,y` from the center.
+task MenuButton (x, y, s) {
+    val w, h = res_frame_size("core/menu/menuitem")
+    val r = [x=(W//2) + x - (w//2), y=(H//2) + y - (h//2), w=w, h=h]
+    spawn Sprite("core/menu/menuitem", r)
+    spawn Hover(r, "core/menu/menuitem_highlight", "tick")
+    spawn {
+        loop on :sdl.draw {
+            text(FONT.chalk_large, s, r.x + (r.w//2), r.y + (r.h//2) - 28, :center)
+        }
+    }
+    await Click(r)
+}
+
+;; Menu(): returns the choice of the player.
+task Menu () {
+    spawn MenuBackground()
+    spawn Sprite("core/misc/logo", [x=W//2, y=20], [anchor=:top_center])
+    music("pingus-1.it")
+    spawn {
+        val f = FONT.pingus_small
+        loop on :sdl.draw {
+            text(f, "Pingus in Atmos - Copyright (C) 1998-2011 Ingo Ruhnke <grumbelATgmail.com>\n" ++
+                    "See the file AUTHORS for a complete list of contributors.\n" ++
+                    "Pingus comes with ABSOLUTELY NO WARRANTY. This is free software, and you are\n" ++
+                    "welcome to redistribute it under certain conditions; see the file LICENSE for details.\n",
+                 (W//2) - 400 + 25, H - 140)
+            pg.fill(0x000000FF, 0, H - 26, W, 26)
+            text(f, "..:: F5: options   ::   Escape: back   ::   P: pause   ::   F: fast forward ::..",
+                 W//2, H - 20 - 8, :center)
+        }
+    }
+    par :any {
+        await MenuButton(-125, -20, "Story")
+        :story
+    } with {
+        await MenuButton(125, -20, "Credits")
+        :credits
+    } with {
+        await MenuButton(-125, 50, "Levelsets")
+        :levelsets
+    } with {
+        loop {
+            await MenuButton(125, 50, "Options")
+            emit @(:global) :go.options
+        }
+    } with {
+        await MenuButton(0, 120, "Exit")
+        :exit
+    } with {
+        await Key("Escape")
+        :exit
+    }
+}

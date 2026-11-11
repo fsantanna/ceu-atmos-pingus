@@ -1,0 +1,42 @@
+;; Start: the level, its goal, and the choice to play it or go back.
+
+task Start (lvl) {
+    val head = lvl.head
+    val desc = break_lines(FONT.chalk_normal, head.description || "", 800-200)
+    spawn Board()
+    spawn Label("Play", OK_R.x + (OK_R.w//2), OK_R.y - 20)
+    spawn Label("Back", BACK_R.x + (BACK_R.w//2), BACK_R.y)
+    spawn {
+        val b = BOARD
+        val f = FONT.chalk_normal
+        val xl = b.x + 220
+        val xr = b.x + b.w - 220
+        val y = b.y + b.h - 160
+        loop on :sdl.draw {
+            text(FONT.chalk_large, head.levelname, b.x + (b.w//2), b.y + 50, :center)
+            text(f, desc, b.x + 70, b.y + 110)
+            text(f, "Number of Pingus: ", xl, y)
+            text(f, head.number_of_pingus, xr, y, :right)
+            text(f, "Number to Save: ", xl, y + 30)
+            text(f, head.number_to_save, xr, y + 30, :right)
+            text(f, "Time: ", xl, y + 60)
+            text(f, time_str(if head.time == nil => -1 => head.time), xr, y + 60, :right)
+            text(FONT.chalk_small, "Author: " ++ (head.author || ""),
+                 b.x + (b.w//2), b.y + b.h - 60, :center)
+        }
+    }
+    par :any {
+        await Ok()
+        sound "yipee"
+        true
+    } with {
+        await Back()
+        false
+    } with {
+        await :sdl.key.dn until X.xin(it.name, ["P", "F", "Space", "Return"])
+        true
+    } with {
+        await Key("Escape")
+        false
+    }
+}

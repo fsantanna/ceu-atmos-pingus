@@ -1,0 +1,258 @@
+;; Worldmap: the dots of the levels and of the stories, joined by
+;; paths, and the pingu that walks between them.
+;;
+;; The view is a task that returns what the player chose (a level, a
+;; story, or to leave); the worldmap plays it, and shows the view again.
+;; The pingu is in the node of `SAVE.worldmaps@name`.
+
+;; The graph of a worldmap: nodes by name, and their neighbors with the
+;; points of the paths between them.
+func wm_load (path) {
+    val wm = data_load(path)
+    val nodes = []
+    loop _, n in wm.graph.nodes {
+        set nodes@(n.dot.name) = [
+            name = n.dot.name, tag = n.tag,
+            x = n.dot.position@0, y = n.dot.position@1,
+            level = if n.levelname => "data/levels/" ++ n.levelname ++ ".pingus.atm" => nil,
+            story = if n.story => "data/" ++ n.story ++ ".atm" => nil,
+            credits = n.credits,
+            next = [],
+        ]
+    }
+    loop _, e in wm.graph.edges {
+        val a = nodes@(e.source)
+        val b = nodes@(e.destination)
+        val pts = []
+        loop _, p in e.positions {
+            vector.insert(pts, [x=p@0, y=p@1])
+        }
+        set a.next@(b.name) = pts
+        val rev = []
+        loop i in #pts {
+            vector.insert(rev, pts@(#pts - 1 - i))
+        }
+        set b.next@(a.name) = rev
+    }
+    set wm.nodes = nodes
+    wm
+}
+
+func wm_solved (n) {
+    n.level && level_solved(n.level)
+}
+
+;; A node is open: the first one, a solved one, or a neighbor of a
+;; solved one (or of the first, for stories).
+func wm_open (wm, n) {
+    val first = wm.head.default_node
+    if (n.name == first) || wm_solved(n) {
+        return true
+    }
+    val near = loop k, _ in n.next {
+        val m = wm.nodes@(k)
+        until wm_solved(m) || (n.story && (k == first)), true
+    }
+    near || false
+}
+
+;; The shortest path between two nodes, through open nodes, as a vector
+;; of names (breadth first).
+func wm_path (wm, a, b) {
+    val from = [ @(a) = a ]
+    val queue = [a]
+    var i = 0
+    loop {
+        while i < #queue
+        val cur = queue@i
+        set i += 1
+        loop k, _ in wm.nodes@(cur).next {
+            if !from@(k) && wm_open(wm, wm.nodes@(k)) {
+                set from@(k) = cur
+                vector.insert(queue, k)
+            }
+        }
+    }
+    if !from@(b) {
+        return nil
+    }
+    val path = [b]
+    loop {
+        while path@0 != a
+        vector.insert(path, 0, from@(path@0))
+    }
+    path
+}
+
+func wm_cam (wm, x, y) {
+    set CAM.x = math.max(0, math.min(wm.head.width - W, x - (W//2)))
+    set CAM.y = math.max(0, math.min(wm.head.height - H, y - (H//2)))
+}
+
+;; The pingu of the worldmap: walks to the target of the player, one
+;; edge at a time, at 100 pixels per second.
+task WmPingu (wm, me) {
+    val pos = [x=wm.nodes@(me.at).x, y=wm.nodes@(me.at).y, dir=0]
+    spawn {
+        loop on :sdl.draw {
+            wm_cam(wm, pos.x, pos.y)
+        }
+    }
+    var cur = me.at
+    loop {
+        ;; standing
+        watching :wm.go {
+            await Sprite("core/worldmap/pingus_standing", pos, [cam=true, anchor=:bottom_center])
+        }
+        ;; walking to the target, which may change on the way
+        loop {
+            val path = wm_path(wm, cur, me.goal)
+            while path && (#path > 1)
+            set me.at = nil
+            val nxt = path@1
+            val pts = [[x=pos.x, y=pos.y]] ++ wm.nodes@(cur).next@(nxt) ++
+                      [[x=wm.nodes@(nxt).x, y=wm.nodes@(nxt).y]]
+            loop i in #pts - 1 {
+                val a, b = pts@i, pts@(i+1)
+                val len = math.max(1, math.sqrt(((b.x-a.x)*(b.x-a.x)) + ((b.y-a.y)*(b.y-a.y))))
+                set pos.dir = if b.x < a.x => -1 => 1
+                par :any {
+                    await Sprite("core/worldmap/pingus", pos, [cam=true, turn=true, anchor=:bottom_center])
+                } with {
+                    var t = 0.0
+                    loop us on :clock {
+                        set t = math.min(len, t + ((us / 1000000) * 100))
+                        set pos.x = a.x + (((b.x - a.x) * t) / len)
+                        set pos.y = a.y + (((b.y - a.y) * t) / len)
+                        until t >= len
+                    }
+                }
+            }
+            set cur = nxt
+        }
+        set me.at = cur
+        set SAVE.worldmaps@(wm.head.short_name) = cur
+        save()
+    }
+}
+
+;; A dot of the worldmap: its image by its state, the highlight and the
+;; name while the mouse is over it, and its clicks.
+task WmDot (wm, n) {
+    val pos = [x=n.x, y=n.y]
+    val over = \(x, y) { inside([x=n.x-CAM.x-12, y=n.y-CAM.y-12, w=24, h=24], x, y) }
+    val name = if n.level => level_load(n.level).head.levelname => n.name
+    do {
+        val open = wm_open(wm, n)
+        val ok = !n.level || LEVELS_OK@(n.level)
+        val img = ifs {
+            n.story => "core/worldmap/story_dot"
+            !ok || !open => "core/worldmap/dot_invalid"
+            wm_solved(n) => "core/worldmap/dot_green"
+            else => "core/worldmap/dot_red"
+        }
+        do {
+            spawn Sprite(img, pos, [cam=true, anchor=:center])
+            loop {
+                await :sdl.mouse.motion until over(it.x, it.y)
+                watching :sdl.mouse.motion until !over(it.x, it.y) {
+                    par {
+                        if !n.story && open {
+                            await Sprite(img ++ "_hl", pos, [cam=true, anchor=:center])
+                        } else {
+                            if n.story {
+                                await Sprite("core/worldmap/story_dot_highlight", pos, [cam=true, anchor=:center])
+                            }
+                        }
+                    } with {
+                        loop on :sdl.draw {
+                            text(FONT.chalk_small, if open => name => "???", n.x - CAM.x, n.y - CAM.y - 40, :center)
+                        }
+                    } with {
+                        loop {
+                            val e = await :sdl.mouse.dn until it.but == 1
+                            if open && ok {
+                                emit @(:parent) :wm.click [node=n.name]
+                            } else {
+                                sound "chink"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+;; WmView(wm): the worldmap, until the player chooses something.
+task WmView (wm) {
+    val me = [at = SAVE.worldmaps@(wm.head.short_name) || wm.head.default_node, goal=nil]
+    set me.goal = me.at
+    pin ims = tasks()
+    loop _, o in wm.objects {
+        if o.surface {
+            spawn @ims Sprite(o.surface.image, [x=o.position@0, y=o.position@1], [cam=true])
+        }
+    }
+    pin dots = tasks()
+    loop k, n in wm.nodes {
+        spawn @dots WmDot(wm, n)
+    }
+    spawn WmPingu(wm, me)
+    val lr = do {
+        val w, h = res_frame_size("core/worldmap/leave_button_normal")
+        [x=W - w - 10, y=H - h - 10, w=w, h=h]
+    }
+    spawn {
+        loop on :sdl.draw {
+            text(FONT.chalk_large, wm.head.name, W//2, 10, :center)
+        }
+    }
+    par :any {
+        await Button(lr, "core/worldmap/leave_button_normal", "core/worldmap/leave_button_hover",
+                         "core/worldmap/leave_button_pressed")
+        nil
+    } with {
+        await Key("Escape")
+        nil
+    } with {
+        loop {
+            val e = await :wm.click
+            if e.node == me.at {
+                break wm.nodes@(e.node)
+            }
+            set me.goal = e.node
+            emit :wm.go
+        }
+    }
+}
+
+;; Worldmap(path): the worldmap, the levels and stories of its dots.
+task Worldmap (path) {
+    val wm = wm_load(path)
+    set SAVE.worldmaps = SAVE.worldmaps || []
+    set SAVE.stories = SAVE.stories || []
+    if wm.intro_story && !SAVE.stories@(wm.intro_story) {
+        await Story("data/" ++ wm.intro_story ++ ".atm")
+        set SAVE.stories@(wm.intro_story) = true
+        save()
+    }
+    loop {
+        music(wm.head.music)
+        val n = await WmView(wm)
+        until n == nil
+        if n.level {
+            val final = wm_solved(wm.nodes@(wm.head.final_node))
+            await Play(n.level)
+            if !final && wm_solved(wm.nodes@(wm.head.final_node)) && wm.end_story {
+                await Story("data/" ++ wm.end_story ++ ".atm")
+                await Credits()
+            }
+        } else {
+            await Story(n.story)
+            if n.credits {
+                await Credits()
+            }
+        }
+    }
+}

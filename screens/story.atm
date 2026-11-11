@@ -1,0 +1,59 @@
+;; Story: the pages of a story, each one with an image and a text that
+;; is written letter by letter. Next shows the whole text, or the next
+;; page. A case of the study: continuation passing, the next page is
+;; the next iteration.
+
+task Story (path) {
+    val st = data_load(path)
+    spawn Board()
+    music(st.music)
+    spawn {
+        loop on :sdl.draw {
+            text(FONT.chalk_large, st.title, W//2, (H//2) - 200, :center)
+        }
+    }
+    val nr = board_at("core/misc/next", :right_bottom, -50, -60)
+    par :any {
+        loop _, page in st.pages {
+            val img = page.surface.image
+            val iw, ih = res_frame_size(img)
+            val all = if page.text ?? :table => vector.join(page.text, "") => page.text
+            val txt = break_lines(FONT.chalk_normal, all, 560)
+            spawn Sprite(img, [x=(W//2) - (iw//2), y=(H//2) + 10 - ih])
+            ;; the text, letter by letter, until it is all there or the
+            ;; player wants it all
+            val shown = [n=0, t=0]
+            spawn {
+                loop on :sdl.draw {
+                    if shown.n > 0 {
+                        text(FONT.chalk_normal, string.sub(txt, 0, shown.n - 1), (W//2) - 280, (H//2) + 35)
+                    }
+                }
+            }
+            par :any {
+                loop us on :clock {
+                    set shown.t += us / 1000
+                    set shown.n = math.min(#txt, trunc(shown.t * 0.02))
+                    until shown.n >= #txt
+                }
+            } with {
+                await Button(nr, "core/misc/next", "core/misc/next_hover", "core/misc/next")
+            } with {
+                await :sdl.key.dn until X.xin(it.name, ["F", "Space", "Return"])
+            }
+            set shown.n = #txt
+            par :any {
+                await Button(nr, "core/misc/next", "core/misc/next_hover", "core/misc/next")
+            } with {
+                await :sdl.key.dn until X.xin(it.name, ["F", "Space", "Return"])
+            }
+        }
+        true
+    } with {
+        await LabelButton("skip", W - 60, H - 30)
+        true
+    } with {
+        await Key("Escape")
+        false
+    }
+}

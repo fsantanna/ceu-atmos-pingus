@@ -97,6 +97,9 @@ val pg = [
     music = func (path) {
         `pg_music(pg_cstr($path));`
     },
+    volume = func (snd, mus) {
+        `pg_volume(a_dbl($snd), a_dbl($mus));`
+    },
     music_stop = func () {
         `pg_music_stop();`
     },
