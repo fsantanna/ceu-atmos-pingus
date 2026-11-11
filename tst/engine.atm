@@ -1,0 +1,24 @@
+;; Test of the engine: an animated sprite, a text, and a button that
+;; reacts to a scripted click.
+;;
+;;      PINGUS_FRAMES=40:25 PINGUS_MOUSE="20:dn:400:300:1,21:up:400:300:1" \
+;;      PINGUS_SHOT="10:/tmp/engine.png" ./run.sh tst/engine.atm
+
+include "../engine/engine.atm"
+
+spawn Wood()
+
+spawn Sprite("pingus/player0/walker/right", [x=100, y=100])
+spawn Sprite("core/misc/logo", [x=W//2, y=20], [anchor=:top_center])
+
+spawn {
+    loop on :sdl.draw {
+        text(FONT.chalk_large, "Pingus in Atmos", W//2, 200, :center)
+        text(FONT.pingus_small, "Released: 10/20", 10, 10)
+    }
+}
+
+val w, h = res_frame_size("core/start/ok")
+val r = [x=400-(w//2), y=300-(h//2), w=w, h=h]
+await Button(r, "core/start/ok", "core/start/ok_hover", "core/start/ok_clicked")
+print("clicked")

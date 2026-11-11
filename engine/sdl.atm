@@ -1,0 +1,153 @@
+;; The SDL environment of the game, over `engine/pingus.h`.
+;;
+;; It extends `lib/sdl.atm` of the compiler with what the game needs:
+;; mouse, images with modifiers and cropping, bitmap fonts, music, the
+;; ground maps in C, and a test mode with scripted mouse.
+;;
+;; The program runs inside the loop of SDL, which emits, once per frame:
+;;
+;;      :sdl.key.dn [name]          a key was pressed  (name: 'P', 'Escape', ...)
+;;      :sdl.key.up [name]          a key was released
+;;      :sdl.mouse.motion [x,y]     the mouse moved
+;;      :sdl.mouse.dn [x,y,but]     a button was pressed (1 left, 3 right)
+;;      :sdl.mouse.up [x,y,but]     a button was released
+;;      :sdl.quit                   the window was closed
+;;      (time)                      so that `await 1s` and `:clock` work
+;;      :sdl.draw                   to redraw the screen
+;;
+;; Test mode, with `SDL_VIDEODRIVER=dummy`:
+;;
+;;      PINGUS_FRAMES=n:ms          runs `n` frames of `ms` milliseconds
+;;      PINGUS_KEYS=f:dn:P,...      presses or releases keys at frames
+;;      PINGUS_MOUSE=f:dn:x:y:b,... moves (mv), presses (dn), or releases
+;;                                  (up) the mouse at frames
+;;      PINGUS_SHOT=f:x.png,...     saves the screen at frames
+;;      PINGUS_MUTE=1               no audio
+;;      PINGUS_FPS=n                frames per second (0: no cap)
+;;      PINGUS_COUNT=1              prints the number of frames at exit
+
+```:prelude
+#include "engine/pingus.h"
+```
+
+val W = 800
+val H = 600
+
+val pg = [
+    ;; pg.img(path, mod [, [cx,cy,cw,ch]]): an image, or -1
+    img = func (path, mod, c) {
+        val cx, cy, cw, ch = if c => (c@0, c@1, c@2, c@3) => (0, 0, 0, 0)
+        `:number pg_img_load(pg_cstr($path), pg_int($mod), pg_int($cx), pg_int($cy), pg_int($cw), pg_int($ch))`
+    },
+
+    ;; pg.size(img): width and height
+    size = func (i) {
+        val w = `:number ({ PgImg* p = pg_img(pg_int($i)); p ? p->w : 0; })`
+        val h = `:number ({ PgImg* p = pg_img(pg_int($i)); p ? p->h : 0; })`
+        return w, h
+    },
+
+    ;; pg.draw(img, x, y): the whole image at x,y
+    draw = func (i, x, y) {
+        `pg_img_draw(pg_int($i), 0,0,0,0, pg_int($x),pg_int($y), 0,0, 255);`
+    },
+
+    ;; pg.part(img, sx,sy,sw,sh, x,y [,alpha]): a part of the image at x,y
+    part = func (i, sx, sy, sw, sh, x, y, a) {
+        val alpha = if a == nil => 255 => a
+        `pg_img_draw(pg_int($i), pg_int($sx),pg_int($sy),pg_int($sw),pg_int($sh), pg_int($x),pg_int($y), 0,0, pg_int($alpha));`
+    },
+
+    ;; pg.scale(img, x,y,w,h): the whole image stretched into a rectangle
+    scale = func (i, x, y, w, h) {
+        `pg_img_draw(pg_int($i), 0,0,0,0, pg_int($x),pg_int($y), pg_int($w),pg_int($h), 255);`
+    },
+
+    ;; pg.fill(0xRRGGBBAA, x,y,w,h), pg.rect(...), pg.line(c, x1,y1,x2,y2)
+    fill = func (c, x, y, w, h) {
+        `pg_fill((int64_t)a_dbl($c), pg_int($x),pg_int($y),pg_int($w),pg_int($h));`
+    },
+    rect = func (c, x, y, w, h) {
+        `pg_rect((int64_t)a_dbl($c), pg_int($x),pg_int($y),pg_int($w),pg_int($h));`
+    },
+    line = func (c, x1, y1, x2, y2) {
+        `pg_line((int64_t)a_dbl($c), pg_int($x1),pg_int($y1),pg_int($x2),pg_int($y2));`
+    },
+
+    ;; fonts: see `font` in `engine/engine.atm`
+    font_new = func (size, cs, vs) {
+        `:number pg_font_new(pg_int($size), a_dbl($cs), a_dbl($vs))`
+    },
+    font_glyph = func (f, u, img, x1, y1, x2, y2, ox, oy, adv) {
+        `pg_font_glyph(pg_int($f), pg_int($u), pg_int($img), pg_int($x1), pg_int($y1), pg_int($x2), pg_int($y2), pg_int($ox), pg_int($oy), pg_int($adv));`
+    },
+    font_draw = func (f, txt, x, y, origin, a) {
+        val alpha = if a == nil => 255 => a
+        `pg_font_draw(pg_int($f), pg_cstr($txt), pg_int($x), pg_int($y), pg_int($origin), pg_int($alpha));`
+    },
+    font_width = func (f, txt) {
+        `:number pg_font_width(pg_int($f), pg_cstr($txt))`
+    },
+
+    ;; sounds and music
+    sound = func (path, vol) {
+        val v = if vol == nil => 1.0 => vol
+        `pg_sound(pg_cstr($path), a_dbl($v));`
+    },
+    music = func (path) {
+        `pg_music(pg_cstr($path));`
+    },
+    music_stop = func () {
+        `pg_music_stop();`
+    },
+
+    ;; the ground: see `engine/pingus.h`
+    map_new = func (w, h) {
+        `pg_map_new(pg_int($w), pg_int($h));`
+    },
+    map_free = func () {
+        `pg_map_free();`
+    },
+    map_get = func (x, y) {
+        `:number pg_map_get(pg_int($x), pg_int($y))`
+    },
+    map_put = func (img, x, y, type) {
+        `pg_map_put(pg_int($img), pg_int($x), pg_int($y), pg_int($type));`
+    },
+    map_remove = func (gfx, col, x, y) {
+        `pg_map_remove(pg_int($gfx), pg_int($col), pg_int($x), pg_int($y));`
+    },
+    map_draw = func (x, y) {
+        `pg_map_draw(pg_int($x), pg_int($y));`
+    },
+    map_small = func (x, y, w, h) {
+        `pg_map_small(pg_int($x), pg_int($y), pg_int($w), pg_int($h));`
+    },
+
+    ;; the frame number, and whether this is the test mode
+    frame = func () {
+        `:number PG_FRAME`
+    },
+    testing = func () {
+        `:boolean PG_TEST`
+    },
+]
+
+;; The ground types of the collision map.
+val GP = [
+    nothing     = 0,
+    solid       = 1,
+    transparent = 2,
+    ground      = 3,
+    bridge      = 4,
+    water       = 5,
+    lava        = 6,
+    remove      = 7,
+    outofscreen = 8,
+]
+
+;; The modifiers of the data files, as numbers.
+val MOD = [
+    ROT0 = 0, ROT90 = 1, ROT180 = 2, ROT270 = 3,
+    ROT0FLIP = 4, ROT90FLIP = 5, ROT180FLIP = 6, ROT270FLIP = 7,
+]

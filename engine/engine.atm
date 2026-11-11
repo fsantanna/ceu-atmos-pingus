@@ -1,0 +1,387 @@
+;; The engine of the game, in Atmos: data files, sprites, fonts, the
+;; mouse, and the widgets of the screens.
+;;
+;; A sprite is a task: it draws itself on `:sdl.draw`, advances its
+;; frame with the time, signals each new frame to its parent task, and
+;; terminates when an animation that does not loop ends. Its users keep
+;; no frame counters and no "is finished" flags: they await the sprite.
+
+include "sdl.atm"
+
+;;; FILES ;;;
+
+func file_exists (path) {
+    val f = io.open(path)
+    if f {
+        io.close(f)
+        true
+    } else {
+        false
+    }
+}
+
+;; Reads a data file of the game, written in Atmos data.
+func data_load (path) {
+    val f = io.open(path) --> assert
+    val s = io.read(f, :all)
+    io.close(f)
+    X.load(s)
+}
+
+;; The directory of a path, with no trailing `/`.
+func dirname (path) {
+    var i = nil
+    var j = string.find(path, "/")
+    loop {
+        while j
+        set i = j
+        set j = string.find(path, "/", i + 1)
+    }
+    if i => string.sub(path, 0, i - 1) => "."
+}
+
+;; A path with no `.` and `..`.
+func path_norm (path) {
+    val out = []
+    loop _, s in string.split(path, "/") {
+        ifs {
+            s == ".." => vector.remove(out)
+            s == "."  => nil
+            else      => vector.insert(out, s)
+        }
+    }
+    vector.join(out, "/")
+}
+
+;;; SPRITE DESCRIPTIONS ;;;
+
+;; The description of a resource of `data/images/`, by name, as in the
+;; original: a `.sprite` file, or else a `.png` or `.jpg` image.
+;; The descriptions are kept: each one is read once.
+val DESCS = []
+
+func res_desc (name) {
+    val c = DESCS@(name)
+    if c {
+        return c
+    }
+    val base = "data/images/" ++ name
+    val d = ifs {
+        file_exists(base ++ ".sprite.atm") => do {
+            val t = data_load(base ++ ".sprite.atm")
+            ;; an absolute path is relative to the data
+            set t.path = if string.sub(t.image, 0, 0) == "/" =>
+                "data" ++ t.image =>
+                path_norm(dirname(base) ++ "/" ++ t.image)
+            t
+        }
+        file_exists(base ++ ".png") => [path = base ++ ".png"]
+        file_exists(base ++ ".jpg") => [path = base ++ ".jpg"]
+        else => do {
+            print("missing resource : " ++ name)
+            [path = "data/images/core/misc/404.png"]
+        }
+    }
+    if pg.img(d.path, 0) < 0 {
+        print("missing image : " ++ d.path)
+        set d.path = "data/images/core/misc/404.png"
+    }
+    set d.speed    = if d.speed == nil => 100 => d.speed
+    set d.array    = d.array    || [1, 1]
+    set d.position = d.position || [0, 0]
+    set d.offset   = d.offset   || [0, 0]
+    set d.origin   = d.origin   || :top_left
+    set d.loop     = if d.loop == nil => true => d.loop
+    set DESCS@(name) = d
+    d
+}
+
+;; The offset of an origin in a rectangle `w x h`.
+func origin (o, w, h) {
+    match o {
+        :top_left      => (0, 0)
+        :top_center    => (w//2, 0)
+        :top_right     => (w, 0)
+        :center_left   => (0, h//2)
+        :center        => (w//2, h//2)
+        :center_right  => (w, h//2)
+        :bottom_left   => (0, h)
+        :bottom_center => (w//2, h)
+        :bottom_right  => (w, h)
+        else           => (0, 0)
+    }
+}
+
+;; An image of a resource, as a surface: the first frame of its sprite,
+;; with a modifier. As `Resource::load_surface` of the original.
+func res_surface (name, mod) {
+    val d = res_desc(name)
+    val m = MOD@(mod) || 0
+    if d.size || (d.position@0 != 0) || (d.position@1 != 0) ||
+       (d.array@0 != 1) || (d.array@1 != 1)
+    {
+        val full = pg.img(d.path, 0)
+        val iw, ih = pg.size(full)
+        val w = if d.size => d.size@0 => iw // d.array@0
+        val h = if d.size => d.size@1 => ih // d.array@1
+        pg.img(d.path, m, [d.position@0, d.position@1, w, h])
+    } else {
+        pg.img(d.path, m)
+    }
+}
+
+;;; SPRITES ;;;
+
+;; The position of the level in the screen: a point `p` of the level
+;; is drawn at `p - CAM`. The playfield moves it.
+val CAM  = [x=0, y=0]
+val ZERO = [x=0, y=0]
+
+;; Sprite(name, pos, o): draws the resource `name` at `pos`, a table
+;; `[x,y]` that the owner may change.
+;;
+;; Options in `o`, all optional:
+;;  - world:  the sprite is in the level: it moves with `CAM`, and its
+;;            time is the time of the world (`:tick`), not of the screen;
+;;  - anchor: the point of the frame at `pos` (`:top_left`, `:center`,
+;;            `:bottom_center`, ...), besides the origin of the sprite;
+;;  - frame:  the first frame;
+;;  - still:  the frame does not advance;
+;;  - speed:  milliseconds per frame, instead of the one of the data;
+;;  - loop:   whether it loops, instead of the one of the data;
+;;  - back:   the frames go backwards.
+;;
+;; It emits `:frame [n]` to its parent task at each new frame, and
+;; terminates when an animation that does not loop ends.
+task Sprite (name, pos, o) {
+    val opt = o || []
+    val d = res_desc(name)
+    val img = pg.img(d.path, 0)
+    val iw, ih = pg.size(img)
+    val ax, ay = d.array@0, d.array@1
+    val fw = if d.size => d.size@0 => iw // ax
+    val fh = if d.size => d.size@1 => ih // ay
+    val n = ax * ay
+    val ox1, oy1 = origin(d.origin, fw, fh)
+    val ox2, oy2 = origin(opt.anchor, fw, fh)
+    val dx = ox1 + ox2 - d.offset@0
+    val dy = oy1 + oy2 - d.offset@1
+    val delay = opt.speed || d.speed
+    val loops = if opt.loop == nil => d.loop => opt.loop
+    val cam = if opt.world => CAM => ZERO
+
+    ;; the frame is the data of the drawing, which the time advances
+    var frame = if opt.back => n - 1 - (opt.frame || 0) => opt.frame || 0
+
+    var t = 0
+    val total = delay * n
+    func advance (ms) {
+        set t += ms
+        val done = t >= total
+        if done && loops {
+            set t = t % total
+        }
+        if !done || loops {
+            val f = if opt.back => n - 1 - (t // delay) => t // delay
+            if f != frame {
+                set frame = f
+                emit @(:parent) :frame [n=f]
+            }
+        }
+        done && !loops
+    }
+
+    par :any {
+        if opt.still || (delay == 0) || (n == 1) {
+            await(false)
+        } else {
+            if opt.world {
+                loop on :tick {
+                    until advance(33)
+                }
+            } else {
+                loop us on :clock {
+                    until advance(us // 1000)
+                }
+            }
+        }
+    } with {
+        loop on :sdl.draw {
+            pg.part(img,
+                d.position@0 + fw*(frame % ax), d.position@1 + fh*(frame // ax),
+                fw, fh, pos.x - cam.x - dx, pos.y - cam.y - dy)
+        }
+    }
+}
+
+;; The size of the frames of a resource.
+func res_frame_size (name) {
+    val d = res_desc(name)
+    val iw, ih = pg.size(pg.img(d.path, 0))
+    if d.size => (d.size@0, d.size@1) => (iw // d.array@0, ih // d.array@1)
+}
+
+;; Image(img, pos): draws an image with no animation, forever.
+task Image (img, pos) {
+    loop on :sdl.draw {
+        pg.draw(img, pos.x, pos.y)
+    }
+}
+
+;;; FONTS ;;;
+
+;; Fonts by name, read once from their descriptions.
+val FONTS_CACHE = []
+
+func font (name) {
+    val c = FONTS_CACHE@(name)
+    if c ?? :number {
+        return c
+    }
+    val d = data_load("data/images/fonts/" ++ name ++ ".font.atm")
+    val f = pg.font_new(d.size, d.char_spacing || 1.0, d.vertical_spacing || 1.0)
+    loop _, im in d.images {
+        val img = pg.img("data/" ++ im.filename, 0)
+        loop _, g in im.glyphs {
+            pg.font_glyph(f, g.unicode, img, g.rect@0, g.rect@1, g.rect@2, g.rect@3,
+                          g.offset@0, g.offset@1, g.advance)
+        }
+    }
+    set FONTS_CACHE@(name) = f
+    f
+}
+
+;; The fonts of the original, by their names there.
+val FONT = [
+    chalk_large  = font("chalk-40px"),
+    chalk_normal = font("chalk-20px"),
+    chalk_small  = font("chalk-16px"),
+    pingus_small = font("pingus-small-20px"),
+]
+
+val ORIGIN = [left=0, center=1, right=2]
+
+;; text(font, s, x, y [, origin [, alpha]]): a text, with the origin at
+;; the top (`:left`, `:center`, or `:right`).
+func text (f, s, x, y, o, a) {
+    pg.font_draw(f, tostring(s), x, y, ORIGIN@(o || :left), a)
+}
+
+func text_width (f, s) {
+    pg.font_width(f, tostring(s))
+}
+
+;; Breaks a text in lines of at most `w` pixels.
+func break_lines (f, s, w) {
+    val lines = []
+    var cur = ""
+    loop _, word in string.split(s) {
+        val try = if cur == "" => word => cur ++ " " ++ word
+        if (text_width(f, try) > w) && (cur != "") {
+            vector.insert(lines, cur)
+            set cur = word
+        } else {
+            set cur = try
+        }
+    }
+    if cur != "" {
+        vector.insert(lines, cur)
+    }
+    vector.join(lines, "\n")
+}
+
+;;; SOUNDS ;;;
+
+func sound (name, vol) {
+    pg.sound("data/sounds/" ++ name ++ ".wav", vol)
+}
+
+func music (name) {
+    if (name == nil) || (name == "") || (name == "none") {
+        pg.music_stop()
+    } else {
+        pg.music("data/music/" ++ name)
+    }
+}
+
+;;; MOUSE ;;;
+
+;; The last position of the mouse, for the tasks that need it between
+;; its events.
+val MOUSE = [x=0, y=0]
+
+spawn {
+    loop e on :sdl.mouse.motion {
+        set MOUSE.x = e.x
+        set MOUSE.y = e.y
+    }
+}
+
+func inside (r, x, y) {
+    (x >= r.x) && (x < r.x+r.w) && (y >= r.y) && (y < r.y+r.h)
+}
+
+;;; WIDGETS ;;;
+
+;; Click(r [, but]): awaits a click in the rectangle `r`: the button
+;; goes down and up inside it.
+task Click (r, but) {
+    val b = but || 1
+    loop {
+        await :sdl.mouse.dn until (it.but == b) && inside(r, it.x, it.y)
+        val e = await :sdl.mouse.up until it.but == b
+        until inside(r, e.x, e.y)
+    }
+}
+
+;; Hover(r, name, snd): draws the sprite `name` while the mouse is over
+;; `r`, and plays `snd` when it enters. It never terminates.
+task Hover (r, name, snd) {
+    loop {
+        await :sdl.mouse.motion until inside(r, it.x, it.y)
+        if snd {
+            sound(snd)
+        }
+        watching :sdl.mouse.motion until !inside(r, it.x, it.y) {
+            await Sprite(name, r)
+        }
+    }
+}
+
+;; Button(r, normal, hover, pressed): a button with three sprites. It
+;; terminates when it is clicked.
+task Button (r, normal, hover, pressed) {
+    par :any {
+        await Click(r)
+    } with {
+        loop {
+            watching :sdl.mouse.motion until inside(r, it.x, it.y) {
+                await Sprite(normal, r)
+            }
+            sound "tick"
+            watching :sdl.mouse.motion until !inside(r, it.x, it.y) {
+                loop {
+                    watching :sdl.mouse.dn until inside(r, it.x, it.y) {
+                        await Sprite(hover, r)
+                    }
+                    watching :sdl.mouse.up {
+                        await Sprite(pressed, r)
+                    }
+                }
+            }
+        }
+    }
+}
+
+;; Wood(): the wooden background of some screens, tiled, forever.
+task Wood () {
+    val img = res_surface("core/menu/wood")
+    val w, h = pg.size(img)
+    loop on :sdl.draw {
+        loop y in (0, H // h) {
+            loop x in (0, W // w) {
+                pg.draw(img, x*w, y*h)
+            }
+        }
+    }
+}
