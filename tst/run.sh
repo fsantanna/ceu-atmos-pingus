@@ -7,6 +7,7 @@
 #   - the data: every converted file loads with X.load;
 #   - the engine: a sprite, a text, and a scripted click;
 #   - the screens: screenshots at fixed frames, compared with tst/shots/;
+#   - the mouse: tst/clicks.sh, buttons and clicks on a pingu;
 #   - the levels: the scripted levels of tst/levels.txt, whose traces are
 #     compared with tst/golden/.
 
@@ -63,6 +64,10 @@ for s in menu levelsets start game; do
     fi
 done
 check screens "$OUT/screens.out"
+
+# the game with the mouse only
+tst/clicks.sh > "$OUT/clicks.out" 2>&1
+check clicks "$OUT/clicks.out"
 
 # levels, 4 at a time
 grep -v '^#' tst/levels.txt | grep -v '^\s*$' | \

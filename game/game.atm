@@ -220,6 +220,9 @@ task Game (path) {
             set CAM.y = (y // n) + 100 - (H//2)
         }
         cam_clamp(g)
+        if TRACE {
+            print(string.format("view %d %d", CAM.x, CAM.y))
+        }
     }
 
     ;; the time of the world
