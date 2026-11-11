@@ -1,0 +1,7 @@
+;; Smashed: as the original, an action that no object gives, and that
+;; never ends.
+
+task Smashed (p, g) {
+    await Sprite(pspr(p, "splat"), p, PSPR1)
+    await(false)
+}

@@ -1,0 +1,36 @@
+;; Boarder: rides a board, faster and faster, until a wall or the end
+;; of the ground, where it jumps off as a walker.
+
+;; Pushes the pingu, one pixel up, as `apply_force` of the original.
+func push (p, fx, fy) {
+    set p.vx = p.vx + fx
+    set p.vy = p.vy + fy
+    set p.y -= 1
+}
+
+task Boarder (p, g) {
+    spawn Sprite(pspr(p, "boarder"), p, PSPR)
+    var speed = 0.0
+    loop on :tick {
+        if (rel(p, 0, -1) != GP.nothing) || (rel(p, 0, -2) != GP.nothing) {
+            set speed = pg.f32(math.min(15.0, speed + pg.f32(15 * 25 / 1000)))
+            ;; one pixel at a time, then the fraction (the original steps
+            ;; until the position is the target, which with a fraction
+            ;; never happens)
+            val nx = pg.f32(p.x + (p.dir * speed))
+            loop _ in trunc(speed) {
+                val ox = p.x
+                set p.x = ox + p.dir
+                if rel(p, 1, 0) != GP.nothing {
+                    set p.x = ox
+                    push(p, speed * p.dir * 0.5, -speed * 0.5)
+                    return :walker
+                }
+            }
+            set p.x = nx
+        } else {
+            push(p, speed * p.dir, 0)
+            return :walker
+        }
+    }
+}

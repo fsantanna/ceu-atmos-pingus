@@ -1,0 +1,13 @@
+;; Angel: flies up, waving, until it leaves the level.
+
+task Angel (p, g) {
+    spawn Sprite(pspr(p, "angel"), p, PSPR1)
+    val x0 = p.x
+    var t = 0.0
+    loop on :tick {
+        set t = pg.f32(t + 20)          ;; the game speed, as the original
+        set p.x = pg.f32(x0 + (20 * math.sin(t * 3)))
+        set p.y = pg.f32(p.y - pg.f32(50 * 0.025))
+        until p.y < -32, :dead
+    }
+}

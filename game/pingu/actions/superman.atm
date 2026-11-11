@@ -1,0 +1,10 @@
+;; Superman: flies away, up and forward, until it leaves the level.
+
+task Superman (p, g) {
+    spawn Sprite(pspr(p, "superman"), p, PSPR1)
+    loop on :tick {
+        set p.x = pg.f32(p.x + pg.f32(40 * 0.025))
+        set p.y = pg.f32(p.y - pg.f32(200 * 0.025))
+        until p.y < -32, :dead
+    }
+}
