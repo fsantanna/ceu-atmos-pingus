@@ -65,9 +65,25 @@ func level_flatten (objs, dx, dy, ov, out) {
     out
 }
 
-;; The objects of a level, flat, in their order in the file.
+;; The depth of an object: the third coordinate of its position, or a
+;; fixed one for some kinds, as the official game.
+val OBJ_Z = [
+    solidcolor_background = -10, starfield_background = -10,
+    snow_generator = 1000, rain_generator = 1000,
+    switchdoor_door = 100, switchdoor_switch = 100,
+]
+
+func obj_z (o) {
+    OBJ_Z@(o.tag) || (o.position && o.position@2) || 0
+}
+
+;; The objects of a level, flat, in the order of their depth, as the
+;; official game sets them up (a stable sort: the order of the file for
+;; the same depth). The ground, water and holes depend on this order.
 func level_objects (lvl) {
-    level_flatten(lvl.objects, 0, 0, nil, [])
+    val v = level_flatten(lvl.objects, 0, 0, nil, [])
+    vector.sort(v, \(a, b) { obj_z(a) < obj_z(b) })
+    v
 }
 
 ;; The time of the level in ticks of the world (20ms), as a text.

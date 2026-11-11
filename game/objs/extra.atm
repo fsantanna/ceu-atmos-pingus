@@ -195,40 +195,53 @@ task Hammer (g, o) {
 ;;; TELEPORTER ;;;
 
 ;; Teleporter: moves the pingus that enter it to its target. It tells
-;; the target with `:teleport [id]`, through the game.
+;; the target with `:teleport [id]`, through the game. As the original,
+;; it checks its zone at each tick; the animation only restarts.
 task Teleporter (g, o, target) {
     val pos = [x=o.position@0, y=o.position@1]
-    if !target {
-        await Sprite("worldobjs/teleporter", pos, [world=true, still=true])
-    }
-    loop {
-        par :any {
-            await Sprite("worldobjs/teleporter", pos, [world=true, still=true])
-        } with {
-            await :tock until do {
-                loop _, t in g.pingus {
-                    until in_zone(pos, t.pub, -3, -52, 3, 0), true
-                }
+    val img = "worldobjs/teleporter"
+    spawn {
+        watching :tele.go {
+            await Sprite(img, pos, [world=true, still=true])
+        }
+        loop {
+            watching :tele.go {
+                await Sprite(img, pos, [world=true, once=true])
+                await Sprite(img, pos, [world=true, still=true])
             }
+        }
+    }
+    if !target {
+        await(false)
+    }
+    loop on :tock {
+        val hit = loop _, t in g.pingus {
+            until in_zone(pos, t.pub, -3, -52, 3, 0), true
+        }
+        if hit {
             loop _, t in g.pingus {
                 if in_zone(pos, t.pub, -3, -52, 3, 0) {
                     set t.pub.x = target.position@0
                     set t.pub.y = target.position@1
                 }
             }
+            emit :tele.go
             emit @(:parent) :teleport [id=target.id]
         }
-        await Sprite("worldobjs/teleporter", pos, [world=true, once=true])
     }
 }
 
 task TeleporterTarget (g, o) {
     val pos = [x=o.position@0, y=o.position@1]
+    val img = "worldobjs/teleportertarget"
+    watching :teleport until it.id == o.id {
+        await Sprite(img, pos, [world=true, still=true])
+    }
     loop {
         watching :teleport until it.id == o.id {
-            await Sprite("worldobjs/teleportertarget", pos, [world=true, still=true])
+            await Sprite(img, pos, [world=true, once=true])
+            await Sprite(img, pos, [world=true, still=true])
         }
-        await Sprite("worldobjs/teleportertarget", pos, [world=true, once=true])
     }
 }
 
