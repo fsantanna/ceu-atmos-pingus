@@ -1,0 +1,78 @@
+diff --git a/src/engine/display/display.cpp b/src/engine/display/display.cpp
+index 69dcefc..c0a8704 100644
+--- a/src/engine/display/display.cpp
++++ b/src/engine/display/display.cpp
+@@ -1,3 +1,5 @@
++#include <cstdio>
++#include <cstdlib>
+ // Pingus - A free Lemmings clone
+ // Copyright (C) 2000 Ingo Ruhnke <grumbel@gmail.com>
+ //
+@@ -38,6 +40,14 @@ std::unique_ptr<Framebuffer> Display::s_framebuffer;
+ void
+ Display::flip_display()
+ {
++  // Benchmark patch: frames drawn, printed at exit (PINGUS_COUNT=1)
++  static int frames = 0;
++  static bool registered = false;
++  if (!registered && getenv("PINGUS_COUNT")) {
++    registered = true;
++    atexit([]() { fprintf(stderr, "frames: %d\n", frames); });
++  }
++  frames++;
+   return s_framebuffer->flip();
+ }
+ 
+diff --git a/src/pingus/pingu.cpp b/src/pingus/pingu.cpp
+index db2678f..b32e994 100644
+--- a/src/pingus/pingu.cpp
++++ b/src/pingus/pingu.cpp
+@@ -1,3 +1,5 @@
++#include <cstdio>
++#include <cstdlib>
+ // Pingus - A free Lemmings clone
+ // Copyright (C) 1999 Ingo Ruhnke <grumbel@gmail.com>
+ //
+@@ -254,6 +256,17 @@ Pingu::request_set_action(ActionName::Enum action_name)
+   return ret_val;
+ }
+ 
++// Benchmark patch: the trace of the port (PINGUS_TRACE=1), with the time
++// of the port (updates done before the current one).
++void
++bench_trace(Pingu* p, const char* act)
++{
++  if (getenv("PINGUS_TRACE") && p->get_world()) {
++    printf("%5d pingu %2u %-9s %4d %4d\n", p->get_world()->get_time(), p->get_id(),
++           act, static_cast<int>(p->get_x()), static_cast<int>(p->get_y()));
++  }
++}
++
+ void
+ Pingu::set_action (ActionName::Enum action_name)
+ {
+@@ -269,6 +282,7 @@ Pingu::set_action(std::shared_ptr<PinguAction> act)
+   PinguBehavior& b = behavior();
+   b.previous_action = b.action->get_type();
+   b.action = std::move(act);
++  bench_trace(this, ActionName::to_string(b.action->get_type()).c_str());
+ }
+ 
+ bool
+@@ -318,6 +332,8 @@ Pingu::get_status (void) const
+ Pingu::PinguStatus
+ Pingu::set_status (PinguStatus s)
+ {
++  if (s == PS_DEAD)   bench_trace(this, "dead");
++  if (s == PS_EXITED) bench_trace(this, "exited");
+   return (state().status = s);
+ }
+ 
+@@ -369,6 +385,7 @@ Pingu::update()
+   if (rel_getpixel(0, -1) == Groundtype::GP_OUTOFSCREEN)
+   {
+     //Sound::PingusSound::play_sound("die");
++    bench_trace(this, "dead");
+     s.status = PS_DEAD;
+     return;
+   }

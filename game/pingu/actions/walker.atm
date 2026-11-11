@@ -13,49 +13,61 @@ task Walker (p, g) {
     }
 
     loop on :tick {
-        val ox, oy = p.x, p.y
+        do :step {
+            val ox, oy = p.x, p.y
 
-        ;; 1) The ground under the pingu may have gone (a digger, a
-        ;; bomber): it looks for ground a few pixels below, or falls.
-        if rel(p, 0, -1) == GP.nothing {
-            val i = loop _, i in [-2, -3, -4] {
-                until rel(p, 0, i) != GP.nothing, i
+            ;; the end of the level ahead: one more step, to die there
+            if rel(p, 1, 0) == GP.outofscreen {
+                set p.x += p.dir
+                escape :step
             }
-            if i {
-                set p.y -= i
-            } else {
-                return :faller
+            if rel(p, 0, -1) == GP.water {
+                return :drown
             }
-        }
 
-        ;; 2) A bridge ahead: the pingu floats through it.
-        if (rel(p, 1, 0) == GP.bridge) && !head(p, 1, 1) {
-            set p.x += p.dir
-            set p.y -= 1
-        } else {
-            ;; 3) Up or down hill: the highest free step ahead.
-            val step = loop _, y in [5,4,3,2,1,0,-1,-2,-3,-4,-5] {
-                val px = rel(p, 1, y)
-                until ((px == GP.nothing) || (px == GP.bridge)) &&
-                      (rel(p, 1, y-1) != GP.nothing), [y]
-            }
-            ifs {
-                step => {
-                    set p.x += p.dir
-                    set p.y -= step@0
+            ;; 1) The ground under the pingu may have gone (a digger, a
+            ;; bomber): it looks for ground a few pixels below, or falls.
+            if rel(p, 0, -1) == GP.nothing {
+                val i = loop _, i in [-2, -3, -4] {
+                    until rel(p, 0, i) != GP.nothing, i
                 }
-                rel(p, 1, 0) != GP.nothing => {
-                    ;; a wall: the persistent ability, or turn
-                    if p.wall {
-                        return p.wall
-                    }
-                    turn(p)
-                }
-                else => {
-                    ;; a cliff: one step into the air
-                    set p.x += p.dir
+                if i {
+                    set p.y -= i
+                } else {
                     return :faller
                 }
+            }
+
+            ;; 2) A bridge ahead: the pingu floats through it.
+            if (rel(p, 1, 0) == GP.bridge) && !head(p, 1, 1) {
+                set p.x += p.dir
+                set p.y -= 1
+            } else {
+                ;; 3) Up or down hill: the highest free step ahead.
+                val step = loop _, y in [5,4,3,2,1,0,-1,-2,-3,-4,-5] {
+                    val px = rel(p, 1, y)
+                    until ((px == GP.nothing) || (px == GP.bridge)) &&
+                          (rel(p, 1, y-1) != GP.nothing), [y]
+                }
+                ifs {
+                    step => {
+                        set p.x += p.dir
+                        set p.y -= step@0
+                    }
+                    rel(p, 1, 0) != GP.nothing => {
+                        ;; a wall: the persistent ability, or turn
+                        if p.wall {
+                            return p.wall
+                        }
+                        turn(p)
+                    }
+                    else => {
+                        ;; a cliff: one step into the air
+                        set p.x += p.dir
+                        return :faller
+                    }
+                }
+
             }
 
             ;; 4) Stuck in a wall after the step: back, and turn.

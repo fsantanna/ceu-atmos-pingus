@@ -3,6 +3,7 @@
 task Splashed (p, g) {
     sound("splash", 0.5)
     spawn Sprite(pspr(p, "splat"), p, PSPR1)
-    await Ticks(12)
+    ;; 16 frames of 33ms, as the clock of the original
+    await Ticks(16)
     :dead
 }

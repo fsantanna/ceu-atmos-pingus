@@ -5,24 +5,38 @@
 
 task Bomber (p, g) {
     sound("ohno", 0.5)
+    ;; the frames of the sprite are the clock of the original: 16 frames
+    ;; of 60ms; the pingu dies at the end of the animation
     pin s = spawn Sprite(pspr(p, "bomber/left"), p, PSPR1)
     par :any {
         await(s)
+        :dead
     } with {
-        await Mover(p)
+        ;; it moves, and may drown or splash before the frame 10
+        loop on :tick {
+            val v = p.vy
+            move(p)
+            val px = rel(p, 0, -1)
+            ifs {
+                (px == GP.water) || (px == GP.lava) => return :drown
+                (px != GP.nothing) && (v > PINGU.deadly) => return :splashed
+                else => nil
+            }
+        }
     } with {
         await :frame until it.n == 10
         sound("plop", 0.5)
+        await(false)
+    } with {
         await :frame until it.n == 13
         loop _ in 50 {
-            spawn @(g.particles) PinguParticle(g, p.x, p.y - 5)
+            spawn @(g.particles) PinguParticle(g, trunc(p.x), trunc(p.y) - 5)
         }
         val gfx = res_surface("other/bomber_radius_gfx")
         val col = res_surface("other/bomber_radius")
         val w, h = pg.size(col)
-        ground_remove(gfx, col, p.x - (w//2), p.y - (w//2) - 16)
+        ground_remove(gfx, col, trunc(p.x) - (w//2), trunc(p.y) - (w//2) - 16)
         spawn Sprite(pspr(p, "explo"), p, PSPR1)
-        await :tick
+        await(false)
     }
-    :dead
 }

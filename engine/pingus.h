@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
+#include <math.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
@@ -573,6 +574,54 @@ static void pg_map_remove (int gi, int ci, int x0, int y0) {
             }
         }
     }
+}
+
+// The mover of the pingus, as `LinearMover` and `PinguCollider` of the
+// original, in `float` as there: the rounding of 32 bits decides when a
+// falling pingu crosses a pixel. Moves from `x,y` with the velocity
+// `vx,vy`, one unit at a time, up to a collision. The new position is
+// in PG_MX, PG_MY; returns whether it collided.
+static float PG_MX, PG_MY;
+
+static int pg_collides (float x, float y, float sx, float sy, float height) {
+    float nx = x + sx, ny = y + sy;
+    int falling = (sy > 0.0f);
+    if ((int)nx != (int)x) {
+        float top = ny - height;
+        for (; ny >= top; ny -= 1.0f) {
+            int px = pg_map_get((int)nx, (int)ny);
+            if (px != GP_NOTHING && !(px == GP_BRIDGE && !falling)) {
+                return 1;
+            }
+        }
+        return 0;
+    } else if (!falling) {
+        int px = pg_map_get((int)nx, (int)(ny - height));
+        return (px != GP_NOTHING && px != GP_BRIDGE);
+    } else {
+        return pg_map_get((int)nx, (int)ny) != GP_NOTHING;
+    }
+}
+
+static int pg_move (float x, float y, float vx, float vy, float height) {
+    float len2 = vx*vx + vy*vy;
+    float len = sqrtf(len2);
+    int n = (int) len;
+    float inv = 1.0f / sqrtf(len2);
+    float sx = vx * inv, sy = vy * inv;
+    int hit = 0;
+    for (int i=0; i<n && !hit; i++) {
+        hit = pg_collides(x, y, sx, sy, height);
+        x += sx;
+        y += sy;
+    }
+    if (hit) {
+        x -= sx;
+        y -= sy;
+    }
+    PG_MX = x;
+    PG_MY = y;
+    return hit;
 }
 
 // Draws the ground map, with the level at `ox,oy` of the screen.

@@ -311,17 +311,10 @@ task ConveyorBelt (g, o) {
         spawn @ss Sprite("worldobjs/conveyorbelt_middle", [x=pos.x + lw + (i*mw), y=pos.y], [world=true])
     }
     spawn @ss Sprite("worldobjs/conveyorbelt_right", [x=pos.x + lw + (n*mw), y=pos.y], [world=true])
-    ;; the pingus move in whole pixels: the fraction is kept for later
-    var frac = 0.0
     loop on :tock {
-        set frac += speed * 0.025
-        val dx = trunc(frac)
-        set frac -= dx
-        if dx != 0 {
-            loop _, t in g.pingus {
-                if in_zone(pos, t.pub, 0, -2, 15 * (n + 2), 10) {
-                    set t.pub.x -= dx
-                }
+        loop _, t in g.pingus {
+            if in_zone(pos, t.pub, 0, -2, 15 * (n + 2), 10) {
+                set t.pub.x -= speed * 0.025
             }
         }
     }

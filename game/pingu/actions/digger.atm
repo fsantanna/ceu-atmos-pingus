@@ -1,4 +1,4 @@
-;; Digger: digs down, one radius every 4 ticks.
+;; Digger: digs down, one radius every 4 ticks (the 4th, 8th, ...).
 
 func digger_something (p) {
     match rel(p, 0, -1) {
@@ -17,8 +17,9 @@ func digger_dig (p, final) {
                           res_surface("pingus/common/digger_radius_gfx")
     val col = if final => gfx => r
     val w, h = pg.size(r)
-    ground_remove(gfx, col, p.x - (w//2), p.y - h + 2)
-    set p.y += 1
+    ground_remove(gfx, col, trunc(p.x) - (w//2), trunc(p.y) - h + 2)
+    set p.x = trunc(p.x)
+    set p.y = trunc(p.y) + 1
 }
 
 task Digger (p, g) {
@@ -26,11 +27,15 @@ task Digger (p, g) {
     loop {
         loop k in 4 {
             await :tick
+            val px = rel(p, 0, -1)
+            if (px == GP.water) || (px == GP.lava) {
+                return :drown
+            }
             if !digger_something(p) {
                 digger_dig(p, true)
                 return :walker
             }
-            if k == 0 {
+            if k == 3 {
                 digger_dig(p, false)
             }
         }

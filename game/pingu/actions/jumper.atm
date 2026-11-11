@@ -6,8 +6,8 @@ task Jumper (p, g, prev) {
     if prev == :climber {
         turn(p)
     }
-    set p.vx = clamp(p.vx + (4.58 * p.dir), -PINGU.terminal, PINGU.terminal)
-    set p.vy = clamp(p.vy - 4.58, -PINGU.terminal, PINGU.terminal)
+    set p.vx = vel(p.vx + pg.f32(4.58 * p.dir))
+    set p.vy = vel(p.vy - pg.f32(4.58))
     set p.y -= 1
     :faller
 }

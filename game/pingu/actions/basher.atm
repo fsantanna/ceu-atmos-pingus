@@ -8,7 +8,7 @@ func basher_bash (p) {
     val gfx = res_surface("pingus/common/bash_radius_gfx")
     val col = res_surface("pingus/common/bash_radius")
     val w, h = pg.size(col)
-    ground_remove(gfx, col, p.x - (w//2), p.y - h + 1)
+    ground_remove(gfx, col, trunc(p.x) - (w//2), trunc(p.y) - h + 1)
 }
 
 ;; Something to bash within reach.
@@ -37,35 +37,37 @@ func basher_walk (p) {
 }
 
 task Basher (p, g) {
-    val n = do {
-        val d = res_desc(pspr(p, "basher/left"))
-        d.array@0 * d.array@1
-    }
     spawn Sprite(pspr(p, "basher"), p, PSPR)
     basher_bash(p)
-
-    ;; with nothing to bash, it stops at 60% of the animation
-    par :any {
-        await :frame until (it.n > (n * 0.6)) && !basher_something(p)
-        :walker
-    } with {
-        loop {
-            loop k in 2 {
-                await Ticks(3)
-                if !basher_walk(p) {
-                    return :faller
-                }
-                if rel(p, 0, -1) != GP.nothing {
-                    if (rel(p, 0, 0) == GP.solid) || (rel(p, 0, PINGU.height) == GP.solid) {
+    ;; a step every 3 ticks, a bash every 2 steps; with nothing to bash,
+    ;; it stops past 60% of its cycle of 12 frames of 100ms (the frame
+    ;; comes from the ticks of the loop, as the clock of the original)
+    loop i {
+        await Ticks(3)
+        val c = 3 * (i + 1)
+        if !basher_walk(p) {
+            return :faller
+        }
+        val px = rel(p, 0, -1)
+        ifs {
+            (px == GP.water) || (px == GP.lava) => return :drown
+            px != GP.nothing => {
+                ifs {
+                    (rel(p, 0, 0) == GP.solid) || (rel(p, 0, PINGU.height) == GP.solid) => {
                         sound "chink"
                         turn(p)
                         return :walker
                     }
-                    if (k == 1) && basher_something(p) {
-                        basher_bash(p)
+                    basher_something(p) => {
+                        if (c % 2) == 0 {
+                            basher_bash(p)
+                        }
                     }
+                    ((((33 * c) // 100) % 12) / 12) > 0.6 => return :walker
+                    else => nil
                 }
             }
+            else => nil
         }
     }
 }

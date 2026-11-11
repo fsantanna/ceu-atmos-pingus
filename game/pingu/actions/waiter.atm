@@ -2,6 +2,7 @@
 
 task Waiter (p, g) {
     spawn Sprite(pspr(p, "waiter/left"), p, PSPR1)
-    await Ticks(81)
+    ;; a countdown of 2.0 by 0.025 per tick, in `float`: 82 ticks
+    await Ticks(82)
     :walker
 }

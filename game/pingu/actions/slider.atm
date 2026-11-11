@@ -1,22 +1,22 @@
-;; Slider: slides forward on the belly, slowing down.
+;; Slider: slides forward on the belly, slowing down at each tick.
 
 task Slider (p, g) {
     spawn Sprite(pspr(p, "slider"), p, PSPR)
-    var speed = 10.0
+    var speed = pg.f32(10.0)
     loop on :tick {
-        loop _ in trunc(speed) {
-            if rel(p, 1, 0) != GP.nothing {
-                break
-            }
+        var i = 0
+        loop {
+            while (i < speed) && (rel(p, 1, 0) == GP.nothing)
             set p.x += p.dir
             if rel(p, 0, -1) == GP.nothing {
-                set p.vx += math.max(speed, 5.0) * p.dir
+                set p.vx = vel(p.vx + (math.min(speed, 5) * p.dir))
                 return :faller
             }
-            set speed -= 7 * 0.025
-            if speed < 1 {
-                return :walker
-            }
+            set i += 1
+        }
+        set speed = pg.f32(speed - pg.f32(7 * 0.025))
+        if speed < 1 {
+            return :walker
         }
     }
 }

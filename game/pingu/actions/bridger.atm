@@ -17,32 +17,35 @@ func bridger_brick (p, left) {
     if p.dir == 1 {
         val b = res_surface("other/brick_right")
         val w, h = pg.size(b)
-        ground_put(b, p.x + 10 - w, p.y, GP.bridge)
+        ground_put(b, trunc(p.x + 10 - w), trunc(p.y), GP.bridge)
     } else {
-        ground_put(res_surface("other/brick_left"), p.x - 10, p.y, GP.bridge)
+        ground_put(res_surface("other/brick_left"), trunc(p.x - 10), trunc(p.y), GP.bridge)
     }
 }
 
 task Bridger (p, g) {
-    loop i in (1, BRIDGER_BRICKS) {
+    ;; as the clocks of the original: a brick takes 15 frames of 66ms
+    ;; (30 ticks), placed at the frame 7 (tick 14); a step up takes 4
+    ;; frames (8 ticks), and is taken at the next tick
+    loop i {
         set p.bricks = BRIDGER_BRICKS - i
-        ;; BUILDING: the brick is placed at the frame 7
-        pin s = spawn Sprite(pspr(p, "bridger"), p, PSPR)
-        await :frame until it.n == 7
-        if head(p, 0, 2) {
-            turn(p)
-            return :walker
+        do {
+            spawn Sprite(pspr(p, "bridger"), p, PSPR)
+            await Ticks(14)
+            if i == BRIDGER_BRICKS {
+                return :waiter
+            }
+            if head(p, 0, 2) {
+                turn(p)
+                return :walker
+            }
+            bridger_brick(p, BRIDGER_BRICKS - i - 1)
+            await Ticks(16)
         }
-        bridger_brick(p, BRIDGER_BRICKS - i)
-        await(s)
-
-        ;; the last brick has no walk
-        if i == BRIDGER_BRICKS {
-            return :waiter
+        do {
+            spawn Sprite(pspr(p, "bridger_walk"), p, PSPR)
+            await Ticks(9)
         }
-
-        ;; WALKING: one step up the bridge
-        await Sprite(pspr(p, "bridger_walk"), p, PSPR)
         if !bridger_free(p) {
             turn(p)
             return :walker

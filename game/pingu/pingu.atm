@@ -16,10 +16,10 @@
 ;;      wall, fall  the persistent abilities: `:climber`, `:floater`
 ;;      owner       the player, for the names of the sprites
 
-val PINGU = [
-    gravity  = 0.2,
-    deadly   = 10.4,        ;; deadly velocity
-    terminal = 11.0,        ;; terminal velocity
+val PINGU = [               ;; in `float`, as the original
+    gravity  = pg.f32(0.2),
+    deadly   = pg.f32(10.4),    ;; deadly velocity
+    terminal = pg.f32(11.0),    ;; terminal velocity
     height   = 26,
 ]
 
@@ -65,11 +65,12 @@ var ACTIONS = []
 
 ;; The actions that a player can give, in the order of the buttons.
 val ACTIONS_PLAYER = [
-    :basher, :blocker, :bomber, :bridger, :climber, :digger, :floater,
-    :jumper, :miner, :slider,
+    :angel, :basher, :blocker, :boarder, :bomber, :bridger, :climber,
+    :digger, :floater, :jumper, :miner, :slider, :superman,
 ]
 
 val ACTION_NAME = [
+    angel = "Angel", boarder = "Boarder", superman = "Superman", smashed = "Smashed",
     basher = "Basher", blocker = "Blocker", bomber = "Bomber",
     bridger = "Bridger", climber = "Climber", digger = "Digger",
     drown = "Drown", exiter = "Exiter", faller = "Faller",
@@ -83,13 +84,13 @@ val ACTION_NAME = [
 val ACTION_MODE = [ climber = :wall, floater = :fall ]
 
 ;; Actions that are not shown nor clicked.
-val ACTION_UNCATCHABLE = [ drown=true, laserkill=true, splashed=true, dead=true ]
+val ACTION_UNCATCHABLE = [ drown=true, laserkill=true, smashed=true, splashed=true, dead=true ]
 
 ;; Whether a pingu may change from action `a` to `b`, as the table
 ;; `CHANGE_ALLOWED` of the original.
 func allowed (a, b) {
     ifs {
-        X.xin(a, [:bomber, :drown, :exiter, :splashed]) => b == :dead
+        X.xin(a, [:bomber, :drown, :exiter, :splashed, :smashed]) => b == :dead
         a == :faller  => X.xin(b, [:dead, :bomber, :climber, :floater])
         a == :floater => X.xin(b, [:dead, :bomber])
         else => true
@@ -107,50 +108,23 @@ func can (p, b) {
 
 ;;; MOVER ;;;
 
-;; Whether moving one step from `x,y` collides, as `PinguCollider` of
-;; the original.
-func collides (x, y, sx, sy) {
-    val nx, ny = x + sx, y + sy
-    val falling = sy > 0.0
-    ifs {
-        trunc(nx) != trunc(x) => do {
-            ;; moving sideways: something from the feet up to the head
-            val top = ny - PINGU.height
-            var yy = ny
-            loop {
-                while yy >= top
-                val px = pg.map_get(trunc(nx), trunc(yy))
-                until (px != GP.nothing) && !((px == GP.bridge) && !falling), true
-                set yy -= 1
-            } || false
-        }
-        !falling => do {
-            val px = pg.map_get(trunc(nx), trunc(ny - PINGU.height))
-            (px != GP.nothing) && (px != GP.bridge)
-        }
-        else => pg.map_get(trunc(nx), trunc(ny)) != GP.nothing
+;; Moves the pingu with its velocity, one unit at a time, up to a
+;; collision, as the original (in C, with its `float`). Returns whether
+;; it collided.
+func move (p) {
+    if (p.vx == 0) && (p.vy == 0) {
+        return false
     }
+    val hit, x, y = pg.move(p.x, p.y, p.vx, p.vy, PINGU.height)
+    set p.x = x
+    set p.y = y
+    hit
 }
 
-;; Moves the pingu with its velocity, one unit at a time, up to a
-;; collision. Returns whether it collided.
-func move (p) {
-    var x, y = p.x, p.y
-    val len = math.sqrt((p.vx*p.vx) + (p.vy*p.vy))
-    val n = trunc(len)
-    val sx = if len > 0 => p.vx / len => 0.0
-    val sy = if len > 0 => p.vy / len => 0.0
-    val hit = loop i in n {
-        val c = collides(x, y, sx, sy)
-        set x, y = x + sx, y + sy
-        until c, true
-    }
-    if hit {
-        set x, y = x - sx, y - sy
-    }
-    set p.x = trunc(x)
-    set p.y = trunc(y)
-    hit
+;; A velocity of the original: clamped to the terminal velocity, and in
+;; `float`.
+func vel (v) {
+    pg.f32(clamp(v, -PINGU.terminal, PINGU.terminal))
 }
 
 ;; Mover(p): moves the pingu at each tick, and signals each collision
@@ -172,24 +146,13 @@ task Ticks (n) {
 
 ;;; PINGU ;;;
 
-;; The dangers of the world, checked at each tick before the action:
-;; the end of the level, water and lava, and hitting the ground too
-;; fast. Returns the action they force, whatever the current one is,
-;; as in the original.
+;; The end of the level, checked at each tick before the action, as
+;; the official game. (Water, lava, and falls too fast are checked by
+;; the actions where they happen: walker, faller, basher, digger,
+;; bomber.)
 task Danger (p) {
-    loop on :tick {
-        val px = rel(p, 0, -1)
-        if px == GP.outofscreen {
-            set p.x += p.dir
-            return :dead
-        }
-        if (px == GP.water) || (px == GP.lava) {
-            return :drown
-        }
-        if (px != GP.nothing) && (p.vy > PINGU.deadly) {
-            return :splashed
-        }
-    }
+    await :tick until rel(p, 0, -1) == GP.outofscreen
+    :dead
 }
 
 ;; Go(p): the orders to the pingu, from the player and the world:

@@ -123,6 +123,17 @@ val pg = [
     map_remove = func (gfx, col, x, y) {
         `pg_map_remove(pg_int($gfx), pg_int($col), pg_int($x), pg_int($y));`
     },
+    ;; pg.move(x, y, vx, vy, h): the mover of the pingus, in C
+    move = func (x, y, vx, vy, h) {
+        val hit = `:boolean pg_move(a_dbl($x), a_dbl($y), a_dbl($vx), a_dbl($vy), a_dbl($h))`
+        return hit, `:number.float (double)PG_MX`, `:number.float (double)PG_MY`
+    },
+
+    ;; pg.f32(x): x rounded to 32 bits, as a `float` of the original
+    f32 = func (x) {
+        `:number.float (double)(float)a_dbl($x)`
+    },
+
     map_draw = func (x, y) {
         `pg_map_draw(pg_int($x), pg_int($y));`
     },

@@ -26,7 +26,7 @@ val TRACE = os.getenv("PINGUS_TRACE")
 
 func trace (g, p, act) {
     if TRACE {
-        print(string.format("%5d pingu %2d %-9s %4d %4d", g.time, p.id, act, p.x, p.y))
+        print(string.format("%5d pingu %2d %-9s %4d %4d", g.time, p.id, act, trunc(p.x), trunc(p.y)))
     }
 }
 
@@ -87,7 +87,7 @@ func pingu_out (g, st) {
 ;; moves the pingus (and the objects drawn after them), then `:tock`
 ;; lets the objects drawn before them (exits, teleporters, ...) react
 ;; to where the pingus are now.
-task Clock () {
+task Clock (g) {
     var late = 0
     loop {
         watching :game.ff.on {
@@ -96,6 +96,7 @@ task Clock () {
                 loop {
                     while late >= 20
                     set late -= 20
+                    set g.time += 1
                     emit @(:parent) :tick
                     emit @(:parent) :tock
                 }
@@ -108,6 +109,7 @@ task Clock () {
                     while late >= 20
                     set late -= 20
                     loop _ in 4 {
+                        set g.time += 1
                         emit @(:parent) :tick
                         emit @(:parent) :tock
                     }
@@ -234,13 +236,9 @@ task Game (path) {
         }
     }
 
-    ;; the time of the world
-    spawn {
-        loop on :tick {
-            set g.time += 1
-        }
-    }
-    pin clock = spawn Clock()
+    ;; the time of the world: the clock counts it before each tick, as the
+    ;; original counts it at the start of each update
+    pin clock = spawn Clock(g)
 
     ;; pause: the clock stops; a single step gives one tick
     spawn {
@@ -248,6 +246,7 @@ task Game (path) {
             val e = await <:game.pause || :game.step>
             toggle clock(false)
             if e ?? :game.step {
+                set g.time += 1
                 emit :tick
                 emit :tock
             }
@@ -255,6 +254,7 @@ task Game (path) {
                 await <:game.pause || :game.ff.on>
             } with {
                 loop on :game.step {
+                    set g.time += 1
                     emit :tick
                     emit :tock
                 }

@@ -21,14 +21,14 @@ task Faller (p, g, prev) {
         if (p.vy > 5.0) && p.fall {
             return p.fall
         }
-        set p.vy = clamp(p.vy + PINGU.gravity, -PINGU.terminal, PINGU.terminal)
+        set p.vy = vel(p.vy + PINGU.gravity)
         if move(p) {
             ifs {
                 (rel(p,0,-1) == GP.nothing) && (rel(p,0,-2) == GP.nothing) &&
                 (rel(p,0,-3) == GP.nothing) && (rel(p,1,0) != GP.nothing) &&
                 (rel(p,1,0) != GP.bridge) => {
                     ;; a wall: bounces off it
-                    set p.vx = -(p.vx / 3.0)
+                    set p.vx = vel(-(p.vx / 3.0))
                     set p.dir = if p.vx > 0.0 => 1 => -1
                 }
                 p.vy > 0.0 => {
@@ -44,7 +44,7 @@ task Faller (p, g, prev) {
                 else => {
                     ;; the ceiling
                     set p.vy = 0.0
-                    set p.vx = p.vx / 3.0
+                    set p.vx = vel(p.vx / 3.0)
                 }
             }
         }
