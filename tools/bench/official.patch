@@ -24,7 +24,7 @@ index 69dcefc..c0a8704 100644
  }
  
 diff --git a/src/pingus/pingu.cpp b/src/pingus/pingu.cpp
-index db2678f..c68f094 100644
+index db2678f..6c70fca 100644
 --- a/src/pingus/pingu.cpp
 +++ b/src/pingus/pingu.cpp
 @@ -1,3 +1,5 @@
@@ -33,7 +33,7 @@ index db2678f..c68f094 100644
  // Pingus - A free Lemmings clone
  // Copyright (C) 1999 Ingo Ruhnke <grumbel@gmail.com>
  //
-@@ -254,6 +256,17 @@ Pingu::request_set_action(ActionName::Enum action_name)
+@@ -254,6 +256,18 @@ Pingu::request_set_action(ActionName::Enum action_name)
    return ret_val;
  }
  
@@ -45,13 +45,14 @@ index db2678f..c68f094 100644
 +  if (getenv("PINGUS_TRACE") && p->get_world()) {
 +    printf("%5d pingu %2u %-9s %4d %4d\n", p->get_world()->get_time(), p->get_id(),
 +           act, static_cast<int>(p->get_x()), static_cast<int>(p->get_y()));
++    fflush(stdout);   // the run may be killed by a timeout
 +  }
 +}
 +
  void
  Pingu::set_action (ActionName::Enum action_name)
  {
-@@ -269,6 +282,7 @@ Pingu::set_action(std::shared_ptr<PinguAction> act)
+@@ -269,6 +283,7 @@ Pingu::set_action(std::shared_ptr<PinguAction> act)
    PinguBehavior& b = behavior();
    b.previous_action = b.action->get_type();
    b.action = std::move(act);
@@ -59,7 +60,7 @@ index db2678f..c68f094 100644
  }
  
  bool
-@@ -318,6 +332,8 @@ Pingu::get_status (void) const
+@@ -318,6 +333,8 @@ Pingu::get_status (void) const
  Pingu::PinguStatus
  Pingu::set_status (PinguStatus s)
  {
@@ -68,7 +69,7 @@ index db2678f..c68f094 100644
    return (state().status = s);
  }
  
-@@ -369,6 +385,7 @@ Pingu::update()
+@@ -369,6 +386,7 @@ Pingu::update()
    if (rel_getpixel(0, -1) == Groundtype::GP_OUTOFSCREEN)
    {
      //Sound::PingusSound::play_sound("die");
@@ -76,17 +77,43 @@ index db2678f..c68f094 100644
      s.status = PS_DEAD;
      return;
    }
-@@ -389,6 +406,13 @@ Pingu::update()
+@@ -389,6 +407,15 @@ Pingu::update()
    // keep the action alive, it may replace itself during update()
    std::shared_ptr<PinguAction> action = b.action;
    action->update();
 +  {
 +    const char* t = getenv("PINGUS_TRACE");
-+    if (t && t[0] == '2' && get_id() == 0) {
++    const char* tid = getenv("PINGUS_TRACE_ID");
++    if (t && t[0] == '2' && get_id() == (unsigned)(tid ? atoi(tid) : 0)) {
 +      printf("tick %d %.3f %.3f %.3f %.3f %d\n", get_world()->get_time(), get_x(), get_y(),
 +             state().velocity.x, state().velocity.y, (int)direction());
++      fflush(stdout);
 +    }
 +  }
  }
  
  std::shared_ptr<PinguAction>
+diff --git a/src/pingus/screens/demo_session.cpp b/src/pingus/screens/demo_session.cpp
+index 226dcb3..ee7c23c 100644
+--- a/src/pingus/screens/demo_session.cpp
++++ b/src/pingus/screens/demo_session.cpp
+@@ -1,3 +1,4 @@
++#include <cstdlib>
+ // Pingus - A free Lemmings clone
+ // Copyright (C) 2002 Ingo Ruhnke <grumbel@gmail.com>
+ //
+@@ -173,9 +174,12 @@ DemoSession::update(float delta)
+ 
+     if (!pause)
+     {
+-      if (fast_forward)
++      // Benchmark patch: PINGUS_DEMO_SPEED=n updates per frame
++      const char* sp = getenv("PINGUS_DEMO_SPEED");
++      if (fast_forward || sp)
+       {
+-        for (int i = 0; i < 4; ++i)
++        int const n = sp ? atoi(sp) : 4;
++        for (int i = 0; i < n && !server->is_finished(); ++i)
+         {
+           server->update();
+           update_demo();

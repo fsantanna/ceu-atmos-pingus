@@ -1,0 +1,14 @@
+;; Trigger zones: the area of an object where it reacts to a pingu, as
+;; `in_zone` of the original (strict on all sides).
+
+;; Whether a pingu is in the zone `x1,y1,x2,y2` relative to `pos`.
+func in_zone (pos, q, x1, y1, x2, y2) {
+    (q.x > pos.x + x1) && (q.x < pos.x + x2) && (q.y > pos.y + y1) && (q.y < pos.y + y2)
+}
+
+;; Whether any pingu is in a zone.
+func zone_any (g, pos, x1, y1, x2, y2) {
+    loop _, t in g.pingus {
+        until in_zone(pos, t.pub, x1, y1, x2, y2), true
+    } || false
+}

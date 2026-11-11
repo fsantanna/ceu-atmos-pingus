@@ -186,7 +186,7 @@ task Pingu (g, x, y, dir, owner) {
     val p = pub
     ;; tests: the position of the first pingu at each tick
     spawn {
-        if (os.getenv("PINGUS_TRACE") == "2") && (p.id == 0) {
+        if (os.getenv("PINGUS_TRACE") == "2") && (p.id == (tonumber(os.getenv("PINGUS_TRACE_ID") || "0") || 0)) {
             loop on :tock {
                 print(string.format("tick %d %.3f %.3f %.3f %.3f %d %s", g.time, p.x, p.y, p.vx, p.vy, p.dir, p.act))
             }

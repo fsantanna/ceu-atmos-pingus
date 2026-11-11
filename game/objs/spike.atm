@@ -1,31 +1,32 @@
-;; Spike: comes out when a pingu walks over it, and kills it if it is
-;; still there at the frame 3.
+;; Spike: comes out when a pingu walks over it, and kills the pingus
+;; that are over it at its frame 3. As the original, it is hidden while
+;; idle, and its timing is its own clock (14 frames of 100ms, looping),
+;; counted from the ticks of its loop: it kills while the frame is 3, and
+;; rests at the frame 13.
 
-func spike_over (pos, q, d) {
-    (q.x > pos.x+16-d) && (q.x < pos.x+16+d) && (q.y > pos.y) && (q.y < pos.y+32)
+func spike_kill (g, pos) {
+    loop _, t in g.pingus {
+        if in_zone(pos, t.pub, 16-12, 0, 16+12, 32) {
+            emit @t :pingu.set [act=:dead]
+        }
+    }
 }
 
 task Spike (g, o) {
     val pos = [x=o.position@0, y=o.position@1]
     loop {
-        val t = loop {
-            await :tick
-            val t = loop _, t in g.pingus {
-                until spike_over(pos, t.pub, 5), t
-            }
-            until t, t
-        }
-        val q = t.pub
-        pin s = spawn Sprite("traps/spike", pos, [world=true])
+        await :tick until zone_any(g, pos, 16-5, 0, 16+5, 32)
         par :any {
-            await(s)
+            await Sprite("traps/spike", pos, [world=true, cycle=true])
         } with {
-            await(t)
-        } with {
-            await :frame until it.n == 3
-            await :tick until spike_over(pos, q, 12)
-            emit @t :pingu.set [act=:dead]
-            await(false)
+            loop k {
+                await :tick
+                val f = ((33 * (k + 1)) // 100) % 14
+                if f == 3 {
+                    spike_kill(g, pos)
+                }
+                until f == 13
+            }
         }
     }
 }
