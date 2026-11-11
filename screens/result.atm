@@ -70,7 +70,7 @@ task Result (r) {
 }
 
 ;; Play(path): the start screen, then the game and its result, again
-;; and again while the player retries. Returns whether it was solved.
+;; and again while the player retries. Returns the last result, or nil.
 task Play (path) {
     val lvl = level_load(path)
     if await Start(lvl) {
@@ -78,9 +78,9 @@ task Play (path) {
             val r = await Game(path)
             level_store(path, r)
             val again = await Result(r)
-            until !again, r.saved >= r.needed
+            until !again, r
         }
     } else {
-        false
+        nil
     }
 }

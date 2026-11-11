@@ -13,7 +13,15 @@ val OBJS_KNOWN = [
 ]
 
 func level_load (path) {
-    data_load(path)
+    val lvl = data_load(path)
+    ;; a name in pieces, as `""Crystal-Desert" Temple"` of a level
+    val n = lvl.head.levelname
+    set lvl.head.levelname = ifs {
+        n == nil     => path
+        n ?? :table  => vector.join(n, '"')
+        else         => n
+    }
+    lvl
 }
 
 ;; The objects of a list, with the offset `dx,dy` and the overrides

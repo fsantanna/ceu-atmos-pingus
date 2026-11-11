@@ -174,7 +174,8 @@ task Ticks (n) {
 
 ;; The dangers of the world, checked at each tick before the action:
 ;; the end of the level, water and lava, and hitting the ground too
-;; fast. Returns the action they force.
+;; fast. Returns the action they force, whatever the current one is,
+;; as in the original.
 task Danger (p) {
     loop on :tick {
         val px = rel(p, 0, -1)
@@ -182,10 +183,10 @@ task Danger (p) {
             set p.x += p.dir
             return :dead
         }
-        if ((px == GP.water) || (px == GP.lava)) && allowed(p.act, :drown) {
+        if (px == GP.water) || (px == GP.lava) {
             return :drown
         }
-        if (px != GP.nothing) && (p.vy > PINGU.deadly) && allowed(p.act, :splashed) {
+        if (px != GP.nothing) && (p.vy > PINGU.deadly) {
             return :splashed
         }
     }
@@ -194,12 +195,18 @@ task Danger (p) {
 ;; Go(p): the orders to the pingu, from the player and the world:
 ;; `:pingu.go [act]`. A persistent ability is kept in the pingu, and an
 ;; action that it can take now is returned.
-task Go (p) {
+task Go (p, g) {
     loop {
         val e = await :pingu.go until can(p, it.act)
         match ACTION_MODE@(e.act) {
-            :wall => set p.wall = e.act
-            :fall => set p.fall = e.act
+            :wall => do {
+                set p.wall = e.act
+                trace(g, p, "+" ++ e.act)
+            }
+            :fall => do {
+                set p.fall = e.act
+                trace(g, p, "+" ++ e.act)
+            }
             else  => return e.act
         }
     }
@@ -211,29 +218,35 @@ task Pingu (g, x, y, dir, owner) {
     set pub = [
         x = x, y = y, dir = dir, vx = 0.0, vy = 0.0,
         act = :faller, wall = nil, fall = nil, owner = owner || 0,
+        id = g.counter.released - 1,
     ]
     val p = pub
-    val st = par :any {
-        val act = await Danger(p)
-        if act == :dead {
-            :dead
-        } else {
-            set p.act = act
-            await ACTIONS@(act)(p, g)
-        }
+    ;; the actions, until the end, or until a danger forces one
+    val end = par :any {
+        await Danger(p)
     } with {
         var act, prev = :faller, :faller
         loop {
             set p.act = act
+            trace(g, p, act)
             val nxt = par :any {
                 await ACTIONS@(act)(p, g, prev)
             } with {
-                await Go(p)
+                await Go(p, g)
             }
             until (nxt == :dead) || (nxt == :exited), nxt
             set act, prev = nxt, act
         }
     }
+    ;; the forced action, drown or splashed, ends in death
+    val st = if X.xin(end, [:drown, :splashed]) {
+        set p.act = end
+        trace(g, p, end)
+        await ACTIONS@(end)(p, g)
+    } else {
+        end
+    }
+    trace(g, p, st)
     pingu_out(g, st)
     st
 }

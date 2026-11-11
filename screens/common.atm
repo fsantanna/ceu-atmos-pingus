@@ -115,7 +115,7 @@ val LEVELS_OK = do {
     loop i in #idx {
         val l = idx@i
         if l.ok {
-            set t@(l.file) = true
+            set t@("data/" ++ l.file) = true
         }
     }
     t

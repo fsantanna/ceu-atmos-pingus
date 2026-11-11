@@ -19,6 +19,41 @@ include "objs.atm"
 include "playfield.atm"
 include "hud.atm"
 
+;; Tests: `PINGUS_TRACE=1` prints the actions of the pingus, and
+;; `PINGUS_ORDERS=tick:n:action,...` gives an action to the pingu `n`
+;; (in the order of release) at a tick of the world, as a click would.
+val TRACE = os.getenv("PINGUS_TRACE")
+
+func trace (g, p, act) {
+    if TRACE {
+        print(string.format("%5d pingu %2d %-9s %4d %4d", g.time, p.id, act, p.x, p.y))
+    }
+}
+
+;; Orders(g): the orders of `PINGUS_ORDERS`, in sequence.
+task Orders (g) {
+    val s = os.getenv("PINGUS_ORDERS")
+    if !s || (s == "") {
+        await(false)
+    }
+    loop _, o in string.split(s, ",") {
+        val f = string.split(o, ":")
+        val t, n, act = tonumber(f@0), tonumber(f@1), f@2
+        await :tick until g.time >= t
+        loop _, k in g.pingus {
+            if k.pub.id == n {
+                if can(k.pub, act) && ((g.actions@(act) || 0) > 0) {
+                    set g.actions@(act) -= 1
+                    emit @k :pingu.go [act=act]
+                } else {
+                    trace(g, k.pub, "refuses:" ++ act)
+                }
+            }
+        }
+    }
+    await(false)
+}
+
 ;; A pingu leaves the entrance, if there are pingus left.
 func pingu_in (g) {
     val c = g.counter
@@ -240,6 +275,7 @@ task Game (path) {
     }
     spawn ActionKeys(g, acts)
     spawn Playfield(g)
+    spawn Orders(g)
 
     ;; the goal: all pingus out, all gone after the armageddon, or the
     ;; time is over; or the player quits
