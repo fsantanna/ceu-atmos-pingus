@@ -3,6 +3,9 @@
 #
 #   tst/run.sh          runs and compares with the stored outputs
 #   tst/run.sh update   stores the new outputs as the expected ones
+#   ASAN=1 tst/run.sh   the same, built with the address sanitizer, which
+#                       also checks leaks at the end of each run (any
+#                       report changes the outputs, and fails)
 #
 #   - the data: every converted file loads with X.load;
 #   - the engine: a sprite, a text, and a scripted click;
@@ -32,7 +35,11 @@ check () {     # name, file
 [ "$1" = "update" ] && UPDATE=1
 
 # one build of the game for all the tests
-./run.sh -o "$OUT/pingus" main.atm || exit 1
+if [ -n "$ASAN" ]; then
+    ATMOS_ASAN=1 ATMOS_CFLAGS="-O1 -g" ./run.sh -o "$OUT/pingus" main.atm 2>/dev/null || exit 1
+else
+    ./run.sh -o "$OUT/pingus" main.atm || exit 1
+fi
 export PINGUS_BIN="$OUT/pingus"
 
 # data
