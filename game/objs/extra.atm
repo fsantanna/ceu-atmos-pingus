@@ -2,6 +2,9 @@
 ;; game (Pingus/pingus@ffe3851, src/pingus/ecs/): backgrounds of solid
 ;; color and of stars, snow and rain, the fake exit, the hammer, the
 ;; teleporter, the ice block, the conveyor belt, and the switch door.
+;;
+;; The objects drawn behind the pingus react to them at `:tock`, after
+;; the pingus moved in the tick (see Clock in game/game.atm).
 
 ;; Whether a pingu is in the zone `x1,y1,x2,y2` relative to `pos`.
 func in_zone (pos, q, x1, y1, x2, y2) {
@@ -164,7 +167,7 @@ task FakeExit (g, o) {
         par :any {
             await Sprite("traps/fake_exit", pos, [world=true, still=true])
         } with {
-            await :tick until do {
+            await :tock until do {
                 loop _, t in g.pingus {
                     until zone(t.pub), true
                 }
@@ -214,7 +217,7 @@ task Teleporter (g, o, target) {
         par :any {
             await Sprite("worldobjs/teleporter", pos, [world=true, still=true])
         } with {
-            await :tick until do {
+            await :tock until do {
                 loop _, t in g.pingus {
                     until in_zone(pos, t.pub, -3, -52, 3, 0), true
                 }
@@ -264,7 +267,7 @@ task IceBlock (g, o) {
         }
     }
     loop {
-        await :tick until contact()
+        await :tock until contact()
         ;; melts, until no contact for a second
         par :any {
             loop {
@@ -272,13 +275,13 @@ task IceBlock (g, o) {
                     await Ticks(50)
                     false
                 } with {
-                    await :tick until contact()
+                    await :tock until contact()
                     true
                 }
                 until !again
             }
         } with {
-            loop on :tick {
+            loop on :tock {
                 set ice.thick -= 0.01
                 if ice.thick < 0 {
                     ground_remove(cmap, cmap, pos.x, pos.y)
@@ -310,7 +313,7 @@ task ConveyorBelt (g, o) {
     spawn @ss Sprite("worldobjs/conveyorbelt_right", [x=pos.x + lw + (n*mw), y=pos.y], [world=true])
     ;; the pingus move in whole pixels: the fraction is kept for later
     var frac = 0.0
-    loop on :tick {
+    loop on :tock {
         set frac += speed * 0.025
         val dx = trunc(frac)
         set frac -= dx
@@ -331,7 +334,7 @@ task ConveyorBelt (g, o) {
 task SwitchDoorSwitch (g, o) {
     val pos = [x=o.position@0, y=o.position@1]
     spawn Sprite("worldobjs/switchdoor_switch", pos, [world=true])
-    await :tick until zone_any(g, pos, 0, 0, 15, 40)
+    await :tock until zone_any(g, pos, 0, 0, 15, 40)
     emit @(:parent) :door.open [id=o.target_id]
     await(false)
 }
@@ -365,7 +368,7 @@ task SwitchDoor (g, o) {
         }
     }
     await :door.open until it.id == o.id
-    loop on :tick {
+    loop on :tock {
         until door.h == 0
         set door.h -= 1
         if door.h + 10 < n {

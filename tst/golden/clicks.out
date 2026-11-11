@@ -1,17 +1,17 @@
 view 0 440
   149 pingu  0 faller     325  640
-  190 pingu  0 walker     325  784
-  210 pingu  0 bomber     344  784
-  234 pingu  0 dead       344  784
-  349 pingu  1 faller     325  640
+  189 pingu  0 walker     325  784
+  210 pingu  0 bomber     345  785
+  234 pingu  0 dead       345  785
+  350 pingu  1 faller     325  640
   391 pingu  1 walker     325  793
-  549 pingu  2 faller     325  640
-  591 pingu  2 walker     325  793
-  749 pingu  3 faller     325  640
-  791 pingu  3 walker     325  793
+  551 pingu  2 faller     325  640
+  592 pingu  2 walker     325  793
+  752 pingu  3 faller     325  640
+  793 pingu  3 walker     325  793
   952 pingu  1 bomber     401  785
-  956 pingu  2 bomber     350  798
-  960 pingu  3 bomber     493  785
+  956 pingu  2 bomber     351  799
+  960 pingu  3 bomber     491  785
   976 pingu  1 dead       401  785
-  980 pingu  2 dead       350  798
-  984 pingu  3 dead       493  785
+  980 pingu  2 dead       351  799
+  984 pingu  3 dead       491  785

@@ -12,7 +12,8 @@ task Exit (g, o) {
     spawn Sprite(o.surface.image, pos, [world=true])
     spawn Sprite("core/misc/flag" ++ owner, [x=pos.x+40, y=pos.y], [world=true])
 
-    loop on :tick {
+    ;; after the pingus moved
+    loop on :tock {
         loop _, t in g.pingus {
             val q = t.pub
             if (q.x > pos.x-1) && (q.x < pos.x+1) && (q.y > pos.y-5) && (q.y < pos.y+5) {

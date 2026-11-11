@@ -1,9 +1,10 @@
-;; Faller: falls with gravity, bounces off walls, and lands as a walker
-;; (or as a blocker again). With the floater ability, it floats.
+;; Faller: falls with gravity, bounces off walls, and lands: as a walker
+;; (or as a blocker again), or drowns, or splashes if it falls too fast.
+;; With the floater ability, it floats.
 ;;
-;; The Mover moves the pingu and signals collisions. The collision is
-;; handled one tick later, so that the danger of hitting the ground too
-;; fast (in the Pingu task) is checked first, as in the original.
+;; The landing is decided in the same tick as the collision, as in the
+;; original. (The Céu rewrite waited one tick, a workaround of the order
+;; of its mover and its pingu.)
 
 func tumbling (p) {
     (math.abs(p.vx) > PINGU.deadly) || (math.abs(p.vy) > PINGU.deadly)
@@ -16,19 +17,12 @@ task Faller (p, g, prev) {
         }
         await Sprite(pspr(p, "tumbler"), p, PSPR)
     }
-    par :any {
-        loop on :tick {
-            if (p.vy > 5.0) && p.fall {
-                return p.fall
-            }
-            set p.vy += PINGU.gravity
+    loop on :tick {
+        if (p.vy > 5.0) && p.fall {
+            return p.fall
         }
-    } with {
-        await Mover(p)
-    } with {
-        loop {
-            await :collided
-            await :tick
+        set p.vy = clamp(p.vy + PINGU.gravity, -PINGU.terminal, PINGU.terminal)
+        if move(p) {
             ifs {
                 (rel(p,0,-1) == GP.nothing) && (rel(p,0,-2) == GP.nothing) &&
                 (rel(p,0,-3) == GP.nothing) && (rel(p,1,0) != GP.nothing) &&
@@ -38,8 +32,14 @@ task Faller (p, g, prev) {
                     set p.dir = if p.vx > 0.0 => 1 => -1
                 }
                 p.vy > 0.0 => {
-                    ;; the ground
-                    return (if prev == :blocker => :blocker => :walker)
+                    ;; the ground, the water, or too fast
+                    val px = rel(p, 0, -1)
+                    return ifs {
+                        (px == GP.water) || (px == GP.lava) => :drown
+                        math.abs(p.vy) > PINGU.deadly       => :splashed
+                        prev == :blocker                    => :blocker
+                        else                                => :walker
+                    }
                 }
                 else => {
                     ;; the ceiling

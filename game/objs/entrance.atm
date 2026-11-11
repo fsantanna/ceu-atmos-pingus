@@ -1,6 +1,7 @@
 ;; Entrance: releases the pingus, at a rate, until all are out or the
 ;; armageddon starts. The first one comes after 3 seconds, for the
-;; "let's go" sound.
+;; "let's go" sound. As the original, a pingu comes when the time is
+;; past the last release plus the rate: one every `rate + 1` ticks.
 
 task Entrance (g, o) {
     val x, y = o.position@0, o.position@1
@@ -20,7 +21,7 @@ task Entrance (g, o) {
                 if pingu_in(g) {
                     spawn @(g.pingus) Pingu(g, x, y, d, owner)
                 }
-                await Ticks(rate)
+                await Ticks(rate + 1)
             }
         }
     }

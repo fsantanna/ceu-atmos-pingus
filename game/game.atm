@@ -39,7 +39,9 @@ task Orders (g) {
     loop _, o in string.split(s, ",") {
         val f = string.split(o, ":")
         val t, n, act = tonumber(f@0), tonumber(f@1), f@2
-        await :tick until g.time >= t
+        if g.time < t {
+            await :tick until g.time >= t
+        }
         loop _, k in g.pingus {
             if k.pub.id == n {
                 if can(k.pub, act) && ((g.actions@(act) || 0) > 0) {
@@ -80,6 +82,11 @@ func pingu_out (g, st) {
 ;; Clock(): the time of the world, in ticks of 20ms, from the time of
 ;; the screen. It emits `:tick` to the game, 4 times as many with fast
 ;; forward. The time not yet given to the world goes to the next frame.
+;;
+;; Each tick has two phases, as the update of the original: `:tick`
+;; moves the pingus (and the objects drawn after them), then `:tock`
+;; lets the objects drawn before them (exits, teleporters, ...) react
+;; to where the pingus are now.
 task Clock () {
     var late = 0
     loop {
@@ -90,6 +97,7 @@ task Clock () {
                     while late >= 20
                     set late -= 20
                     emit @(:parent) :tick
+                    emit @(:parent) :tock
                 }
             }
         }
@@ -101,6 +109,7 @@ task Clock () {
                     set late -= 20
                     loop _ in 4 {
                         emit @(:parent) :tick
+                        emit @(:parent) :tock
                     }
                 }
             }
@@ -240,12 +249,14 @@ task Game (path) {
             toggle clock(false)
             if e ?? :game.step {
                 emit :tick
+                emit :tock
             }
             par :any {
                 await <:game.pause || :game.ff.on>
             } with {
                 loop on :game.step {
                     emit :tick
+                    emit :tock
                 }
             }
             toggle clock(true)
