@@ -1,0 +1,31 @@
+;; Checks that every converted data file loads with `X.load`.
+;;
+;;      find data -name '*.atm' > /tmp/files.txt
+;;      atmos tools/check.atm /tmp/files.txt
+;;
+;; It receives a file with one path per line, and shows the number of
+;; files and the one that takes the longest to load.
+
+val list = ...
+var n = 0
+var slow = [path="", s=0]
+loop path in io.lines(list) {
+    val f = io.open(path) --> assert
+    val src = io.read(f, :all)
+    io.close(f)
+    val t0 = os.clock()
+    val ok, v = catch true {
+        X.load(src)
+    }
+    val dt = os.clock() - t0
+    if !ok {
+        print("ERROR", path, v)
+        os.exit(1)
+    }
+    assert(type(v) == :table, path)
+    if dt > slow.s {
+        set slow = [path=path, s=dt]
+    }
+    set n += 1
+}
+print(string.format("%d files, slowest %s (%.3fs)", n, slow.path, slow.s))
