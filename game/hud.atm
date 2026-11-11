@@ -13,7 +13,7 @@
 ;; `act`. It is either selected or not, and goes from one to the other.
 task ActionButton (g, i, act, n) {
     val r = [x=0, y=(H//2) + (i*38) - ((n*38)//2) - 19, w=60, h=38]
-    val sp = [x=r.x+3+16, y=r.y+19-3+16]
+    val sp = [x=r.x+3+16, y=r.y+16]
     val name = "pingus/player0/" ++ act ++ "/right"
     par {
         loop {
