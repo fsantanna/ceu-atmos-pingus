@@ -1,0 +1,22 @@
+;; Slider: slides forward on the belly, slowing down.
+
+task Slider (p, g) {
+    spawn Sprite(pspr(p, "slider"), p, PSPR)
+    var speed = 10.0
+    loop on :tick {
+        loop _ in trunc(speed) {
+            if rel(p, 1, 0) != GP.nothing {
+                break
+            }
+            set p.x += p.dir
+            if rel(p, 0, -1) == GP.nothing {
+                set p.vx += math.max(speed, 5.0) * p.dir
+                return :faller
+            }
+            set speed -= 7 * 0.025
+            if speed < 1 {
+                return :walker
+            }
+        }
+    }
+}

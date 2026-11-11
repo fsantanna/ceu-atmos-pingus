@@ -1,0 +1,49 @@
+;; SurfaceBackground: a tiled image behind the level, which moves with
+;; a parallax and may scroll by itself. A color may cover it.
+
+task SurfaceBackground (g, o) {
+    val img = res_surface(o.surface.image, o.surface.modifier)
+    val w, h = pg.size(img)
+    val para_x = if o.para_x == nil => 0.5 => o.para_x
+    val para_y = if o.para_y == nil => 0.5 => o.para_y
+    val sx = o.scroll_x || 0
+    val sy = o.scroll_y || 0
+    val color = ifs {
+        o.colori => (o.colori@0 << 24) | (o.colori@1 << 16) | (o.colori@2 << 8) | o.colori@3
+        o.color  => (trunc(o.color@0*255) << 24) | (trunc(o.color@1*255) << 16) |
+                    (trunc(o.color@2*255) << 8)  |  trunc(o.color@3*255)
+        else     => 0
+    }
+
+    ;; the scroll of the image by itself, in the time of the world
+    val scroll = [x=0, y=0]
+    if (sx != 0) || (sy != 0) {
+        spawn {
+            loop on :tick {
+                set scroll.x = (scroll.x + sx) % w
+                set scroll.y = (scroll.y + sy) % h
+            }
+        }
+    }
+
+    loop on :sdl.draw {
+        var x0 = trunc((-CAM.x * para_x) + scroll.x) % w
+        var y0 = trunc((-CAM.y * para_y) + scroll.y) % h
+        if x0 > 0 { set x0 -= w }
+        if y0 > 0 { set y0 -= h }
+        var y = y0
+        loop {
+            while y < H
+            var x = x0
+            loop {
+                while x < W
+                pg.draw(img, x, y)
+                set x += w
+            }
+            set y += h
+        }
+        if (color & 0xFF) > 0 {
+            pg.fill(color, 0, 0, W, H)
+        }
+    }
+}

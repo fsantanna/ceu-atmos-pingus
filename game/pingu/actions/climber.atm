@@ -1,0 +1,25 @@
+;; Climber: climbs a wall up to its end.
+
+task Climber (p, g) {
+    spawn Sprite(pspr(p, "climber"), p, PSPR)
+    loop on :tick {
+        val up = rel(p, 0, 1)
+        if (up == GP.nothing) || (up == GP.bridge) {
+            if rel(p, 1, 1) != GP.nothing {
+                set p.y -= 1
+            } else {
+                ;; the wall ended: steps over it, or turns to fall
+                if !head(p, p.dir, 1) {
+                    set p.x += p.dir
+                    set p.y -= 1
+                } else {
+                    turn(p)
+                }
+                return :walker
+            }
+        } else {
+            turn(p)
+            return :walker
+        }
+    }
+}

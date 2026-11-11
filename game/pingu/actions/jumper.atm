@@ -1,0 +1,13 @@
+;; Jumper: jumps forward, or off the wall if it was climbing.
+
+task Jumper (p, g, prev) {
+    spawn Sprite(pspr(p, "jumper"), p, PSPR)
+    await :tick
+    if prev == :climber {
+        turn(p)
+    }
+    set p.vx += 4.58 * p.dir
+    set p.vy += -4.58
+    set p.y -= 1
+    :faller
+}

@@ -1,0 +1,21 @@
+;; The ground of the level: the collision map and the ground map, in C
+;; (`engine/pingus.h`). Both change together.
+
+func ground_put (img, x, y, type) {
+    pg.map_put(img, x, y, type)
+}
+
+func ground_remove (gfx, col, x, y) {
+    pg.map_remove(gfx, col, x, y)
+}
+
+;; A groundpiece of the level: put in the ground, or removed from it.
+func groundpiece (o) {
+    val img = res_surface(o.surface.image, o.surface.modifier)
+    val x, y = o.position@0, o.position@1
+    if o.type == :remove {
+        ground_remove(img, img, x, y)
+    } else {
+        ground_put(img, x, y, GP@(o.type) || GP.ground)
+    }
+}

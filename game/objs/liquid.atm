@@ -1,0 +1,17 @@
+;; Liquid: water or lava, repeated along its width. The pingus drown in
+;; it, through the collision map.
+
+task Liquid (g, o) {
+    val pos = [x=o.position@0, y=o.position@1]
+    val fw, fh = res_frame_size(o.surface.image)
+    val n = o.repeat || 1
+    val mask = res_surface("liquids/water_cmap")
+    loop i in n * fw {
+        ground_put(mask, pos.x + i, pos.y, GP.water)
+    }
+    pin ss = tasks()
+    loop i in n {
+        spawn @ss Sprite(o.surface.image, [x=pos.x + (i*fw), y=pos.y], [world=true])
+    }
+    await(false)
+}

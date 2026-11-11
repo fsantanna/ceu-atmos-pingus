@@ -1,0 +1,18 @@
+;; Blocker: stands, and turns the pingus that reach it.
+
+task Blocker (p, g) {
+    spawn Sprite(pspr(p, "blocker"), p, PSPR)
+    loop on :tick {
+        if rel(p, 0, -1) == GP.nothing {
+            return :faller
+        }
+        loop _, t in g.pingus {
+            val q = t.pub
+            if (q != p) && (q.x > p.x-16) && (q.x < p.x+16) &&
+               (q.y > p.y-32) && (q.y < p.y+5)
+            {
+                set q.dir = if q.x > p.x => 1 => -1
+            }
+        }
+    }
+}

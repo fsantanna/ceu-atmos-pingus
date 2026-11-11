@@ -1,0 +1,6 @@
+;; Drown: the animation of drowning, then dead.
+
+task Drown (p, g) {
+    await Sprite(pspr(p, "drownfall"), p, PSPR)
+    :dead
+}

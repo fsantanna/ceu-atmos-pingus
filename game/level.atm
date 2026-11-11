@@ -1,0 +1,62 @@
+;; Levels: reading a converted level, and resolving its prefabs and
+;; groups into a flat list of objects.
+;;
+;; A prefab is a file of objects, placed at a position, with fields
+;; that the level may override (as `OverrideFileReader` of the
+;; original). A group is a list of objects. Both are expanded here, so
+;; that the game only sees the objects it creates.
+
+;; The kinds of objects that the game implements, and the actions.
+val OBJS_KNOWN = [
+    :entrance, :exit, :groundpiece, :guillotine, :hotspot, :laser_exit,
+    :liquid, :smasher, :spike, :surface_background,
+]
+
+func level_load (path) {
+    data_load(path)
+}
+
+;; The objects of a list, with the offset `dx,dy` and the overrides
+;; `ov`, appended to `out`.
+func level_flatten (objs, dx, dy, ov, out) {
+    loop _, o in objs {
+        val obj = if ov => (o ++ ov) => o
+        match obj {
+            :group => level_flatten(obj.objects, dx, dy, nil, out)
+            :prefab => do {
+                val name = string.sub(obj.name, #"prefabs/")
+                val pf = data_load("data/prefabs/" ++ name ++ ".prefab.atm")
+                val pos = obj.position || [0, 0, 0]
+                level_flatten(pf.objects, dx + pos@0, dy + pos@1, obj.overrides, out)
+            }
+            else => do {
+                val c = X.copy(obj)
+                set c.tag = obj.tag
+                if c.position {
+                    set c.position = [
+                        math.floor(c.position@0 + dx),
+                        math.floor(c.position@1 + dy),
+                        c.position@2 || 0,
+                    ]
+                }
+                vector.insert(out, c)
+            }
+        }
+    }
+    out
+}
+
+;; The objects of a level, flat, in their order in the file.
+func level_objects (lvl) {
+    level_flatten(lvl.objects, 0, 0, nil, [])
+}
+
+;; The time of the level in ticks of the world (20ms), as a text.
+func time_str (ticks) {
+    if ticks < 0 {
+        "unlimited"
+    } else {
+        val secs = (ticks * 20) // 1000
+        string.format("%2d:%02d", secs // 60, secs % 60)
+    }
+}

@@ -1,0 +1,7 @@
+;; Exiter: the animation of the exit, then saved.
+
+task Exiter (p, g) {
+    sound "yipee"
+    await Sprite(pspr(p, "exit"), p, PSPR)
+    :exited
+}

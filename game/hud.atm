@@ -1,0 +1,209 @@
+;; The panel of the game: the action buttons, the counters, the time,
+;; the small map, and the buttons of armageddon, fast forward, and
+;; pause.
+;;
+;; The widgets talk with the game through events to their parent task,
+;; the game: `:game.select`, `:game.armageddon`, `:game.pause`,
+;; `:game.ff.on` and `:game.ff.off`. None of them keeps a flag of its
+;; state: the state is where its code is.
+
+;;; ACTION BUTTONS ;;;
+
+;; ActionButton(g, i, act, n): the button `i` of `n`, for the action
+;; `act`. It is either selected or not, and goes from one to the other.
+task ActionButton (g, i, act, n) {
+    val r = [x=0, y=(H//2) + (i*38) - ((n*38)//2) - 19, w=60, h=38]
+    val sp = [x=r.x+3+16, y=r.y+19-3+16]
+    val name = "pingus/player0/" ++ act ++ "/right"
+    par {
+        loop {
+            ;; selected
+            if (i != 0) || (g.next != act) {
+                ;; not selected: until clicked, or selected by key
+                watching :game.select until it.i == i {
+                    spawn Sprite("core/buttons/buttonbackground", r)
+                    spawn Sprite(name, sp, [anchor=:center, still=true])
+                    await Click(r)
+                    emit @(:parent) :game.select [i=i, act=act]
+                }
+            }
+            set g.next = act
+            watching :game.select until it.i != i {
+                spawn Sprite("core/buttons/buttonbackgroundhl", r)
+                await Sprite(name, sp, [anchor=:center, cycle=true])
+            }
+        }
+    } with {
+        val f = FONT.pingus_small
+        loop on :sdl.draw {
+            text(f, g.actions@(act), r.x + r.w - 5, r.y + 9, :right)
+        }
+    } with {
+        loop {
+            await :sdl.mouse.motion until inside(r, it.x, it.y)
+            watching :sdl.mouse.motion until !inside(r, it.x, it.y) {
+                loop on :sdl.draw {
+                    text(FONT.pingus_small, ACTION_NAME@(act), r.x + r.w + 5, r.y + 9)
+                }
+            }
+        }
+    }
+}
+
+;; The keys of the actions: 1 to 9 and 0, and the arrows of the
+;; original (up and down, via the mouse wheel there).
+task ActionKeys (g, acts) {
+    val n = #acts
+    loop {
+        val e = await :sdl.key.dn
+        val k = tonumber(e.name)
+        if k && (k >= 0) && (k <= 9) {
+            val i = if k == 0 => 9 => k - 1
+            if i < n {
+                emit @(:parent) :game.select [i=i, act=acts@i]
+            }
+        }
+    }
+}
+
+;;; COUNTERS AND TIME ;;;
+
+task Counters (g) {
+    val c = g.counter
+    spawn Sprite("core/buttons/info", [x=W//2, y=0], [anchor=:top_center])
+    loop on :sdl.draw {
+        text(FONT.pingus_small,
+            string.format("Released:%3d/%d   Out:%3d   Saved:%3d/%d",
+                c.released, c.allowed, c.alive, c.exited, c.to_save),
+            W//2, -2, :center)
+    }
+}
+
+task Time (g) {
+    if g.limit < 0 {
+        await(false)
+    }
+    loop on :sdl.draw {
+        text(FONT.pingus_small, time_str(math.max(0, g.limit - g.time)), W - 30, 3, :right)
+    }
+}
+
+;;; SMALL MAP ;;;
+
+;; The level in small, with the view, the pingus, the entrances and
+;; exits. A click (or a drag) on it moves the view.
+task SmallMap (g) {
+    val r = [x=5, y=H-105, w=175, h=100]
+    val ent = res_surface("core/misc/smallmap_entrance")
+    val ext = res_surface("core/misc/smallmap_exit")
+    val ew, eh = pg.size(ent)
+    val xw, xh = pg.size(ext)
+    val func cam_to (x, y) {
+        set CAM.x = (((x - r.x) * g.w) // r.w) - (W//2)
+        set CAM.y = (((y - r.y) * g.h) // r.h) - (H//2)
+        cam_clamp(g)
+    }
+    par {
+        loop {
+            val e = await :sdl.mouse.dn until (it.but == 1) && inside(r, it.x, it.y)
+            cam_to(e.x, e.y)
+            watching :sdl.mouse.up {
+                loop m on :sdl.mouse.motion {
+                    if inside(r, m.x, m.y) {
+                        cam_to(m.x, m.y)
+                    }
+                }
+            }
+        }
+    } with {
+        loop on :sdl.draw {
+            pg.map_small(r.x, r.y, r.w, r.h)
+            loop _, m in g.marks {
+                if m.tag == :entrance {
+                    pg.draw(ent, r.x + ((m.x*r.w)//g.w) - (ew//2), r.y + ((m.y*r.h)//g.h) - eh)
+                } else {
+                    pg.draw(ext, r.x + ((m.x*r.w)//g.w) - (xw//2), r.y + ((m.y*r.h)//g.h) - xh)
+                }
+            }
+            ;; the view
+            val vw = math.min(r.w, (W*r.w)//g.w)
+            val vh = math.min(r.h, (H*r.h)//g.h)
+            pg.rect(0x00FF00FF, r.x + ((CAM.x*r.w)//g.w), r.y + ((CAM.y*r.h)//g.h), vw, vh)
+            ;; the pingus
+            loop _, t in g.pingus {
+                val q = t.pub
+                val x = r.x + ((q.x*r.w)//g.w)
+                val y = r.y + ((q.y*r.h)//g.h)
+                pg.line(0xFFFF00FF, x, y, x, y-2)
+            }
+        }
+    }
+}
+
+;;; ARMAGEDDON, FAST FORWARD, PAUSE ;;;
+
+;; The armageddon needs a double click: a second click within 1 second
+;; of the first. A case of the study: a state machine with no state
+;; variable, only a loop and a timeout.
+task Armageddon (g) {
+    val r = [x=W-44, y=H-65, w=38, h=60]
+    val pos = [x=r.x+19, y=r.y+30]
+    spawn Sprite("core/buttons/hbuttonbgb", r)
+    do {
+        spawn Sprite("core/buttons/armageddon_anim", pos, [anchor=:center, still=true, frame=7])
+        loop {
+            await Click(r)
+            watching 1s {
+                await Click(r)
+                break
+            }
+        }
+    }
+    spawn Sprite("core/buttons/armageddon_anim", pos, [anchor=:center])
+    emit @(:parent) :game.armageddon
+    await(false)
+}
+
+;; Fast forward: on while the button is pressed.
+task FastForward (g) {
+    val r = [x=W-84, y=H-65, w=38, h=60]
+    val pos = [x=r.x+19, y=r.y+30]
+    spawn {
+        loop {
+            watching :game.ff.on {
+                spawn Sprite("core/buttons/hbuttonbgb", r)
+                await :sdl.mouse.dn until (it.but == 1) && inside(r, it.x, it.y)
+                emit @(:parent) :game.ff.on
+            }
+            watching :game.ff.off {
+                spawn Sprite("core/buttons/hbuttonbg", r)
+                await :sdl.mouse.up until it.but == 1
+                emit @(:parent) :game.ff.off
+            }
+        }
+    }
+    spawn Sprite("core/buttons/fast_forward", pos, [anchor=:center])
+    await(false)
+}
+
+;; Pause: shows the state of the pause, and toggles it on click.
+task Pause (g) {
+    val r = [x=W-124, y=H-65, w=38, h=60]
+    val pos = [x=r.x+19, y=r.y+30]
+    spawn {
+        loop {
+            watching :game.pause {
+                spawn Sprite("core/buttons/hbuttonbgb", r)
+                await Click(r)
+                emit @(:parent) :game.pause
+            }
+            watching :game.pause {
+                spawn Sprite("core/buttons/hbuttonbg", r)
+                await Click(r)
+                emit @(:parent) :game.pause
+            }
+        }
+    }
+    spawn Sprite("core/buttons/pause", pos, [anchor=:center])
+    await(false)
+}

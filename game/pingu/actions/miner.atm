@@ -1,0 +1,40 @@
+;; Miner: mines diagonally down, one step every 4 ticks.
+
+func miner_mine (p, name) {
+    val gfx = res_surface("pingus/common/" ++ name ++ "_gfx")
+    val col = res_surface("pingus/common/" ++ name)
+    val w, h = pg.size(col)
+    ground_remove(gfx, col, p.x - (w//2) + p.dir, p.y - h + 2)
+}
+
+func miner_final (p) {
+    miner_mine(p, if p.dir == -1 => "miner_radius_left" => "miner_radius_right")
+}
+
+task Miner (p, g) {
+    spawn Sprite(pspr(p, "miner"), p, PSPR)
+    loop {
+        await :tick
+        ifs {
+            rel(p, 0, -1) == GP.nothing => {
+                ;; in the air
+                miner_final(p)
+                return :walker
+            }
+            (rel(p, 0, -1) == GP.solid) || (rel(p, 0, PINGU.height) == GP.solid) => {
+                if rel(p, 0, -1) == GP.solid {
+                    sound "chink"
+                }
+                miner_final(p)
+                turn(p)
+                return :walker
+            }
+            else => {
+                miner_mine(p, "miner_radius")
+                set p.x += p.dir
+                set p.y += 1
+            }
+        }
+        await Ticks(3)
+    }
+}

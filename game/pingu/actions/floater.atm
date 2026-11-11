@@ -1,0 +1,14 @@
+;; Floater: floats down slowly, with the umbrella.
+
+task Floater (p, g) {
+    spawn Sprite(pspr(p, "floater/left"), p, PSPR1)
+    set p.vx = 0.0
+    set p.vy = 1.0
+    loop on :tick {
+        if rel(p, 0, -1) == GP.nothing {
+            set p.y += 1
+        } else {
+            return :walker
+        }
+    }
+}

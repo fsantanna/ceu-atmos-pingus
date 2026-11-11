@@ -1,0 +1,7 @@
+;; Waiter: waits a little after the last brick of a bridge.
+
+task Waiter (p, g) {
+    spawn Sprite(pspr(p, "waiter/left"), p, PSPR1)
+    await Ticks(81)
+    :walker
+}

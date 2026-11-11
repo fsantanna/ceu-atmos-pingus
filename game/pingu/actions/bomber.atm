@@ -1,0 +1,28 @@
+;; Bomber: a countdown in the animation, then the explosion.
+;;
+;; The steps follow the frames of the sprite, which signals them: there
+;; are no flags of "sound played" or "exploded".
+
+task Bomber (p, g) {
+    sound("ohno", 0.5)
+    pin s = spawn Sprite(pspr(p, "bomber/left"), p, PSPR1)
+    par :any {
+        await(s)
+    } with {
+        await Mover(p)
+    } with {
+        await :frame until it.n == 10
+        sound("plop", 0.5)
+        await :frame until it.n == 13
+        loop _ in 50 {
+            spawn @(g.particles) PinguParticle(g, p.x, p.y - 5)
+        }
+        val gfx = res_surface("other/bomber_radius_gfx")
+        val col = res_surface("other/bomber_radius")
+        val w, h = pg.size(col)
+        ground_remove(gfx, col, p.x - (w//2), p.y - (w//2) - 16)
+        spawn Sprite(pspr(p, "explo"), p, PSPR1)
+        await :tick
+    }
+    :dead
+}

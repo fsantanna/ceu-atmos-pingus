@@ -1,0 +1,29 @@
+;; The actions of a pingu, one file each, and the table that maps the
+;; tag of an action to its task.
+
+include "actions/basher.atm"
+include "actions/blocker.atm"
+include "actions/bomber.atm"
+include "actions/bridger.atm"
+include "actions/climber.atm"
+include "actions/dead.atm"
+include "actions/digger.atm"
+include "actions/drown.atm"
+include "actions/exiter.atm"
+include "actions/faller.atm"
+include "actions/floater.atm"
+include "actions/jumper.atm"
+include "actions/laserkill.atm"
+include "actions/miner.atm"
+include "actions/slider.atm"
+include "actions/splashed.atm"
+include "actions/waiter.atm"
+include "actions/walker.atm"
+
+set ACTIONS = [
+    basher = Basher, blocker = Blocker, bomber = Bomber,
+    bridger = Bridger, climber = Climber, dead = Dead, digger = Digger,
+    drown = Drown, exiter = Exiter, faller = Faller, floater = Floater,
+    jumper = Jumper, laserkill = Laserkill, miner = Miner,
+    slider = Slider, splashed = Splashed, waiter = Waiter, walker = Walker,
+]

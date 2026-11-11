@@ -1,0 +1,11 @@
+;; The objects of the level, one file each.
+
+include "objs/surface_background.atm"
+include "objs/hotspot.atm"
+include "objs/liquid.atm"
+include "objs/entrance.atm"
+include "objs/exit.atm"
+include "objs/guillotine.atm"
+include "objs/spike.atm"
+include "objs/smasher.atm"
+include "objs/laser_exit.atm"

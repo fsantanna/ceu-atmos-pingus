@@ -1,0 +1,43 @@
+;; Smasher: a weight that falls on the pingus under it.
+
+func smasher_trigger (pos, q) {
+    ((q.dir == -1) && (q.x > pos.x+65)  && (q.x < pos.x+85)) ||
+    ((q.dir ==  1) && (q.x > pos.x+190) && (q.x < pos.x+210))
+}
+
+func smasher_any (g, pos) {
+    loop _, t in g.pingus {
+        until smasher_trigger(pos, t.pub) && (t.pub.act != :splashed), true
+    }
+}
+
+task Smasher (g, o) {
+    val pos = [x=o.position@0, y=o.position@1]
+    ground_put(res_surface("traps/smasher_cmap"), pos.x, pos.y, GP.solid)
+    val one = [world=true, speed=33, once=true]
+    loop {
+        ;; still, until a pingu walks under it
+        par :any {
+            await Sprite("traps/smasher", pos, [world=true, still=true])
+        } with {
+            await :tick until smasher_any(g, pos)
+        }
+
+        ;; down, one frame per tick
+        await Sprite("traps/smasher", pos, one)
+        sound "tenton"
+        loop _ in 20 {
+            spawn @(g.smoke) SmokeParticle(pos.x + 20 + math.random(0, 259), pos.y + 180,
+                                            math.random() - 0.5, math.random() - 0.5)
+        }
+        loop _, t in g.pingus {
+            val q = t.pub
+            if (q.x > pos.x+30) && (q.x < pos.x+250) && (q.y > pos.y+90) && (q.y < pos.y+190) {
+                emit @t :pingu.go [act=:splashed]
+            }
+        }
+
+        ;; up
+        await Sprite("traps/smasher", pos, one ++ [back=true])
+    }
+}

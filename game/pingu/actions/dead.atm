@@ -1,0 +1,5 @@
+;; Dead: nothing more to do.
+
+task Dead (p, g) {
+    :dead
+}

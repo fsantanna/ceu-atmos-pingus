@@ -1,0 +1,239 @@
+;; The pingu: physics helpers, the table of actions, and the Pingu task.
+;;
+;; A pingu is a loop over actions. Each action is a task that returns
+;; the tag of the next action: `await Walker(p)` is `:faller` when the
+;; ground ends. No action enum is stored for control: the action that
+;; runs is the position in the loop. The tag of the current action is
+;; published in `p.act`, only for the observers (the playfield, the
+;; traps, armageddon), which cannot see the position of the code.
+;;
+;; The data of a pingu is its `pub`, a table shared with its actions:
+;;
+;;      x, y        position of its feet, in the level
+;;      dir         -1 (left) or 1 (right)
+;;      vx, vy      velocity
+;;      act         the current action, for observers
+;;      wall, fall  the persistent abilities: `:climber`, `:floater`
+;;      owner       the player, for the names of the sprites
+
+val PINGU = [
+    gravity  = 0.2,
+    deadly   = 10.4,        ;; deadly velocity
+    terminal = 11.0,        ;; terminal velocity
+    height   = 26,
+]
+
+;; The pixel of the collision map at `x,y` relative to the pingu: `x`
+;; forward, and `y` upwards.
+func rel (p, x, y) {
+    pg.map_get(p.x + (x * p.dir), p.y - y)
+}
+
+;; A head collision when walking to `x,y`: anything but nothing, and
+;; the types with the bit of bridges (bridge, water, lava).
+func head (p, x, y) {
+    val px = rel(p, x, y + PINGU.height)
+    (px != GP.nothing) && ((px & GP.bridge) == 0)
+}
+
+func turn (p) {
+    set p.dir = -p.dir
+}
+
+func clamp (v, a, b) {
+    math.max(a, math.min(b, v))
+}
+
+func trunc (v) {
+    if v < 0 => math.ceil(v) => math.floor(v)
+}
+
+;; The name of a sprite of a pingu.
+func pspr (p, name) {
+    "pingus/player" ++ p.owner ++ "/" ++ name
+}
+
+;; The options of the sprites of pingus: in the world, with the feet at
+;; the position, and following the direction.
+val PSPR = [world=true, anchor=:bottom_center, turn=true]
+val PSPR1 = [world=true, anchor=:bottom_center]
+
+;;; ACTIONS ;;;
+
+;; The tasks of the actions, by tag: see `actions.atm`.
+var ACTIONS = []
+
+;; The actions that a player can give, in the order of the buttons.
+val ACTIONS_PLAYER = [
+    :basher, :blocker, :bomber, :bridger, :climber, :digger, :floater,
+    :jumper, :miner, :slider,
+]
+
+val ACTION_NAME = [
+    basher = "Basher", blocker = "Blocker", bomber = "Bomber",
+    bridger = "Bridger", climber = "Climber", digger = "Digger",
+    drown = "Drown", exiter = "Exiter", faller = "Faller",
+    floater = "Floater", jumper = "Jumper", laserkill = "Laserkill",
+    miner = "Miner", slider = "Slider", splashed = "Splashed",
+    waiter = "Waiter", walker = "Walker", dead = "Dead",
+]
+
+;; How an action is given: at once (the default), at the next wall
+;; (climber), or at the next fall (floater). These two are persistent.
+val ACTION_MODE = [ climber = :wall, floater = :fall ]
+
+;; Actions that are not shown nor clicked.
+val ACTION_UNCATCHABLE = [ drown=true, laserkill=true, splashed=true, dead=true ]
+
+;; Whether a pingu may change from action `a` to `b`, as the table
+;; `CHANGE_ALLOWED` of the original.
+func allowed (a, b) {
+    ifs {
+        X.xin(a, [:bomber, :drown, :exiter, :splashed]) => b == :dead
+        a == :faller  => X.xin(b, [:dead, :bomber, :climber, :floater])
+        a == :floater => X.xin(b, [:dead, :bomber])
+        else => true
+    }
+}
+
+;; Whether the action `b` would do something to the pingu `p` now.
+func can (p, b) {
+    match ACTION_MODE@(b) {
+        :wall => p.wall != b
+        :fall => p.fall != b
+        else  => (b != p.act) && allowed(p.act, b)
+    }
+}
+
+;;; MOVER ;;;
+
+;; Whether moving one step from `x,y` collides, as `PinguCollider` of
+;; the original.
+func collides (x, y, sx, sy) {
+    val nx, ny = x + sx, y + sy
+    val falling = sy > 0.0
+    ifs {
+        trunc(nx) != trunc(x) => do {
+            ;; moving sideways: something from the feet up to the head
+            val top = ny - PINGU.height
+            var yy = ny
+            loop {
+                while yy >= top
+                val px = pg.map_get(trunc(nx), trunc(yy))
+                until (px != GP.nothing) && !((px == GP.bridge) && !falling), true
+                set yy -= 1
+            } || false
+        }
+        !falling => do {
+            val px = pg.map_get(trunc(nx), trunc(ny - PINGU.height))
+            (px != GP.nothing) && (px != GP.bridge)
+        }
+        else => pg.map_get(trunc(nx), trunc(ny)) != GP.nothing
+    }
+}
+
+;; Moves the pingu with its velocity, one unit at a time, up to a
+;; collision. Returns whether it collided.
+func move (p) {
+    var x, y = p.x, p.y
+    val len = math.sqrt((p.vx*p.vx) + (p.vy*p.vy))
+    val n = trunc(len)
+    val sx = if len > 0 => p.vx / len => 0.0
+    val sy = if len > 0 => p.vy / len => 0.0
+    val hit = loop i in n {
+        val c = collides(x, y, sx, sy)
+        set x, y = x + sx, y + sy
+        until c, true
+    }
+    if hit {
+        set x, y = x - sx, y - sy
+    }
+    set p.x = trunc(x)
+    set p.y = trunc(y)
+    hit
+}
+
+;; Mover(p): moves the pingu at each tick, and signals each collision
+;; to its parent task with `:collided`.
+task Mover (p) {
+    loop on :tick {
+        if move(p) {
+            emit @(:parent) :collided
+        }
+    }
+}
+
+;; Ticks(n): awaits `n` ticks of the world.
+task Ticks (n) {
+    loop _ in n {
+        await :tick
+    }
+}
+
+;;; PINGU ;;;
+
+;; The dangers of the world, checked at each tick before the action:
+;; the end of the level, water and lava, and hitting the ground too
+;; fast. Returns the action they force.
+task Danger (p) {
+    loop on :tick {
+        val px = rel(p, 0, -1)
+        if px == GP.outofscreen {
+            set p.x += p.dir
+            return :dead
+        }
+        if ((px == GP.water) || (px == GP.lava)) && allowed(p.act, :drown) {
+            return :drown
+        }
+        if (px != GP.nothing) && (p.vy > PINGU.deadly) && allowed(p.act, :splashed) {
+            return :splashed
+        }
+    }
+}
+
+;; Go(p): the orders to the pingu, from the player and the world:
+;; `:pingu.go [act]`. A persistent ability is kept in the pingu, and an
+;; action that it can take now is returned.
+task Go (p) {
+    loop {
+        val e = await :pingu.go until can(p, it.act)
+        match ACTION_MODE@(e.act) {
+            :wall => set p.wall = e.act
+            :fall => set p.fall = e.act
+            else  => return e.act
+        }
+    }
+}
+
+;; Pingu(g, x, y, dir, owner): a pingu, from the fall at the entrance
+;; to `:exited` or `:dead`.
+task Pingu (g, x, y, dir, owner) {
+    set pub = [
+        x = x, y = y, dir = dir, vx = 0.0, vy = 0.0,
+        act = :faller, wall = nil, fall = nil, owner = owner || 0,
+    ]
+    val p = pub
+    val st = par :any {
+        val act = await Danger(p)
+        if act == :dead {
+            :dead
+        } else {
+            set p.act = act
+            await ACTIONS@(act)(p, g)
+        }
+    } with {
+        var act, prev = :faller, :faller
+        loop {
+            set p.act = act
+            val nxt = par :any {
+                await ACTIONS@(act)(p, g, prev)
+            } with {
+                await Go(p)
+            }
+            until (nxt == :dead) || (nxt == :exited), nxt
+            set act, prev = nxt, act
+        }
+    }
+    pingu_out(g, st)
+    st
+}

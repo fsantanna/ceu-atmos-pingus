@@ -1,0 +1,23 @@
+;; Exit: the pingus that reach it are saved. Its image is cut out of
+;; the ground, so that they can walk into it.
+
+task Exit (g, o) {
+    val pos = [x=o.position@0, y=o.position@1]
+    val owner = if (o.owner_id ?? :number) && (o.owner_id >= 0) && (o.owner_id <= 3) =>
+                    o.owner_id => 0
+    val img = res_surface(o.surface.image, o.surface.modifier)
+    val fw, fh = res_frame_size(o.surface.image)
+    ground_remove(img, img, pos.x - (fw//2), pos.y - fh)
+
+    spawn Sprite(o.surface.image, pos, [world=true])
+    spawn Sprite("core/misc/flag" ++ owner, [x=pos.x+40, y=pos.y], [world=true])
+
+    loop on :tick {
+        loop _, t in g.pingus {
+            val q = t.pub
+            if (q.x > pos.x-1) && (q.x < pos.x+1) && (q.y > pos.y-5) && (q.y < pos.y+5) {
+                emit @t :pingu.go [act=:exiter]
+            }
+        }
+    }
+}

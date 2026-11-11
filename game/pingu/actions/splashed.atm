@@ -1,0 +1,8 @@
+;; Splashed: hit the ground too fast.
+
+task Splashed (p, g) {
+    sound("splash", 0.5)
+    spawn Sprite(pspr(p, "splat"), p, PSPR1)
+    await Ticks(12)
+    :dead
+}

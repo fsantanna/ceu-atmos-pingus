@@ -1,0 +1,49 @@
+;; Particles: the pieces of an exploding pingu, and the smoke of the
+;; smasher. They live in pools of the game, and end with their time.
+
+;; A piece of a pingu, which bounces on the ground.
+task PinguParticle (g, x, y) {
+    val pos = [x=x, y=y]
+    var vx = (math.random() * 7) - 3.5
+    var vy = math.random() * -9
+    spawn Sprite("particles/pingu_explo", pos, [world=true, anchor=:bottom_left])
+
+    val func hit () {
+        pg.map_get(pos.x, pos.y) != GP.nothing
+    }
+
+    loop _ in 50 + math.random(0, 74) {
+        await :tick
+        set vy += PINGU.gravity
+        loop _ in trunc(math.abs(vy)) {
+            val s = if vy > 0 => 1 => -1
+            set pos.y += s
+            if hit() {
+                set pos.y -= s
+                set vy = vy * -0.6
+                break
+            }
+        }
+        loop _ in trunc(math.abs(vx)) {
+            val s = if vx > 0 => 1 => -1
+            set pos.x += s
+            if hit() {
+                set pos.x -= s
+                set vx = vx * -0.3
+                break
+            }
+        }
+    }
+}
+
+;; Smoke, which goes away.
+task SmokeParticle (x, y, vx, vy) {
+    val pos = [x=x, y=y]
+    val name = if math.random(0, 1) == 0 => "particles/smoke" => "particles/smoke2"
+    spawn Sprite(name, pos, [world=true])
+    loop _ in 25 + math.random(0, 9) {
+        await :tick
+        set pos.x += vx
+        set pos.y += vy
+    }
+}

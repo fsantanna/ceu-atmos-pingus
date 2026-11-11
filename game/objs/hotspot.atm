@@ -1,0 +1,6 @@
+;; Hotspot: an image of the level, with no effect on the pingus.
+
+task Hotspot (g, o) {
+    val pos = [x=o.position@0, y=o.position@1]
+    await Sprite(o.surface.image, pos, [world=true])
+}

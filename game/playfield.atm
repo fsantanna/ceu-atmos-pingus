@@ -1,0 +1,111 @@
+;; The playfield: the view over the level, the scrolling, the pingu
+;; under the mouse, and the clicks that give actions.
+
+;; Keeps the view inside the level.
+func cam_clamp (g) {
+    set CAM.x = math.max(0, math.min(CAM.x, g.w - W))
+    set CAM.y = math.max(0, math.min(CAM.y, g.h - H))
+}
+
+;; The pingu under the mouse, the nearest to its center, or nil.
+func pingu_at (g, mx, my) {
+    val lx = mx + CAM.x
+    val ly = my + CAM.y
+    var best, dist = nil, 500.0
+    loop _, t in g.pingus {
+        val q = t.pub
+        if (lx > q.x-16) && (lx < q.x+16) && (ly > q.y-32) && (ly < q.y) {
+            val d = math.sqrt(((q.x-lx)*(q.x-lx)) + ((q.y-16-ly)*(q.y-16-ly)))
+            if d < dist {
+                set best, dist = t, d
+            }
+        }
+    }
+    best
+}
+
+task Playfield (g) {
+    par {
+        ;; a click on a pingu gives it the selected action, if there is
+        ;; one left
+        loop e on :sdl.mouse.dn {
+            if e.but == 1 {
+                val t = pingu_at(g, e.x, e.y)
+                val act = g.next
+                if t && act && can(t.pub, act) && ((g.actions@(act) || 0) > 0) {
+                    set g.actions@(act) -= 1
+                    emit @t :pingu.go [act=act]
+                }
+            }
+        }
+    } with {
+        ;; scrolling: drag with the right button, as the original
+        loop {
+            val e = await :sdl.mouse.dn until it.but == 3
+            watching :sdl.mouse.up until it.but == 3 {
+                par {
+                    loop us on :clock {
+                        set CAM.x += trunc((MOUSE.x - e.x) * 0.2)
+                        set CAM.y += trunc((MOUSE.y - e.y) * 0.2)
+                        cam_clamp(g)
+                    }
+                } with {
+                    loop on :sdl.draw {
+                        pg.line(0x00FF00FF, MOUSE.x, MOUSE.y, e.x, e.y-15)
+                        pg.line(0x0000FFFF, MOUSE.x, MOUSE.y, e.x, e.y+15)
+                        pg.line(0x00FFFFFF, MOUSE.x, MOUSE.y, e.x+15, e.y)
+                        pg.line(0xFFFF00FF, MOUSE.x, MOUSE.y, e.x-15, e.y)
+                        pg.line(0xFF0000FF, MOUSE.x, MOUSE.y, e.x, e.y)
+                    }
+                }
+            }
+        }
+    } with {
+        ;; scrolling: the arrow keys, while pressed
+        loop {
+            val e = await :sdl.key.dn until X.xin(it.name, ["Left", "Right", "Up", "Down"])
+            val dx, dy = match e.name {
+                "Left"  => (-1, 0)
+                "Right" => (1, 0)
+                "Up"    => (0, -1)
+                else    => (0, 1)
+            }
+            watching :sdl.key.up until it.name == e.name {
+                loop us on :clock {
+                    set CAM.x += dx * (us // 2000)
+                    set CAM.y += dy * (us // 2000)
+                    cam_clamp(g)
+                }
+            }
+        }
+    } with {
+        ;; the pingu under the mouse: its capture rectangle, its
+        ;; direction, and the name of its action
+        val good = res_surface("game/cursors/capgood")
+        val bad  = res_surface("game/cursors/capbad")
+        val left = res_surface("game/cursors/arrow_left")
+        val right = res_surface("game/cursors/arrow_right")
+        val func center (img, x, y) {
+            val w, h = pg.size(img)
+            pg.draw(img, x - (w//2), y - (h//2))
+        }
+        loop on :sdl.draw {
+            val t = pingu_at(g, MOUSE.x, MOUSE.y)
+            if t && !ACTION_UNCATCHABLE@(t.pub.act) {
+                val q = t.pub
+                val x = q.x - CAM.x
+                val y = q.y - 16 - CAM.y
+                center(if allowed(q.act, g.next) => good => bad, x, y)
+                center(if q.dir == -1 => left => right, x, y)
+                var s = ACTION_NAME@(q.act)
+                if q.act == :bridger {
+                    set s = s ++ " (" ++ (q.bricks || 0) ++ ")"
+                }
+                if q.wall || q.fall {
+                    set s = s ++ "[" ++ (if q.wall => "c" => "") ++ (if q.fall => "f" => "") ++ "]"
+                }
+                text(FONT.pingus_small, s, x, y - 46, :center)
+            }
+        }
+    }
+}

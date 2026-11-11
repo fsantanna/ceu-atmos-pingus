@@ -1,0 +1,38 @@
+;; Digger: digs down, one radius every 4 ticks.
+
+func digger_something (p) {
+    match rel(p, 0, -1) {
+        GP.nothing => false
+        GP.solid   => do {
+            sound "chink"
+            false
+        }
+        else => true
+    }
+}
+
+func digger_dig (p, final) {
+    val r = res_surface("pingus/common/digger_radius")
+    val gfx = if final => res_surface("pingus/common/digger_radius_final_gfx") =>
+                          res_surface("pingus/common/digger_radius_gfx")
+    val col = if final => gfx => r
+    val w, h = pg.size(r)
+    ground_remove(gfx, col, p.x - (w//2), p.y - h + 2)
+    set p.y += 1
+}
+
+task Digger (p, g) {
+    spawn Sprite(pspr(p, "digger/left"), p, PSPR1)
+    loop {
+        loop k in 4 {
+            await :tick
+            if !digger_something(p) {
+                digger_dig(p, true)
+                return :walker
+            }
+            if k == 0 {
+                digger_dig(p, false)
+            }
+        }
+    }
+}

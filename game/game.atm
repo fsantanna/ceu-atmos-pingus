@@ -1,0 +1,270 @@
+;; The game screen: a level, from its first tick to its result.
+;;
+;; The tree of tasks is the dispatch and the lifespan of everything:
+;;
+;;  - the layers are pools, in the order of drawing: backgrounds, the
+;;    ground, liquids and exits, particles, pingus, front hotspots, and
+;;    the other objects; then the panel and the playfield;
+;;  - the world moves with `:tick` (20ms), which the Clock emits to the
+;;    game; pausing the world is pausing the Clock (`toggle`);
+;;  - the game ends when its goal is reached; then the block ends, and
+;;    with it every pingu, particle, and object.
+
+include "level.atm"
+include "ground.atm"
+include "pingu/pingu.atm"
+include "pingu/particles.atm"
+include "pingu/actions.atm"
+include "objs.atm"
+include "playfield.atm"
+include "hud.atm"
+
+;; A pingu leaves the entrance, if there are pingus left.
+func pingu_in (g) {
+    val c = g.counter
+    if c.released < c.allowed {
+        set c.released += 1
+        set c.alive += 1
+        true
+    } else {
+        false
+    }
+}
+
+;; A pingu leaves the world, saved or dead.
+func pingu_out (g, st) {
+    val c = g.counter
+    if st == :exited {
+        set c.exited += 1
+    } else {
+        set c.killed += 1
+    }
+    set c.alive -= 1
+}
+
+;; Clock(): the time of the world, in ticks of 20ms, from the time of
+;; the screen. It emits `:tick` to the game, 4 times as many with fast
+;; forward. The time not yet given to the world goes to the next frame.
+task Clock () {
+    var late = 0
+    loop {
+        watching :game.ff.on {
+            loop us on :clock {
+                set late += us // 1000
+                loop {
+                    while late >= 20
+                    set late -= 20
+                    emit @(:parent) :tick
+                }
+            }
+        }
+        watching :game.ff.off {
+            loop us on :clock {
+                set late += us // 1000
+                loop {
+                    while late >= 20
+                    set late -= 20
+                    loop _ in 4 {
+                        emit @(:parent) :tick
+                    }
+                }
+            }
+        }
+    }
+}
+
+;; Game(path): plays a level, and returns its result.
+task Game (path) {
+    val lvl = level_load(path)
+    val head = lvl.head
+    val objs = level_objects(lvl)
+    pg.map_new(head.levelsize@0, head.levelsize@1)
+    defer {
+        pg.map_free()
+    }
+    music(head.music)
+
+    ;; the layers, in the order of drawing
+    pin bgs = tasks()
+    spawn {
+        loop on :sdl.draw {
+            pg.map_draw(-CAM.x, -CAM.y)
+        }
+    }
+    pin back  = tasks()
+    pin parts = tasks()
+    pin smoke = tasks()
+    pin pingus = tasks()
+    pin front = tasks()
+    pin traps = tasks()
+
+    ;; the actions in the level, in the order of the buttons
+    val acts = do {
+        val v = []
+        loop _, a in ACTIONS_PLAYER {
+            if head.actions@(a) {
+                vector.insert(v, a)
+            }
+        }
+        v
+    }
+
+    pin g = [
+        pingus = pingus, particles = parts, smoke = smoke,
+        w = head.levelsize@0, h = head.levelsize@1,
+        counter = [
+            released = 0, alive = 0, exited = 0, killed = 0,
+            allowed = head.number_of_pingus, to_save = head.number_to_save,
+        ],
+        actions = if head.actions => X.copy(head.actions) => [],
+        next = acts@0,
+        time = 0,
+        limit = if head.time == nil => -1 => head.time,
+        marks = [],
+    ]
+
+    ;; the objects of the level
+    loop _, o in objs {
+        match o {
+            :surface_background => spawn @bgs SurfaceBackground(g, o)
+            :groundpiece => groundpiece(o)
+            :liquid      => spawn @back Liquid(g, o)
+            :exit        => do {
+                vector.insert(g.marks, :exit [x=o.position@0, y=o.position@1])
+                spawn @back Exit(g, o)
+            }
+            :hotspot     => if o.position@2 < 100 {
+                spawn @back Hotspot(g, o)
+            } else {
+                spawn @front Hotspot(g, o)
+            }
+            :entrance    => do {
+                vector.insert(g.marks, :entrance [x=o.position@0, y=o.position@1])
+                spawn @traps Entrance(g, o)
+            }
+            :guillotine  => spawn @traps Guillotine(g, o)
+            :smasher     => spawn @traps Smasher(g, o)
+            :spike       => spawn @traps Spike(g, o)
+            :laser_exit  => spawn @traps LaserExit(g, o)
+            else => nil
+        }
+    }
+
+    ;; the view starts over the entrances
+    do {
+        var x, y, n = 0, 0, 0
+        loop _, m in g.marks {
+            if m.tag == :entrance {
+                set x, y, n = x + m.x, y + m.y, n + 1
+            }
+        }
+        if n > 0 {
+            set CAM.x = (x // n) - (W//2)
+            set CAM.y = (y // n) + 100 - (H//2)
+        }
+        cam_clamp(g)
+    }
+
+    ;; the time of the world
+    spawn {
+        loop on :tick {
+            set g.time += 1
+        }
+    }
+    pin clock = spawn Clock()
+
+    ;; pause: the clock stops; a single step gives one tick
+    spawn {
+        loop {
+            val e = await <:game.pause || :game.step>
+            toggle clock(false)
+            if e ?? :game.step {
+                emit :tick
+            }
+            par :any {
+                await <:game.pause || :game.ff.on>
+            } with {
+                loop on :game.step {
+                    emit :tick
+                }
+            }
+            toggle clock(true)
+        }
+    }
+
+    ;; armageddon: every pingu becomes a bomber, one every 4 ticks
+    spawn {
+        await :game.armageddon
+        sound "goodidea"
+        loop {
+            await Ticks(4)
+            val t = loop _, t in pingus {
+                until can(t.pub, :bomber), t
+            }
+            while t
+            emit @t :pingu.go [act=:bomber]
+        }
+    }
+
+    ;; the keys of the game
+    spawn {
+        loop e on :sdl.key.dn {
+            match e.name {
+                "P"     => emit :game.pause
+                "S"     => emit :game.step
+                "A"     => emit :game.armageddon
+                "F"     => emit :game.ff.on
+                "Space" => emit :game.ff.on
+                else    => nil
+            }
+        }
+    }
+    spawn {
+        loop e on :sdl.key.up {
+            if (e.name == "F") || (e.name == "Space") {
+                emit :game.ff.off
+            }
+        }
+    }
+
+    ;; the panel and the playfield
+    spawn SmallMap(g)
+    spawn Time(g)
+    spawn Counters(g)
+    spawn Armageddon(g)
+    spawn FastForward(g)
+    spawn Pause(g)
+    pin buttons = tasks()
+    loop i, a in acts {
+        spawn @buttons ActionButton(g, i, a, #acts)
+    }
+    spawn ActionKeys(g, acts)
+    spawn Playfield(g)
+
+    ;; the goal: all pingus out, all gone after the armageddon, or the
+    ;; time is over; or the player quits
+    val c = g.counter
+    val quit = par :any {
+        await :tick until (c.released == c.allowed) && (c.alive == 0)
+    } with {
+        await :game.armageddon
+        await :tick until c.alive == 0
+    } with {
+        if g.limit < 0 {
+            await(false)
+        }
+        await :tick until g.time >= g.limit
+    } with {
+        await :sdl.key.dn until it.name == "Escape"
+        true
+    }
+    if quit != true {
+        await Ticks(125)
+    }
+
+    [
+        saved = c.exited, killed = c.killed, total = c.allowed,
+        needed = c.to_save, time = g.time, limit = g.limit,
+        name = head.levelname,
+    ]
+}

@@ -1,0 +1,69 @@
+;; Walker: walks, up and down hills, turns at walls, and falls at
+;; cliffs. With the floater ability, it shows the floater layer.
+
+val WALKER_MAX_STEPS = 5   ;; max nr. of pixels that a pingu walks up/down
+
+task Walker (p, g) {
+    set p.vx = 0.0
+    set p.vy = 0.0
+    spawn Sprite(pspr(p, "walker"), p, PSPR)
+    spawn {
+        await :tick until p.fall == :floater
+        await Sprite("other/floaterlayer", p, PSPR)
+    }
+
+    loop on :tick {
+        val ox, oy = p.x, p.y
+
+        ;; 1) The ground under the pingu may have gone (a digger, a
+        ;; bomber): it looks for ground a few pixels below, or falls.
+        if rel(p, 0, -1) == GP.nothing {
+            val i = loop _, i in [-2, -3, -4] {
+                until rel(p, 0, i) != GP.nothing, i
+            }
+            if i {
+                set p.y -= i
+            } else {
+                return :faller
+            }
+        }
+
+        ;; 2) A bridge ahead: the pingu floats through it.
+        if (rel(p, 1, 0) == GP.bridge) && !head(p, 1, 1) {
+            set p.x += p.dir
+            set p.y -= 1
+        } else {
+            ;; 3) Up or down hill: the highest free step ahead.
+            val step = loop _, y in [5,4,3,2,1,0,-1,-2,-3,-4,-5] {
+                val px = rel(p, 1, y)
+                until ((px == GP.nothing) || (px == GP.bridge)) &&
+                      (rel(p, 1, y-1) != GP.nothing), [y]
+            }
+            ifs {
+                step => {
+                    set p.x += p.dir
+                    set p.y -= step@0
+                }
+                rel(p, 1, 0) != GP.nothing => {
+                    ;; a wall: the persistent ability, or turn
+                    if p.wall {
+                        return p.wall
+                    }
+                    turn(p)
+                }
+                else => {
+                    ;; a cliff: one step into the air
+                    set p.x += p.dir
+                    return :faller
+                }
+            }
+
+            ;; 4) Stuck in a wall after the step: back, and turn.
+            if head(p, 0, 0) {
+                turn(p)
+                set p.x = ox
+                set p.y = oy
+            }
+        }
+    }
+}

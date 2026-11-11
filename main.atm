@@ -1,0 +1,12 @@
+;; Pingus in Atmos.
+;;
+;;      ./run.sh                    the menu
+;;      ./run.sh main.atm LEVEL     a level: data/levels/.../x.pingus.atm
+
+include "engine/engine.atm"
+include "game/game.atm"
+
+val args = [...]
+val path = args@0 || "data/levels/tutorial/snow11-grumbel.pingus.atm"
+val r = await Game(path)
+X.print(r)

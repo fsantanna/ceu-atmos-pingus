@@ -1,0 +1,31 @@
+;; Spike: comes out when a pingu walks over it, and kills it if it is
+;; still there at the frame 3.
+
+func spike_over (pos, q, d) {
+    (q.x > pos.x+16-d) && (q.x < pos.x+16+d) && (q.y > pos.y) && (q.y < pos.y+32)
+}
+
+task Spike (g, o) {
+    val pos = [x=o.position@0, y=o.position@1]
+    loop {
+        val t = loop {
+            await :tick
+            val t = loop _, t in g.pingus {
+                until spike_over(pos, t.pub, 5), t
+            }
+            until t, t
+        }
+        val q = t.pub
+        pin s = spawn Sprite("traps/spike", pos, [world=true])
+        par :any {
+            await(s)
+        } with {
+            await(t)
+        } with {
+            await :frame until it.n == 3
+            await :tick until spike_over(pos, q, 12)
+            emit @t :pingu.go [act=:dead]
+            await(false)
+        }
+    }
+}

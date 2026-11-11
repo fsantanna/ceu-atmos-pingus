@@ -1,0 +1,6 @@
+;; Laserkill: burnt by a laser exit.
+
+task Laserkill (p, g) {
+    await Sprite("other/laser_kill", p, [world=true, turn=true])
+    :dead
+}

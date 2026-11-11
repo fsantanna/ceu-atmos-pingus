@@ -1,0 +1,32 @@
+;; Guillotine: kills the pingu that walks under it.
+
+task Guillotine (g, o) {
+    val pos = [x=o.position@0, y=o.position@1]
+    loop {
+        ;; idle, until a pingu is under it
+        val dir = watching :guillotine.kill {
+            spawn Sprite("traps/guillotineidle", pos, [world=true])
+            loop on :tick {
+                loop _, t in g.pingus {
+                    val q = t.pub
+                    if (q.x > pos.x+38) && (q.x < pos.x+42) && (q.y > pos.y+90) && (q.y < pos.y+98) {
+                        val d = q.dir
+                        emit @t :pingu.go [act=:dead]
+                        emit :guillotine.kill [dir=d]
+                    }
+                }
+            }
+        }
+        ;; the kill
+        val name = if dir.dir == -1 => "traps/guillotinekill/left" =>
+                                       "traps/guillotinekill/right"
+        pin s = spawn Sprite(name, pos, [world=true])
+        par :any {
+            await(s)
+        } with {
+            await :frame until it.n == 7
+            sound("splash", 0.5)
+            await(false)
+        }
+    }
+}

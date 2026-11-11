@@ -1,0 +1,20 @@
+;; LaserExit: burns the pingu that walks into its beam.
+
+task LaserExit (g, o) {
+    val pos = [x=o.position@0, y=o.position@1]
+    loop {
+        watching :laser.kill {
+            spawn Sprite("traps/laser_exit", pos, [world=true, still=true])
+            loop on :tick {
+                loop _, t in g.pingus {
+                    val q = t.pub
+                    if (q.x < pos.x+34+10) && (q.x > pos.x+34) && (q.y < pos.y+43+20) && (q.y > pos.y+43) {
+                        emit @t :pingu.go [act=:laserkill]
+                        emit :laser.kill
+                    }
+                }
+            }
+        }
+        await Sprite("traps/laser_exit", pos, [world=true])
+    }
+}
