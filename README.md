@@ -120,7 +120,7 @@ fixed random seed, and scripted keys and mouse:
 - [x] P8 Case study ([doc/](doc/README.md)); the baseline of the
       official game is still to be measured again ([doc/bench.md](doc/bench.md))
 - [x] P9 Later items: the 12 objects that Céu did not have
-- [ ] Translations (the texts are in English)
+- [x] Translations: the `.po` files of the game, chosen in the options
 - [ ] The full options screen, input configuration, controllers
 
 ## License
