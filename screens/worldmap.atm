@@ -137,8 +137,9 @@ task WmPingu (wm, me) {
 }
 
 ;; A dot of the worldmap: its image by its state, the highlight and the
-;; name while the mouse is over it, and its clicks.
-task WmDot (wm, n) {
+;; name while the mouse is over it, and its clicks, which go to the view
+;; `v` (the parent of a task in a pool is the pool, not the view).
+task WmDot (wm, n, v) {
     val pos = [x=n.x, y=n.y]
     val over = \(x, y) { inside([x=n.x-CAM.x-12, y=n.y-CAM.y-12, w=24, h=24], x, y) }
     val name = if n.level => level_load(n.level).head.levelname => n.name
@@ -172,7 +173,7 @@ task WmDot (wm, n) {
                         loop {
                             val e = await :sdl.mouse.dn until it.but == 1
                             if open && ok {
-                                emit @(:parent) :wm.click [node=n.name]
+                                emit @v :wm.click [node=n.name]
                             } else {
                                 sound "chink"
                             }
@@ -196,7 +197,7 @@ task WmView (wm) {
     }
     pin dots = tasks()
     loop k, n in wm.nodes {
-        spawn @dots WmDot(wm, n)
+        spawn @dots WmDot(wm, n, task)
     }
     spawn WmPingu(wm, me)
     val lr = do {

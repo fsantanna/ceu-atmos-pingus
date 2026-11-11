@@ -76,6 +76,10 @@ check screens "$OUT/screens.out"
 tst/clicks.sh > "$OUT/clicks.out" 2>&1
 check clicks "$OUT/clicks.out"
 
+# the worldmap: a click walks the pingu to an open dot
+tst/worldmap.sh > "$OUT/worldmap.out" 2>&1
+check worldmap "$OUT/worldmap.out"
+
 # levels, 4 at a time
 grep -v '^#' tst/levels.txt | grep -v '^\s*$' | \
 while read name frames level orders keys; do

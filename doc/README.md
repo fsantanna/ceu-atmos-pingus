@@ -23,6 +23,7 @@ And the measures:
 - [loc.md](loc.md): lines of code per part.
 - [todo.md](todo.md): the open issues of the Céu rewrite, in this port.
 - [bench.md](bench.md): memory, CPU and frames of the port.
+- [compiler.md](compiler.md): what the port found in the compiler.
 
 The C++ code is quoted by the study, with links to the pinned commit of
 the original. The Céu code is at `fsantanna/pingus@036852a`, in `ceu/`.
