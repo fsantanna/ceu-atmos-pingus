@@ -24,7 +24,7 @@ index 69dcefc..c0a8704 100644
  }
  
 diff --git a/src/pingus/pingu.cpp b/src/pingus/pingu.cpp
-index db2678f..b32e994 100644
+index db2678f..c68f094 100644
 --- a/src/pingus/pingu.cpp
 +++ b/src/pingus/pingu.cpp
 @@ -1,3 +1,5 @@
@@ -76,3 +76,17 @@ index db2678f..b32e994 100644
      s.status = PS_DEAD;
      return;
    }
+@@ -389,6 +406,13 @@ Pingu::update()
+   // keep the action alive, it may replace itself during update()
+   std::shared_ptr<PinguAction> action = b.action;
+   action->update();
++  {
++    const char* t = getenv("PINGUS_TRACE");
++    if (t && t[0] == '2' && get_id() == 0) {
++      printf("tick %d %.3f %.3f %.3f %.3f %d\n", get_world()->get_time(), get_x(), get_y(),
++             state().velocity.x, state().velocity.y, (int)direction());
++    }
++  }
+ }
+ 
+ std::shared_ptr<PinguAction>
