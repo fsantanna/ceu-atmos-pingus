@@ -25,7 +25,9 @@ func wm_load (path) {
         val b = nodes@(e.destination)
         val pts = []
         loop _, p in e.positions {
-            vector.insert(pts, [x=p@0, y=p@1])
+            ;; `:position [x,y,z]` of old files, `:point [pos=[x,y,z]]` now
+            val v = p.pos || p
+            vector.insert(pts, [x=v@0, y=v@1])
         }
         set a.next@(b.name) = pts
         val rev = []

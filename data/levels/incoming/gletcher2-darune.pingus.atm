@@ -2,10 +2,7 @@
     version = 2,
     head = [
         levelname = "Twinpeeks",
-        description = [
-            "The pingus encounter two mountainpeeks, one peek looks ordinary and one of ",
-            "the peeks looks strange, but to which one shall the pingus go ?",
-        ],
+        description = "The pingus encounter two mountainpeeks, one peek looks ordinary and one of the peeks looks strange, but to which one shall the pingus go ?",
         author = "darune",
         number_of_pingus = 50,
         number_to_save = 20,
@@ -749,9 +746,9 @@
             position = [-11, 913, 0],
         ],
         :exit [
-            owner_id = 0,
             position = [132, 1040, 0],
             surface = [image = "exits/desert", modifier = :ROT0],
+            owner_id = 0,
         ],
         :groundpiece [
             type = :ground,
@@ -1069,9 +1066,9 @@
             position = [2144, 1481, 0],
         ],
         :exit [
-            owner_id = 0,
             position = [2101, 974, 0],
             surface = [image = "exits/stone", modifier = :ROT0],
+            owner_id = 0,
         ],
         :groundpiece [
             type = :solid,

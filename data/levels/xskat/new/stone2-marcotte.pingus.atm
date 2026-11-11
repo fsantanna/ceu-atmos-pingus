@@ -2,10 +2,7 @@
     version = 2,
     head = [
         levelname = "The wrong direction",
-        description = [
-            "Someone forgot to told the advanced group that rigth doesn't mean left. We ",
-            "just hope the will be able to do the trip before the sun rise.",
-        ],
+        description = "Someone forgot to told the advanced group that rigth doesn't mean left. We just hope the will be able to do the trip before the sun rise.",
         author = "Etienne Marcotte <marcotte_moi@yahoo.com>",
         number_of_pingus = 5,
         number_to_save = 5,
@@ -143,9 +140,9 @@
             position = [908, 261, 0],
         ],
         :exit [
-            owner_id = 0,
             position = [1113, 262, 0],
             surface = [image = "exits/stone", modifier = :ROT0],
+            owner_id = 0,
         ],
         :groundpiece [
             type = :ground,

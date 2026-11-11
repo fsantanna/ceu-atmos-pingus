@@ -2,10 +2,7 @@
     version = 2,
     head = [
         levelname = "Dig this",
-        description = [
-            "Get the Pingus down to the exit - but be careful, completing with enough ",
-            "Pingus may prove a bit difficult. ",
-        ],
+        description = "Get the Pingus down to the exit - but be careful, completing with enough Pingus may prove a bit difficult. ",
         author = "Rune Zedeler <rz@daimi.au.dk> & Erik Soe Sorensen <eriksoe@daimi.au.dk>",
         number_of_pingus = 40,
         number_to_save = 30,
@@ -113,9 +110,9 @@
             position = [444, 363, 0],
         ],
         :exit [
-            owner_id = 0,
             position = [778, 851, 0],
             surface = [image = "exits/stone", modifier = :ROT0],
+            owner_id = 0,
         ],
         :groundpiece [
             type = :ground,

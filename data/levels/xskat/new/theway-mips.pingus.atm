@@ -2,11 +2,7 @@
     version = 2,
     head = [
         levelname = "The Way is One, the Paths are Many.",
-        description = [
-            "Quick and simple... or maybe not. There are a few ways to solve this one. ",
-            "The lack of blockers might make it tougher than I expected. Email me with ",
-            "your comments + solutions (mrmips@hotpop.com). This is my first Pingus level.",
-        ],
+        description = "Quick and simple... or maybe not. There are a few ways to solve this one. The lack of blockers might make it tougher than I expected. Email me with your comments + solutions (mrmips@hotpop.com). This is my first Pingus level.",
         author = "mr. mips (mrmips@hotpop.com)",
         number_of_pingus = 30,
         number_to_save = 29,
@@ -179,9 +175,9 @@
             position = [324, 612, 0],
         ],
         :exit [
-            owner_id = 0,
             position = [1148.6, 611.6, 0],
             surface = [image = "exits/stone", modifier = :ROT0],
+            owner_id = 0,
         ],
         :groundpiece [
             type = :ground,

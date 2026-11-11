@@ -2,10 +2,7 @@
     version = 2,
     head = [
         levelname = "Have you seen something?",
-        description = [
-            "Hey, look there! No, wait, really, I think I saw something there. Don't run ",
-            "away! Wait a moment... oh, no, too late! ",
-        ],
+        description = "Hey, look there! No, wait, really, I think I saw something there. Don't run away! Wait a moment... oh, no, too late! ",
         author = "Marcus Brinkmann <Marcus.Brinkmann@ruhr-uni-bochum.de>",
         number_of_pingus = 3,
         number_to_save = 1,
@@ -82,14 +79,14 @@
             owner_id = 0,
         ],
         :exit [
-            owner_id = 0,
             position = [731, 199, 0],
             surface = [image = "exits/stone", modifier = :ROT0],
+            owner_id = 0,
         ],
         :exit [
-            owner_id = 0,
             position = [121, 349, 0],
             surface = [image = "groundpieces/ground/real/real22", modifier = :ROT0],
+            owner_id = 0,
         ],
         :hotspot [
             surface = [image = "groundpieces/ground/real/real5", modifier = :ROT0],

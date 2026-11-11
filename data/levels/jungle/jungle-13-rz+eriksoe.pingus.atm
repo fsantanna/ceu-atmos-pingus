@@ -250,9 +250,9 @@
             position = [760, 600, 0],
         ],
         :exit [
-            owner_id = 0,
             position = [725, 265, 0],
             surface = [image = "exits/ordina", modifier = :ROT0],
+            owner_id = 0,
         ],
         :groundpiece [
             type = :solid,

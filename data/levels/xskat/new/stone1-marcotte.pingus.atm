@@ -2,10 +2,7 @@
     version = 2,
     head = [
         levelname = "Entering the cave",
-        description = [
-            "The Pingus are going to explore the inner portion of this island. Will they ",
-            "be able to resist the urge of going down to quickly?",
-        ],
+        description = "The Pingus are going to explore the inner portion of this island. Will they be able to resist the urge of going down to quickly?",
         author = "Etienne Marcotte <marcotte_moi@yahoo.com>",
         number_of_pingus = 18,
         number_to_save = 15,
@@ -83,9 +80,9 @@
             position = [450, 813, 0],
         ],
         :exit [
-            owner_id = 0,
             position = [780, 803, 0],
             surface = [image = "exits/stone", modifier = :ROT0],
+            owner_id = 0,
         ],
         :groundpiece [
             type = :ground,

@@ -1,607 +1,606 @@
 view 733 298
-  149 pingu  0 faller     278  530
-  149 pingu  1 faller    1817  972
-  149 pingu  2 faller    1773  991
-  149 pingu  3 faller    1692 1033
-  149 pingu  4 faller    1652 1054
-  149 pingu  5 faller    1611 1073
-  149 pingu  6 faller    1528 1120
-  149 pingu  7 faller    1400 1004
-  149 pingu  8 faller    1463 1031
-  149 pingu  9 faller    1429 1018
-  149 pingu 10 faller    1365  989
-  149 pingu 11 faller    1236  934
-  149 pingu 12 faller    1298  959
-  149 pingu 13 faller    1175  901
-  149 pingu 14 faller    1193  841
-  149 pingu 15 faller    1234  825
-  149 pingu 16 faller    1273  810
-  149 pingu 17 faller    1350  772
-  149 pingu 18 faller    1429  732
-  149 pingu 19 faller    1473  715
-  149 pingu 20 faller    1508  693
-  149 pingu 21 faller    1389  752
-  149 pingu 22 faller    1709  594
-  149 pingu 23 faller    1550  676
-  149 pingu 24 faller    1591  654
-  149 pingu 25 faller    1669  615
-  149 pingu 26 faller    1904  497
-  149 pingu 27 faller    1749  575
-  149 pingu 28 faller    1827  534
-  149 pingu 29 faller    1866  518
-  149 pingu 30 faller     674  728
-  149 pingu 31 faller     716  719
-  149 pingu 32 faller     757  710
-  149 pingu 33 faller     500  770
-  149 pingu 34 faller     629  737
-  149 pingu 35 faller     541  758
-  149 pingu 36 faller     584  748
-  149 pingu 37 faller    1772  374
-  149 pingu 38 faller    1890  430
-  149 pingu 39 faller    1810  394
-  149 pingu 40 faller    1625  301
-  149 pingu 41 faller    1696  338
-  149 pingu 42 faller    1733  357
-  149 pingu 43 faller    1590  282
-  149 pingu 44 faller    1286  139
-  149 pingu 45 faller    1322  159
-  149 pingu 46 faller    1361  175
-  149 pingu 47 faller    1212  105
-  149 pingu 48 faller    1512  247
-  149 pingu 49 faller    1474  229
-  149 pingu 50 faller    1439  209
-  149 pingu 51 faller    1177   86
-  149 pingu 52 faller    1126   85
-  149 pingu 53 faller    1088  102
-  149 pingu 54 faller    1010  138
-  149 pingu 55 faller     974  156
-  149 pingu 56 faller     936  174
-  149 pingu 57 faller     897  194
-  149 pingu 58 faller     821  230
-  149 pingu 59 faller     780  248
-  149 pingu 60 faller     744  269
-  149 pingu 61 faller     709  290
-  149 pingu 62 faller     628  291
-  149 pingu 63 faller     666  305
-  149 pingu 64 faller     527  243
-  149 pingu 65 faller     252  107
-  149 pingu 66 faller     594  275
-  149 pingu 67 faller     192   78
-  149 pingu 68 faller     466  208
-  149 pingu 69 faller     406  180
-  149 pingu 70 faller     436  194
-  149 pingu 71 faller     284  124
-  149 pingu 72 faller     343  150
-  149 pingu 73 faller     113   44
-  149 pingu 74 faller    1731 1013
-  149 pingu 75 faller    1574 1094
-  149 pingu 76 faller    1171  861
-  149 pingu 77 faller    1143  884
-  149 pingu 78 faller    1311  791
-  149 pingu 79 faller    1629  636
-  149 pingu 80 faller    1787  558
-  149 pingu 81 faller    1850  413
-  149 pingu 82 faller    1661  319
-  149 pingu 83 faller    1552  264
-  149 pingu 84 faller    1399  193
-  149 pingu 85 faller    1249  122
-  149 pingu 86 faller    1050  121
-  149 pingu 87 faller     858  211
-  149 pingu 88 faller     559  259
-  149 pingu 89 faller     497  228
-  149 pingu 90 faller     374  165
-  149 pingu 91 faller     313  139
-  149 pingu 92 faller     219   97
-  149 pingu 93 faller     162   66
-  149 pingu 94 faller     136   55
-  149 pingu 95 faller      85   30
-  149 pingu 96 faller    1499 1044
-  149 pingu 97 faller    1330  974
-  149 pingu 98 faller    1264  948
-  149 pingu 99 faller    1203  916
-  155 pingu 31 walker     716  720
-  159 pingu  6 walker    1528 1125
-  160 pingu 11 walker    1236  941
-  160 pingu 76 walker    1171  868
+  150 pingu  0 faller     278  530
+  150 pingu  1 faller    1817  972
+  150 pingu  2 faller    1773  991
+  150 pingu  3 faller    1692 1033
+  150 pingu  4 faller    1652 1054
+  150 pingu  5 faller    1611 1073
+  150 pingu  6 faller    1528 1120
+  150 pingu  7 faller    1400 1004
+  150 pingu  8 faller    1463 1031
+  150 pingu  9 faller    1429 1018
+  150 pingu 10 faller    1365  989
+  150 pingu 11 faller    1236  934
+  150 pingu 12 faller    1298  959
+  150 pingu 13 faller    1175  901
+  150 pingu 14 faller    1193  841
+  150 pingu 15 faller    1234  825
+  150 pingu 16 faller    1273  810
+  150 pingu 17 faller    1350  772
+  150 pingu 18 faller    1429  732
+  150 pingu 19 faller    1473  715
+  150 pingu 20 faller    1508  693
+  150 pingu 21 faller    1389  752
+  150 pingu 22 faller    1709  594
+  150 pingu 23 faller    1550  676
+  150 pingu 24 faller    1591  654
+  150 pingu 25 faller    1669  615
+  150 pingu 26 faller    1904  497
+  150 pingu 27 faller    1749  575
+  150 pingu 28 faller    1827  534
+  150 pingu 29 faller    1866  518
+  150 pingu 30 faller     674  728
+  150 pingu 31 faller     716  719
+  150 pingu 32 faller     757  710
+  150 pingu 33 faller     500  770
+  150 pingu 34 faller     629  737
+  150 pingu 35 faller     541  758
+  150 pingu 36 faller     584  748
+  150 pingu 37 faller    1772  374
+  150 pingu 38 faller    1890  430
+  150 pingu 39 faller    1810  394
+  150 pingu 40 faller    1625  301
+  150 pingu 41 faller    1696  338
+  150 pingu 42 faller    1733  357
+  150 pingu 43 faller    1590  282
+  150 pingu 44 faller    1286  139
+  150 pingu 45 faller    1322  159
+  150 pingu 46 faller    1361  175
+  150 pingu 47 faller    1212  105
+  150 pingu 48 faller    1512  247
+  150 pingu 49 faller    1474  229
+  150 pingu 50 faller    1439  209
+  150 pingu 51 faller    1177   86
+  150 pingu 52 faller    1126   85
+  150 pingu 53 faller    1088  102
+  150 pingu 54 faller    1010  138
+  150 pingu 55 faller     974  156
+  150 pingu 56 faller     936  174
+  150 pingu 57 faller     897  194
+  150 pingu 58 faller     821  230
+  150 pingu 59 faller     780  248
+  150 pingu 60 faller     744  269
+  150 pingu 61 faller     709  290
+  150 pingu 62 faller     628  291
+  150 pingu 63 faller     666  305
+  150 pingu 64 faller     527  243
+  150 pingu 65 faller     252  107
+  150 pingu 66 faller     594  275
+  150 pingu 67 faller     192   78
+  150 pingu 68 faller     466  208
+  150 pingu 69 faller     406  180
+  150 pingu 70 faller     436  194
+  150 pingu 71 faller     284  124
+  150 pingu 72 faller     343  150
+  150 pingu 73 faller     113   44
+  150 pingu 74 faller    1731 1013
+  150 pingu 75 faller    1574 1094
+  150 pingu 76 faller    1171  861
+  150 pingu 77 faller    1143  884
+  150 pingu 78 faller    1311  791
+  150 pingu 79 faller    1629  636
+  150 pingu 80 faller    1787  558
+  150 pingu 81 faller    1850  413
+  150 pingu 82 faller    1661  319
+  150 pingu 83 faller    1552  264
+  150 pingu 84 faller    1399  193
+  150 pingu 85 faller    1249  122
+  150 pingu 86 faller    1050  121
+  150 pingu 87 faller     858  211
+  150 pingu 88 faller     559  259
+  150 pingu 89 faller     497  228
+  150 pingu 90 faller     374  165
+  150 pingu 91 faller     313  139
+  150 pingu 92 faller     219   97
+  150 pingu 93 faller     162   66
+  150 pingu 94 faller     136   55
+  150 pingu 95 faller      85   30
+  150 pingu 96 faller    1499 1044
+  150 pingu 97 faller    1330  974
+  150 pingu 98 faller    1264  948
+  150 pingu 99 faller    1203  916
+  156 pingu 31 walker     716  720
+  160 pingu  6 walker    1528 1125
+  161 pingu 11 walker    1236  941
   161 pingu 19 walker    1473  723
-  161 pingu 21 walker    1389  761
-  161 pingu 23 walker    1550  685
-  161 pingu 30 walker     674  737
-  161 pingu 32 walker     757  719
   161 pingu 62 walker     628  299
-  161 pingu 66 walker     594  284
-  161 pingu 73 walker     113   53
-  161 pingu 75 walker    1574 1103
-  161 pingu 77 walker    1143  893
-  161 pingu 79 walker    1629  645
-  161 pingu 88 walker     559  268
+  161 pingu 76 walker    1171  868
   161 pingu 98 walker    1264  956
-  162 pingu  4 walker    1652 1065
-  162 pingu 16 walker    1273  821
-  162 pingu 17 walker    1350  783
-  162 pingu 24 walker    1591  665
+  162 pingu 21 walker    1389  761
+  162 pingu 23 walker    1550  685
   162 pingu 25 walker    1669  625
+  162 pingu 30 walker     674  737
+  162 pingu 32 walker     757  719
+  162 pingu 66 walker     594  284
+  162 pingu 73 walker     113   53
+  162 pingu 75 walker    1574 1103
+  162 pingu 77 walker    1143  893
   162 pingu 78 walker    1311  801
-  162 pingu 89 walker     497  239
+  162 pingu 79 walker    1629  645
+  162 pingu 88 walker     559  268
   162 pingu 92 walker     219  107
   162 pingu 94 walker     136   65
-  162 pingu 95 walker      85   41
-  162 pingu 99 walker    1203  927
+  163 pingu  4 walker    1652 1065
   163 pingu  5 walker    1611 1085
-  163 pingu 12 walker    1298  972
-  163 pingu 13 walker    1175  914
   163 pingu 15 walker    1234  837
-  163 pingu 18 walker    1429  745
+  163 pingu 16 walker    1273  821
+  163 pingu 17 walker    1350  783
   163 pingu 22 walker    1709  606
-  163 pingu 36 walker     584  761
+  163 pingu 24 walker    1591  665
   163 pingu 52 walker    1126   97
-  163 pingu 57 walker     897  207
-  163 pingu 61 walker     709  303
   163 pingu 64 walker     527  255
-  163 pingu 65 walker     252  120
-  163 pingu 67 walker     192   91
   163 pingu 71 walker     284  136
-  163 pingu 72 walker     343  163
-  163 pingu 80 walker    1787  571
+  163 pingu 89 walker     497  239
   163 pingu 91 walker     313  151
   163 pingu 93 walker     162   78
+  163 pingu 95 walker      85   41
+  163 pingu 99 walker    1203  927
   164 pingu  1 walker    1817  986
   164 pingu  3 walker    1692 1047
-  164 pingu  7 walker    1400 1020
-  164 pingu 10 walker    1365 1005
-  164 pingu 14 walker    1193  857
+  164 pingu 12 walker    1298  972
+  164 pingu 13 walker    1175  914
+  164 pingu 18 walker    1429  745
   164 pingu 20 walker    1508  707
-  164 pingu 26 walker    1904  513
   164 pingu 27 walker    1749  589
-  164 pingu 29 walker    1866  533
-  164 pingu 34 walker     629  752
   164 pingu 35 walker     541  772
-  164 pingu 37 walker    1772  390
-  164 pingu 39 walker    1810  410
-  164 pingu 45 walker    1322  175
-  164 pingu 53 walker    1088  117
-  164 pingu 58 walker     821  245
+  164 pingu 36 walker     584  761
+  164 pingu 57 walker     897  207
   164 pingu 60 walker     744  283
+  164 pingu 61 walker     709  303
   164 pingu 63 walker     666  319
-  164 pingu 68 walker     466  224
+  164 pingu 65 walker     252  120
+  164 pingu 67 walker     192   91
   164 pingu 69 walker     406  194
-  164 pingu 70 walker     436  210
+  164 pingu 72 walker     343  163
   164 pingu 74 walker    1731 1027
-  164 pingu 81 walker    1850  429
+  164 pingu 80 walker    1787  571
   164 pingu 86 walker    1050  135
   164 pingu 90 walker     374  179
-  164 pingu 97 walker    1330  989
-  165 pingu  2 walker    1773 1009
-  165 pingu  9 walker    1429 1036
+  165 pingu  7 walker    1400 1020
+  165 pingu 10 walker    1365 1005
+  165 pingu 14 walker    1193  857
+  165 pingu 26 walker    1904  513
   165 pingu 28 walker    1827  551
-  165 pingu 38 walker    1890  449
+  165 pingu 29 walker    1866  533
+  165 pingu 34 walker     629  752
+  165 pingu 37 walker    1772  390
+  165 pingu 39 walker    1810  410
   165 pingu 41 walker    1696  355
-  165 pingu 42 walker    1733  375
-  165 pingu 46 walker    1361  194
+  165 pingu 45 walker    1322  175
   165 pingu 47 walker    1212  122
-  165 pingu 48 walker    1512  266
   165 pingu 49 walker    1474  246
+  165 pingu 53 walker    1088  117
   165 pingu 54 walker    1010  155
   165 pingu 55 walker     974  173
-  165 pingu 56 walker     936  192
+  165 pingu 58 walker     821  245
   165 pingu 59 walker     780  265
-  165 pingu 82 walker    1661  338
-  165 pingu 84 walker    1399  211
-  165 pingu 85 walker    1249  140
-  165 pingu 87 walker     858  229
+  165 pingu 68 walker     466  224
+  165 pingu 70 walker     436  210
+  165 pingu 81 walker    1850  429
+  165 pingu 97 walker    1330  989
+  166 pingu  2 walker    1773 1009
   166 pingu  8 walker    1463 1051
-  166 pingu 33 walker     500  791
-  166 pingu 40 walker    1625  322
+  166 pingu  9 walker    1429 1036
+  166 pingu 38 walker    1890  449
+  166 pingu 42 walker    1733  375
   166 pingu 44 walker    1286  159
-  166 pingu 50 walker    1439  231
+  166 pingu 46 walker    1361  194
+  166 pingu 48 walker    1512  266
   166 pingu 51 walker    1177  106
-  166 pingu 83 walker    1552  285
+  166 pingu 56 walker     936  192
+  166 pingu 82 walker    1661  338
+  166 pingu 84 walker    1399  211
+  166 pingu 85 walker    1249  140
+  166 pingu 87 walker     858  229
+  167 pingu 33 walker     500  791
+  167 pingu 40 walker    1625  322
   167 pingu 43 walker    1590  305
-  168 pingu 96 walker    1499 1071
-  174 pingu 38 faller    1899  452
-  188 pingu 14 faller    1169  868
-  189 pingu 96 faller    1520 1078
-  195 pingu  0 walker     278  718
+  167 pingu 50 walker    1439  231
+  167 pingu 83 walker    1552  285
+  169 pingu 96 walker    1499 1071
+  175 pingu 38 faller    1899  452
+  189 pingu 14 faller    1169  868
+  190 pingu 96 faller    1520 1078
+  196 pingu  0 walker     278  718
   200 pingu  0 slider     282  718
-  201 pingu 38 walker    1899  513
-  211 pingu 14 walker    1169  910
-  212 pingu  1 exiter    1864  987
-  213 pingu 81 faller    1899  452
-  214 pingu 96 walker    1520 1129
-  215 pingu  0 walker     334  718
+  202 pingu 38 walker    1899  513
+  210 pingu  0 faller     374  718
+  211 pingu  1 exiter    1864  987
+  212 pingu 14 walker    1169  910
+  214 pingu 81 faller    1899  452
+  215 pingu 96 walker    1520 1129
   223 pingu  8 faller    1520 1078
   228 pingu  1 exited    1864  987
   228 pingu 15 faller    1169  868
-  240 pingu 81 walker    1899  513
+  238 pingu  0 walker     502  790
+  241 pingu 81 walker    1899  513
   248 pingu  8 walker    1520 1129
   251 pingu 15 walker    1169  910
-  253 pingu 39 faller    1899  452
-  255 pingu  0 faller     374  718
-  256 pingu  9 faller    1520 1078
+  254 pingu 39 faller    1899  452
+  257 pingu  9 faller    1520 1078
   257 pingu  2 exiter    1864  987
-  266 pingu 16 faller    1169  868
-  273 pingu  2 exited    1864  987
-  280 pingu 39 walker    1899  513
-  281 pingu  9 walker    1520 1129
-  284 pingu  7 faller    1520 1078
-  289 pingu 16 walker    1169  910
-  290 pingu  0 walker     374  823
-  291 pingu 37 faller    1899  452
-  298 pingu 74 exiter    1864  987
+  267 pingu 16 faller    1169  868
+  274 pingu  2 exited    1864  987
+  281 pingu 39 walker    1899  513
+  282 pingu  9 walker    1520 1129
+  285 pingu  7 faller    1520 1078
+  290 pingu 16 walker    1169  910
+  292 pingu 37 faller    1899  452
+  297 pingu 74 exiter    1864  987
   304 pingu 78 faller    1169  868
-  309 pingu  7 walker    1520 1129
+  310 pingu  7 walker    1520 1129
   314 pingu 74 exited    1864  987
-  318 pingu 37 walker    1899  513
-  319 pingu 10 faller    1520 1078
+  319 pingu 37 walker    1899  513
+  320 pingu 10 faller    1520 1078
   327 pingu 78 walker    1169  910
-  331 pingu 42 faller    1899  452
-  337 pingu  3 exiter    1864  987
-  343 pingu 17 faller    1169  868
-  344 pingu 10 walker    1520 1129
+  332 pingu 42 faller    1899  452
+  336 pingu  3 exiter    1864  987
+  344 pingu 17 faller    1169  868
+  345 pingu 10 walker    1520 1129
   353 pingu  3 exited    1864  987
-  354 pingu 97 faller    1520 1078
-  358 pingu 42 walker    1899  513
-  366 pingu 17 walker    1169  910
+  355 pingu 97 faller    1520 1078
+  359 pingu 42 walker    1899  513
+  367 pingu 17 walker    1169  910
   368 pingu 41 faller    1899  452
   375 pingu  4 exiter    1864  987
-  379 pingu 97 walker    1520 1129
-  381 pingu 21 faller    1169  868
-  385 pingu 12 faller    1520 1078
-  391 pingu  4 exited    1864  987
+  380 pingu 97 walker    1520 1129
+  382 pingu 21 faller    1169  868
+  386 pingu 12 faller    1520 1078
+  392 pingu  4 exited    1864  987
   395 pingu 41 walker    1899  513
-  403 pingu 82 faller    1899  452
-  404 pingu 21 walker    1169  910
-  410 pingu 12 walker    1520 1129
-  417 pingu  5 exiter    1864  987
+  404 pingu 82 faller    1899  452
+  405 pingu 21 walker    1169  910
+  411 pingu 12 walker    1520 1129
+  416 pingu  5 exiter    1864  987
   417 pingu 98 faller    1520 1078
-  423 pingu 18 faller    1169  868
-  430 pingu 82 walker    1899  513
+  424 pingu 18 faller    1169  868
+  431 pingu 82 walker    1899  513
   433 pingu  5 exited    1864  987
-  440 pingu 40 faller    1899  452
+  441 pingu 40 faller    1899  452
   442 pingu 98 walker    1520 1129
-  444 pingu 11 faller    1520 1078
-  446 pingu 18 walker    1169  910
+  445 pingu 11 faller    1520 1078
+  447 pingu 18 walker    1169  910
   452 pingu 75 exiter    1864  987
   465 pingu 19 faller    1169  868
-  467 pingu 40 walker    1899  513
-  468 pingu 75 exited    1864  987
-  469 pingu 11 walker    1520 1129
+  468 pingu 40 walker    1899  513
+  469 pingu 75 exited    1864  987
+  470 pingu 11 walker    1520 1129
   476 pingu 43 faller    1899  452
-  479 pingu 99 faller    1520 1078
+  480 pingu 99 faller    1520 1078
   488 pingu 19 walker    1169  910
   496 pingu  6 exiter    1864  987
   503 pingu 20 faller    1169  868
   503 pingu 43 walker    1899  513
-  504 pingu 99 walker    1520 1129
-  508 pingu 13 faller    1520 1078
-  512 pingu  6 exited    1864  987
-  513 pingu 83 faller    1899  452
+  505 pingu 99 walker    1520 1129
+  509 pingu 13 faller    1520 1078
+  513 pingu  6 exited    1864  987
+  514 pingu 83 faller    1899  452
   526 pingu 20 walker    1169  910
-  533 pingu 13 walker    1520 1129
-  538 pingu 77 faller    1520 1078
-  540 pingu 83 walker    1899  513
-  542 pingu 23 faller    1169  868
-  552 pingu 48 faller    1899  452
+  534 pingu 13 walker    1520 1129
+  539 pingu 77 faller    1520 1078
+  541 pingu 83 walker    1899  513
+  543 pingu 23 faller    1169  868
+  553 pingu 48 faller    1899  452
   559 pingu 96 exiter    1864  987
-  563 pingu 77 walker    1520 1129
-  565 pingu 23 walker    1169  910
-  575 pingu 96 exited    1864  987
-  579 pingu 48 walker    1899  513
-  584 pingu 24 faller    1169  868
+  564 pingu 77 walker    1520 1129
+  566 pingu 23 walker    1169  910
+  576 pingu 96 exited    1864  987
+  580 pingu 48 walker    1899  513
+  585 pingu 24 faller    1169  868
   590 pingu 49 faller    1899  452
-  593 pingu  8 exiter    1864  987
-  607 pingu 24 walker    1169  910
+  592 pingu  8 exiter    1864  987
+  608 pingu 24 walker    1169  910
   609 pingu  8 exited    1864  987
-  613 pingu 14 faller    1520 1078
+  614 pingu 14 faller    1520 1078
   617 pingu 49 walker    1899  513
-  621 pingu 79 faller    1169  868
+  622 pingu 79 faller    1169  868
   626 pingu  9 exiter    1864  987
-  626 pingu 50 faller    1899  452
-  638 pingu 14 walker    1520 1129
-  642 pingu  9 exited    1864  987
-  644 pingu 79 walker    1169  910
+  627 pingu 50 faller    1899  452
+  639 pingu 14 walker    1520 1129
+  643 pingu  9 exited    1864  987
+  645 pingu 79 walker    1169  910
   653 pingu 15 faller    1520 1078
-  653 pingu 50 walker    1899  513
+  654 pingu 50 walker    1899  513
   654 pingu  7 exiter    1864  987
   662 pingu 25 faller    1169  868
-  665 pingu 84 faller    1899  452
-  670 pingu  7 exited    1864  987
+  666 pingu 84 faller    1899  452
+  671 pingu  7 exited    1864  987
   678 pingu 15 walker    1520 1129
   685 pingu 25 walker    1169  910
   689 pingu 10 exiter    1864  987
-  691 pingu 16 faller    1520 1078
-  692 pingu 84 walker    1899  513
+  692 pingu 16 faller    1520 1078
+  693 pingu 84 walker    1899  513
   703 pingu 22 faller    1169  868
-  703 pingu 46 faller    1899  452
-  705 pingu 10 exited    1864  987
-  716 pingu 16 walker    1520 1129
+  704 pingu 46 faller    1899  452
+  706 pingu 10 exited    1864  987
+  717 pingu 16 walker    1520 1129
   724 pingu 97 exiter    1864  987
   726 pingu 22 walker    1169  910
   729 pingu 78 faller    1520 1078
-  730 pingu 46 walker    1899  513
-  740 pingu 97 exited    1864  987
-  741 pingu 45 faller    1899  452
+  731 pingu 46 walker    1899  513
+  741 pingu 97 exited    1864  987
+  742 pingu 45 faller    1899  452
   744 pingu 27 faller    1169  868
   754 pingu 78 walker    1520 1129
   755 pingu 12 exiter    1864  987
   767 pingu 27 walker    1169  910
-  768 pingu 17 faller    1520 1078
-  768 pingu 45 walker    1899  513
-  771 pingu 12 exited    1864  987
+  769 pingu 17 faller    1520 1078
+  769 pingu 45 walker    1899  513
+  772 pingu 12 exited    1864  987
   779 pingu 44 faller    1899  452
-  781 pingu 80 faller    1169  868
-  787 pingu 98 exiter    1864  987
-  793 pingu 17 walker    1520 1129
+  782 pingu 80 faller    1169  868
+  786 pingu 98 exiter    1864  987
+  794 pingu 17 walker    1520 1129
   803 pingu 98 exited    1864  987
-  804 pingu 80 walker    1169  910
-  806 pingu 21 faller    1520 1078
+  805 pingu 80 walker    1169  910
   806 pingu 44 walker    1899  513
+  807 pingu 21 faller    1520 1078
   814 pingu 11 exiter    1864  987
-  815 pingu 85 faller    1899  452
+  816 pingu 85 faller    1899  452
   823 pingu 28 faller    1169  868
-  830 pingu 11 exited    1864  987
-  831 pingu 21 walker    1520 1129
-  842 pingu 85 walker    1899  513
+  831 pingu 11 exited    1864  987
+  832 pingu 21 walker    1520 1129
+  843 pingu 85 walker    1899  513
   846 pingu 28 walker    1169  910
-  848 pingu 18 faller    1520 1078
+  849 pingu 18 faller    1520 1078
   849 pingu 99 exiter    1864  987
   852 pingu 47 faller    1899  452
-  861 pingu 29 faller    1169  868
-  865 pingu 99 exited    1864  987
-  873 pingu 18 walker    1520 1129
+  862 pingu 29 faller    1169  868
+  866 pingu 99 exited    1864  987
+  874 pingu 18 walker    1520 1129
   878 pingu 13 exiter    1864  987
   879 pingu 47 walker    1899  513
-  884 pingu 29 walker    1169  910
+  885 pingu 29 walker    1169  910
   888 pingu 51 faller    1899  452
   890 pingu 19 faller    1520 1078
-  894 pingu 13 exited    1864  987
-  899 pingu 26 faller    1169  868
+  895 pingu 13 exited    1864  987
+  900 pingu 26 faller    1169  868
   908 pingu 77 exiter    1864  987
   915 pingu 19 walker    1520 1129
   915 pingu 51 walker    1899  513
-  922 pingu 26 walker    1169  910
-  922 pingu 32 faller      63  904
-  924 pingu 77 exited    1864  987
+  923 pingu 26 walker    1169  910
+  923 pingu 32 faller      63  904
+  925 pingu 77 exited    1864  987
   928 pingu 20 faller    1520 1078
   936 pingu 52 faller    1899  452
-  949 pingu 32 walker      63  963
+  950 pingu 32 walker      63  963
   953 pingu 20 walker    1520 1129
-  957 pingu 31 faller      63  904
+  958 pingu 31 faller      63  904
   963 pingu 52 walker    1899  513
-  967 pingu 23 faller    1520 1078
-  968 pingu 38 faller    1169  868
-  975 pingu 53 faller    1899  452
+  968 pingu 23 faller    1520 1078
+  969 pingu 38 faller    1169  868
+  976 pingu 53 faller    1899  452
   983 pingu 14 exiter    1864  987
-  984 pingu 31 walker      63  963
-  991 pingu 38 walker    1169  910
-  992 pingu 23 walker    1520 1129
-  999 pingu 14 exited    1864  987
- 1002 pingu 53 walker    1899  513
- 1005 pingu 30 faller      63  904
- 1007 pingu 81 faller    1169  868
- 1009 pingu 24 faller    1520 1078
+  985 pingu 31 walker      63  963
+  992 pingu 38 walker    1169  910
+  993 pingu 23 walker    1520 1129
+ 1000 pingu 14 exited    1864  987
+ 1003 pingu 53 walker    1899  513
+ 1006 pingu 30 faller      63  904
+ 1008 pingu 81 faller    1169  868
+ 1010 pingu 24 faller    1520 1078
  1013 pingu 86 faller    1899  452
- 1023 pingu 15 exiter    1864  987
- 1030 pingu 81 walker    1169  910
- 1032 pingu 30 walker      63  963
- 1034 pingu 24 walker    1520 1129
+ 1022 pingu 15 exiter    1864  987
+ 1031 pingu 81 walker    1169  910
+ 1033 pingu 30 walker      63  963
+ 1035 pingu 24 walker    1520 1129
  1039 pingu 15 exited    1864  987
  1040 pingu 86 walker    1899  513
- 1046 pingu 79 faller    1520 1078
- 1047 pingu 39 faller    1169  868
- 1053 pingu 34 faller      63  904
+ 1047 pingu 79 faller    1520 1078
+ 1048 pingu 39 faller    1169  868
+ 1054 pingu 34 faller      63  904
  1054 pingu 54 faller    1899  452
  1061 pingu 16 exiter    1864  987
- 1070 pingu 39 walker    1169  910
- 1071 pingu 79 walker    1520 1129
- 1077 pingu 16 exited    1864  987
- 1080 pingu 34 walker      63  963
+ 1071 pingu 39 walker    1169  910
+ 1072 pingu 79 walker    1520 1129
+ 1078 pingu 16 exited    1864  987
+ 1081 pingu 34 walker      63  963
  1081 pingu 54 walker    1899  513
- 1085 pingu 37 faller    1169  868
+ 1086 pingu 37 faller    1169  868
  1087 pingu 25 faller    1520 1078
  1090 pingu 55 faller    1899  452
- 1097 pingu 36 faller      63  904
- 1099 pingu 78 exiter    1864  987
- 1108 pingu 37 walker    1169  910
+ 1098 pingu 36 faller      63  904
+ 1098 pingu 78 exiter    1864  987
+ 1109 pingu 37 walker    1169  910
  1112 pingu 25 walker    1520 1129
  1115 pingu 78 exited    1864  987
  1117 pingu 55 walker    1899  513
- 1124 pingu 36 walker      63  963
- 1125 pingu 42 faller    1169  868
+ 1125 pingu 36 walker      63  963
+ 1126 pingu 42 faller    1169  868
  1128 pingu 22 faller    1520 1078
- 1128 pingu 56 faller    1899  452
+ 1129 pingu 56 faller    1899  452
  1138 pingu 17 exiter    1864  987
  1141 pingu 35 faller      63  904
- 1148 pingu 42 walker    1169  910
+ 1149 pingu 42 walker    1169  910
  1153 pingu 22 walker    1520 1129
- 1154 pingu 17 exited    1864  987
- 1155 pingu 56 walker    1899  513
+ 1155 pingu 17 exited    1864  987
+ 1156 pingu 56 walker    1899  513
  1162 pingu 41 faller    1169  868
- 1165 pingu 57 faller    1899  452
+ 1166 pingu 57 faller    1899  452
  1168 pingu 35 walker      63  963
  1169 pingu 27 faller    1520 1078
  1176 pingu 21 exiter    1864  987
- 1184 pingu 33 faller      63  904
+ 1185 pingu 33 faller      63  904
  1185 pingu 41 walker    1169  910
- 1192 pingu 21 exited    1864  987
- 1192 pingu 57 walker    1899  513
+ 1193 pingu 21 exited    1864  987
+ 1193 pingu 57 walker    1899  513
  1194 pingu 27 walker    1520 1129
- 1197 pingu 82 faller    1169  868
- 1206 pingu 80 faller    1520 1078
- 1206 pingu 87 faller    1899  452
- 1211 pingu 33 walker      63  963
+ 1198 pingu 82 faller    1169  868
+ 1207 pingu 80 faller    1520 1078
+ 1207 pingu 87 faller    1899  452
+ 1212 pingu 33 walker      63  963
  1218 pingu 18 exiter    1864  987
- 1220 pingu 82 walker    1169  910
- 1231 pingu 80 walker    1520 1129
- 1233 pingu 87 walker    1899  513
- 1234 pingu 18 exited    1864  987
- 1234 pingu 40 faller    1169  868
- 1242 pingu 58 faller    1899  452
+ 1221 pingu 82 walker    1169  910
+ 1232 pingu 80 walker    1520 1129
+ 1234 pingu 87 walker    1899  513
+ 1235 pingu 18 exited    1864  987
+ 1235 pingu 40 faller    1169  868
+ 1243 pingu 58 faller    1899  452
  1248 pingu 28 faller    1520 1078
- 1257 pingu 40 walker    1169  910
- 1260 pingu 19 exiter    1864  987
- 1269 pingu 58 walker    1899  513
+ 1254 pingu  0 faller      63  904
+ 1258 pingu 40 walker    1169  910
+ 1259 pingu 19 exiter    1864  987
  1270 pingu 43 faller    1169  868
+ 1270 pingu 58 walker    1899  513
  1273 pingu 28 walker    1520 1129
  1276 pingu 19 exited    1864  987
+ 1281 pingu  0 walker      63  963
  1284 pingu 59 faller    1899  452
- 1286 pingu 29 faller    1520 1078
+ 1287 pingu 29 faller    1520 1078
  1293 pingu 43 walker    1169  910
- 1298 pingu 20 exiter    1864  987
- 1307 pingu 83 faller    1169  868
- 1311 pingu 29 walker    1520 1129
+ 1297 pingu 20 exiter    1864  987
+ 1308 pingu 83 faller    1169  868
  1311 pingu 59 walker    1899  513
+ 1312 pingu 29 walker    1520 1129
  1314 pingu 20 exited    1864  987
  1319 pingu 60 faller    1899  452
- 1324 pingu 26 faller    1520 1078
- 1330 pingu 83 walker    1169  910
+ 1325 pingu 26 faller    1520 1078
+ 1331 pingu 83 walker    1169  910
  1337 pingu 23 exiter    1864  987
- 1346 pingu 48 faller    1169  868
  1346 pingu 60 walker    1899  513
- 1349 pingu 26 walker    1520 1129
- 1353 pingu 23 exited    1864  987
- 1353 pingu 61 faller    1899  452
- 1369 pingu 48 walker    1169  910
+ 1347 pingu 48 faller    1169  868
+ 1350 pingu 26 walker    1520 1129
+ 1354 pingu 23 exited    1864  987
+ 1354 pingu 61 faller    1899  452
+ 1370 pingu 48 walker    1169  910
  1379 pingu 24 exiter    1864  987
- 1380 pingu 61 walker    1899  513
+ 1381 pingu 61 walker    1899  513
  1384 pingu 49 faller    1169  868
- 1393 pingu 38 faller    1520 1078
- 1395 pingu 24 exited    1864  987
+ 1394 pingu 38 faller    1520 1078
+ 1396 pingu 24 exited    1864  987
  1397 pingu 63 faller    1899  452
  1407 pingu 49 walker    1169  910
  1416 pingu 79 exiter    1864  987
- 1418 pingu 38 walker    1520 1129
- 1420 pingu 50 faller    1169  868
+ 1419 pingu 38 walker    1520 1129
+ 1421 pingu 50 faller    1169  868
  1424 pingu 63 walker    1899  513
  1432 pingu 62 faller    1899  452
- 1432 pingu 79 exited    1864  987
- 1432 pingu 81 faller    1520 1078
- 1434 pingu  0 faller      63  904
- 1443 pingu 50 walker    1169  910
- 1457 pingu 25 exiter    1864  987
- 1457 pingu 81 walker    1520 1129
+ 1433 pingu 79 exited    1864  987
+ 1433 pingu 81 faller    1520 1078
+ 1444 pingu 50 walker    1169  910
+ 1456 pingu 25 exiter    1864  987
+ 1458 pingu 81 walker    1520 1129
  1459 pingu 62 walker    1899  513
- 1459 pingu 84 faller    1169  868
- 1461 pingu  0 walker      63  963
- 1466 pingu 66 faller    1899  452
- 1472 pingu 39 faller    1520 1078
+ 1460 pingu 84 faller    1169  868
+ 1467 pingu 66 faller    1899  452
  1473 pingu 25 exited    1864  987
- 1482 pingu 84 walker    1169  910
- 1493 pingu 66 walker    1899  513
- 1497 pingu 39 walker    1520 1129
- 1497 pingu 46 faller    1169  868
- 1498 pingu 22 exiter    1864  987
- 1501 pingu 88 faller    1899  452
- 1510 pingu 37 faller    1520 1078
+ 1473 pingu 39 faller    1520 1078
+ 1483 pingu 84 walker    1169  910
+ 1494 pingu 66 walker    1899  513
+ 1497 pingu 22 exiter    1864  987
+ 1498 pingu 39 walker    1520 1129
+ 1498 pingu 46 faller    1169  868
+ 1502 pingu 88 faller    1899  452
+ 1511 pingu 37 faller    1520 1078
  1514 pingu 22 exited    1864  987
- 1520 pingu 46 walker    1169  910
- 1528 pingu 88 walker    1899  513
- 1535 pingu 37 walker    1520 1129
- 1535 pingu 45 faller    1169  868
+ 1521 pingu 46 walker    1169  910
+ 1529 pingu 88 walker    1899  513
  1535 pingu 64 faller    1899  452
- 1539 pingu 27 exiter    1864  987
- 1550 pingu 42 faller    1520 1078
+ 1536 pingu 37 walker    1520 1129
+ 1536 pingu 45 faller    1169  868
+ 1538 pingu 27 exiter    1864  987
+ 1551 pingu 42 faller    1520 1078
  1555 pingu 27 exited    1864  987
- 1558 pingu 45 walker    1169  910
+ 1559 pingu 45 walker    1169  910
  1562 pingu 64 walker    1899  513
- 1564 pingu 89 faller    1899  452
+ 1565 pingu 89 faller    1899  452
  1573 pingu 44 faller    1169  868
- 1575 pingu 42 walker    1520 1129
+ 1576 pingu 42 walker    1520 1129
  1576 pingu 80 exiter    1864  987
  1587 pingu 41 faller    1520 1078
- 1591 pingu 89 walker    1899  513
- 1592 pingu 80 exited    1864  987
+ 1592 pingu 89 walker    1899  513
+ 1593 pingu 80 exited    1864  987
  1596 pingu 44 walker    1169  910
- 1597 pingu 68 faller    1899  452
- 1609 pingu 85 faller    1169  868
+ 1598 pingu 68 faller    1899  452
+ 1610 pingu 85 faller    1169  868
  1612 pingu 41 walker    1520 1129
- 1618 pingu 28 exiter    1864  987
- 1622 pingu 82 faller    1520 1078
- 1624 pingu 68 walker    1899  513
- 1627 pingu 70 faller    1899  452
- 1632 pingu 85 walker    1169  910
+ 1617 pingu 28 exiter    1864  987
+ 1623 pingu 82 faller    1520 1078
+ 1625 pingu 68 walker    1899  513
+ 1628 pingu 70 faller    1899  452
+ 1633 pingu 85 walker    1169  910
  1634 pingu 28 exited    1864  987
  1646 pingu 47 faller    1169  868
- 1647 pingu 82 walker    1520 1129
- 1654 pingu 70 walker    1899  513
- 1655 pingu 76 faller    1169  868
+ 1648 pingu 82 walker    1520 1129
+ 1655 pingu 70 walker    1899  513
+ 1656 pingu 76 faller    1169  868
  1656 pingu 29 exiter    1864  987
  1657 pingu 69 faller    1899  452
- 1659 pingu 40 faller    1520 1078
+ 1660 pingu 40 faller    1520 1078
  1669 pingu 47 walker    1169  910
- 1672 pingu 29 exited    1864  987
- 1678 pingu 76 walker    1169  910
+ 1673 pingu 29 exited    1864  987
+ 1679 pingu 76 walker    1169  910
  1682 pingu 51 faller    1169  868
- 1684 pingu 40 walker    1520 1129
  1684 pingu 69 walker    1899  513
+ 1685 pingu 40 walker    1520 1129
  1689 pingu 90 faller    1899  452
  1694 pingu 26 exiter    1864  987
  1695 pingu 43 faller    1520 1078
  1705 pingu 51 walker    1169  910
- 1710 pingu 26 exited    1864  987
+ 1711 pingu 26 exited    1864  987
  1716 pingu 90 walker    1899  513
- 1719 pingu 72 faller    1899  452
  1720 pingu 43 walker    1520 1129
+ 1720 pingu 72 faller    1899  452
  1730 pingu 52 faller    1169  868
- 1732 pingu 83 faller    1520 1078
- 1746 pingu 72 walker    1899  513
+ 1733 pingu 83 faller    1520 1078
+ 1747 pingu 72 walker    1899  513
  1749 pingu 91 faller    1899  452
  1753 pingu 52 walker    1169  910
- 1757 pingu 83 walker    1520 1129
+ 1758 pingu 83 walker    1520 1129
  1763 pingu 38 exiter    1864  987
- 1769 pingu 53 faller    1169  868
- 1771 pingu 48 faller    1520 1078
+ 1770 pingu 53 faller    1169  868
+ 1772 pingu 48 faller    1520 1078
  1776 pingu 91 walker    1899  513
  1778 pingu 71 faller    1899  452
- 1779 pingu 38 exited    1864  987
- 1792 pingu 53 walker    1169  910
- 1796 pingu 48 walker    1520 1129
+ 1780 pingu 38 exited    1864  987
+ 1793 pingu 53 walker    1169  910
+ 1797 pingu 48 walker    1520 1129
  1802 pingu 81 exiter    1864  987
  1805 pingu 71 walker    1899  513
  1807 pingu 86 faller    1169  868
  1809 pingu 49 faller    1520 1078
- 1810 pingu 65 faller    1899  452
- 1818 pingu 81 exited    1864  987
+ 1811 pingu 65 faller    1899  452
+ 1819 pingu 81 exited    1864  987
  1830 pingu 86 walker    1169  910
  1834 pingu 49 walker    1520 1129
- 1837 pingu 65 walker    1899  513
- 1842 pingu 39 exiter    1864  987
+ 1838 pingu 65 walker    1899  513
  1842 pingu 92 faller    1899  452
- 1845 pingu 50 faller    1520 1078
+ 1842 pingu 39 exiter    1864  987
+ 1846 pingu 50 faller    1520 1078
  1848 pingu 54 faller    1169  868
- 1858 pingu 39 exited    1864  987
+ 1859 pingu 39 exited    1864  987
  1869 pingu 92 walker    1899  513
- 1870 pingu 50 walker    1520 1129
- 1870 pingu 67 faller    1899  452
+ 1871 pingu 50 walker    1520 1129
  1871 pingu 54 walker    1169  910
+ 1871 pingu 67 faller    1899  452
  1880 pingu 37 exiter    1864  987
- 1883 pingu 32 faller     878  893
+ 1884 pingu 32 faller     878  893
  1884 pingu 55 faller    1169  868
- 1884 pingu 84 faller    1520 1078
- 1896 pingu 37 exited    1864  987
- 1897 pingu 67 walker    1899  513
+ 1885 pingu 84 faller    1520 1078
+ 1897 pingu 37 exited    1864  987
+ 1898 pingu 67 walker    1899  513
  1900 pingu 93 faller    1899  452
  1907 pingu 55 walker    1169  910
- 1909 pingu 84 walker    1520 1129
- 1918 pingu 31 faller     878  893
+ 1910 pingu 84 walker    1520 1129
+ 1919 pingu 31 faller     878  893
  1920 pingu 42 exiter    1864  987
- 1920 pingu 32 walker     878 1014
- 1922 pingu 46 faller    1520 1078
- 1922 pingu 56 faller    1169  868
+ 1921 pingu 32 walker     878 1014
+ 1923 pingu 46 faller    1520 1078
+ 1923 pingu 56 faller    1169  868
  1925 pingu 94 faller    1899  452
  1927 pingu 93 walker    1899  513
- 1936 pingu 42 exited    1864  987
- 1945 pingu 56 walker    1169  910
- 1947 pingu 46 walker    1520 1129
- 1947 pingu 73 faller    1899  452
+ 1937 pingu 42 exited    1864  987
+ 1946 pingu 56 walker    1169  910
+ 1948 pingu 46 walker    1520 1129
+ 1948 pingu 73 faller    1899  452
  1952 pingu 94 walker    1899  513
- 1955 pingu 31 walker     878 1014
- 1957 pingu 41 exiter    1864  987
- 1959 pingu 57 faller    1169  868
- 1960 pingu 45 faller    1520 1078
- 1966 pingu 30 faller     878  893
+ 1956 pingu 31 walker     878 1014
+ 1956 pingu 41 exiter    1864  987
+ 1960 pingu 57 faller    1169  868
+ 1961 pingu 45 faller    1520 1078
+ 1967 pingu 30 faller     878  893
  1973 pingu 41 exited    1864  987
- 1974 pingu 73 walker    1899  513
- 1976 pingu 95 faller    1899  452
- 1982 pingu 57 walker    1169  910
- 1985 pingu 45 walker    1520 1129
+ 1975 pingu 73 walker    1899  513
+ 1977 pingu 95 faller    1899  452
+ 1983 pingu 57 walker    1169  910
+ 1986 pingu 45 walker    1520 1129

@@ -28,9 +28,9 @@
             position = [8, 10, -150],
         ],
         :exit [
-            owner_id = 0,
             position = [404.898, 768.021, 0],
             surface = [image = "exits/crystal", modifier = :ROT0],
+            owner_id = 0,
         ],
         :entrance [
             position = [216.255, 156.898, 0],

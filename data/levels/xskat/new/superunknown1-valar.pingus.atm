@@ -40,9 +40,9 @@
             position = [64, 170, 0],
         ],
         :exit [
-            owner_id = 0,
             position = [168.733, 613.854, 0],
             surface = [image = "exits/desert", modifier = :ROT0],
+            owner_id = 0,
         ],
         :iceblock [position = [638.003, 275.883, 0], repeat = 1],
         :groundpiece [

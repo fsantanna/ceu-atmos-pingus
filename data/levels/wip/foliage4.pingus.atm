@@ -2,10 +2,7 @@
     version = 2,
     head = [
         levelname = "Foliage 4 - Mushrooms all around",
-        description = [
-            "abaoeubho thotehunto eh unaoh untohe nutoh untohe nutoh utnohe untoheu tohus ",
-            "taoeu oheutho eauhuh ntoheuntha.thuthu.tah.t.ht.t ht.h .th. nt.h .tnh.",
-        ],
+        description = "abaoeubho thotehunto eh unaoh untohe nutoh untohe nutoh utnohe untoheu tohus taoeu oheutho eauhuh ntoheuntha.thuthu.tah.t.ht.t ht.h .th. nt.h .tnh.",
         author = "Ingo Ruhnke <grumbel@gmail.com>",
         number_of_pingus = 100,
         number_to_save = 50,

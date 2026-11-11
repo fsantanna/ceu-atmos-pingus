@@ -1551,9 +1551,9 @@
             owner_id = 0,
         ],
         :exit [
-            owner_id = 0,
             position = [571, 607, 0],
             surface = [image = "exits/industrial", modifier = :ROT0],
+            owner_id = 0,
         ],
         :switchdoor_switch [
             target_id = "id2401004030",

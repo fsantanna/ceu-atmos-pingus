@@ -55,9 +55,9 @@
             position = [267, 992, 0],
         ],
         :exit [
-            owner_id = 0,
             position = [445.8, 1067.7, 0],
             surface = [image = "exits/ordina", modifier = :ROT0],
+            owner_id = 0,
         ],
         :groundpiece [
             type = :ground,

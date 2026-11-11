@@ -2,10 +2,7 @@
     version = 2,
     head = [
         levelname = "Fly, pingus, fly!",
-        description = [
-            "In this level you need the pingus to cross a whole, a bit too wide for a ",
-            "simple bridge.",
-        ],
+        description = "In this level you need the pingus to cross a whole, a bit too wide for a simple bridge.",
         author = "Rune Zedeler <rz@daimi.au.dk>",
         number_of_pingus = 60,
         number_to_save = 50,
@@ -52,9 +49,9 @@
             position = [1225, 299, 0],
         ],
         :exit [
-            owner_id = 0,
             position = [1287, 593, 0],
             surface = [image = "exits/stone", modifier = :ROT0],
+            owner_id = 0,
         ],
         :groundpiece [
             type = :ground,

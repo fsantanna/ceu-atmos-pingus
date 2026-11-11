@@ -239,9 +239,9 @@
             speed = 10,
         ],
         :exit [
-            owner_id = 0,
             position = [1038, 386, 0],
             surface = [image = "exits/desert", modifier = :ROT0],
+            owner_id = 0,
         ],
     ],
 ]

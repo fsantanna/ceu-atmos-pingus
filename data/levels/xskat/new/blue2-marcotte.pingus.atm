@@ -2,10 +2,7 @@
     version = 2,
     head = [
         levelname = "The Crystal Wall",
-        description = [
-            "Some mad architect must have build that wall in the middle of nowhere. But ",
-            "now the Pingus horde must go on the other side of it.",
-        ],
+        description = "Some mad architect must have build that wall in the middle of nowhere. But now the Pingus horde must go on the other side of it.",
         author = "Etienne Marcotte <marcotte_moi@yahoo.com>",
         number_of_pingus = 60,
         number_to_save = 20,
@@ -31,9 +28,9 @@
             position = [-257, 2, -150],
         ],
         :exit [
-            owner_id = 0,
             position = [106, 430, 0],
             surface = [image = "exits/crystal", modifier = :ROT0],
+            owner_id = 0,
         ],
         :entrance [
             position = [998, 432, 0],

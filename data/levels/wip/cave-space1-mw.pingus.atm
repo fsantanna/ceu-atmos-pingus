@@ -2,10 +2,7 @@
     version = 2,
     head = [
         levelname = "Down to the Secret",
-        description = [
-            "The Pingus now are really approaching the secrets of the cave. Will they ",
-            "make their way to the last door, the way home?",
-        ],
+        description = "The Pingus now are really approaching the secrets of the cave. Will they make their way to the last door, the way home?",
         author = "Michael Wand <mwand@gmx.de>",
         number_of_pingus = 50,
         number_to_save = 30,
@@ -193,9 +190,9 @@
             owner_id = 0,
         ],
         :exit [
-            owner_id = 0,
             position = [999, 1066, 0],
             surface = [image = "exits/sortie_anim", modifier = :ROT0],
+            owner_id = 0,
         ],
         :hotspot [
             surface = [image = "entrances/space", modifier = :ROT0],

@@ -373,9 +373,9 @@
             parallax = 1,
         ],
         :exit [
-            owner_id = 0,
             position = [1010, 221, 0],
             surface = [image = "exits/ice2", modifier = :ROT0],
+            owner_id = 0,
         ],
     ],
 ]

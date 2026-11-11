@@ -314,9 +314,9 @@
             owner_id = 0,
         ],
         :exit [
-            owner_id = 0,
             position = [216, 501, 0],
             surface = [image = "exits/space", modifier = :ROT0],
+            owner_id = 0,
         ],
     ],
 ]

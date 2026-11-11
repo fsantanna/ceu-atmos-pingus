@@ -444,9 +444,9 @@
             position = [1207, 8, 0],
         ],
         :exit [
-            owner_id = 0,
             position = [1290, 525, 0],
             surface = [image = "exits/desert", modifier = :ROT0],
+            owner_id = 0,
         ],
     ],
 ]

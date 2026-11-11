@@ -169,9 +169,9 @@
             position = [440, 218, 0],
         ],
         :exit [
-            owner_id = 0,
             position = [464, 408, 0],
             surface = [image = "exits/space", modifier = :ROT0],
+            owner_id = 0,
         ],
         :hotspot [
             surface = [image = "entrances/snow_back", modifier = :ROT0],

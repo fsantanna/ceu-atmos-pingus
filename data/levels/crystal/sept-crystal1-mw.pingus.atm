@@ -742,9 +742,9 @@
             speed = 50,
         ],
         :exit [
-            owner_id = 0,
             position = [1147, 627, 0],
             surface = [image = "exits/ice", modifier = :ROT0],
+            owner_id = 0,
         ],
         :liquid [
             surface = [image = "liquids/water", modifier = :ROT0],

@@ -557,9 +557,9 @@
             owner_id = 0,
         ],
         :exit [
-            owner_id = 0,
             position = [1229, 234, 0],
             surface = [image = "exits/sortie", modifier = :ROT0],
+            owner_id = 0,
         ],
     ],
 ]

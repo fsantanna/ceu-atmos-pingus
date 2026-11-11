@@ -658,9 +658,9 @@
             position = [163, 891, 0],
         ],
         :exit [
-            owner_id = 0,
             position = [415, 1162, 0],
             surface = [image = "exits/mud", modifier = :ROT0],
+            owner_id = 0,
         ],
         :groundpiece [
             type = :ground,

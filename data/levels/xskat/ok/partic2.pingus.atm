@@ -2,10 +2,7 @@
     version = 2,
     head = [
         levelname = "Pingu Acceleration Labs II",
-        description = [
-            "Hint: Unlike in Lemmings, blockers can be revived by giving them another ",
-            "job. Good Luck! ",
-        ],
+        description = "Hint: Unlike in Lemmings, blockers can be revived by giving them another job. Good Luck! ",
         author = "Craig Timpany <timpany@pingus.cx>",
         number_of_pingus = 100,
         number_to_save = 90,

@@ -2,10 +2,7 @@
     version = 2,
     head = [
         levelname = "Digging from outside",
-        description = [
-            "At last the you have found the exit, but getting out of the caves might require ",
-            "the help from somebody in the jungle.",
-        ],
+        description = "At last the you have found the exit, but getting out of the caves might require the help from somebody in the jungle.",
         author = "Etienne Marcotte <marcotte_moi@yahoo.com>",
         number_of_pingus = 75,
         number_to_save = 25,
@@ -1003,9 +1000,9 @@
             position = [2037, 696, 0],
         ],
         :exit [
-            owner_id = 0,
             position = [2049, 783, 0],
             surface = [image = "exits/mud", modifier = :ROT0],
+            owner_id = 0,
         ],
         :groundpiece [
             type = :transparent,

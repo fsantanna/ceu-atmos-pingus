@@ -41,9 +41,9 @@
             speed = 50,
         ],
         :exit [
-            owner_id = 0,
             position = [1209, 537, -3],
             surface = [image = "exits/stone", modifier = :ROT0],
+            owner_id = 0,
         ],
         :groundpiece [
             type = :ground,

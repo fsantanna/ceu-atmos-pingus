@@ -169,9 +169,9 @@
             position = [977, 535, 0],
         ],
         :exit [
-            owner_id = 0,
             position = [1381, 435, 0],
             surface = [image = "exits/ice2", modifier = :ROT0],
+            owner_id = 0,
         ],
         :liquid [
             surface = [image = "liquids/water2", modifier = :ROT0],

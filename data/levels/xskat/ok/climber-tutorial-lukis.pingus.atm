@@ -354,9 +354,9 @@
             position = [1088, 567, 0],
         ],
         :exit [
-            owner_id = 0,
             position = [1003, 213, 0],
             surface = [image = "exits/desert", modifier = :ROT0],
+            owner_id = 0,
         ],
         :hotspot [
             surface = [image = "entrances/woodthing_nmov", modifier = :ROT0],

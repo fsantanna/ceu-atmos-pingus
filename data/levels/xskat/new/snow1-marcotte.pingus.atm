@@ -2,10 +2,7 @@
     version = 2,
     head = [
         levelname = "Trapped by the snow",
-        description = [
-            "Who said that this cave was a good place to rest overnight ? Now you have ",
-            "to dig yourself out of it.",
-        ],
+        description = "Who said that this cave was a good place to rest overnight ? Now you have to dig yourself out of it.",
         author = "Etienne Marcotte <marcotte_moi@yahoo.com>",
         number_of_pingus = 15,
         number_to_save = 15,
@@ -44,9 +41,9 @@
             position = [383, 201, 0],
         ],
         :exit [
-            owner_id = 0,
             position = [84, 294, 0],
             surface = [image = "exits/ice2", modifier = :ROT0],
+            owner_id = 0,
         ],
         :groundpiece [
             type = :ground,

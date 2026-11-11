@@ -301,14 +301,14 @@
             owner_id = 0,
         ],
         :exit [
-            owner_id = 0,
             position = [330, 1188, 0],
             surface = [image = "exits/space", modifier = :ROT0],
+            owner_id = 0,
         ],
         :exit [
-            owner_id = 0,
             position = [673, 1191, 0],
             surface = [image = "exits/space", modifier = :ROT0],
+            owner_id = 0,
         ],
         :hotspot [
             surface = [image = "entrances/space", modifier = :ROT0],

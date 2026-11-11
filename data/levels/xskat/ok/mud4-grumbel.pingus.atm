@@ -33,9 +33,9 @@
             speed = 50,
         ],
         :exit [
-            owner_id = 0,
             position = [1034, 461, -5],
             surface = [image = "exits/mud", modifier = :ROT0],
+            owner_id = 0,
         ],
         :groundpiece [
             type = :ground,

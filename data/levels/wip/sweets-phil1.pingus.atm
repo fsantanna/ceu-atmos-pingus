@@ -238,9 +238,9 @@
             owner_id = 0,
         ],
         :exit [
-            owner_id = 0,
             position = [685, 192, 0],
             surface = [image = "exits/sweetexit", modifier = :ROT0],
+            owner_id = 0,
         ],
     ],
 ]

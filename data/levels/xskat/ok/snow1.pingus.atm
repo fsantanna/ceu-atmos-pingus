@@ -702,9 +702,9 @@
             speed = 50,
         ],
         :exit [
-            owner_id = 0,
             position = [1917, 867, 0],
             surface = [image = "exits/ice2", modifier = :ROT0],
+            owner_id = 0,
         ],
     ],
 ]

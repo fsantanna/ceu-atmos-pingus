@@ -354,9 +354,9 @@
             owner_id = 0,
         ],
         :exit [
-            owner_id = 0,
             position = [715, 292, 0],
             surface = [image = "exits/stone", modifier = :ROT0],
+            owner_id = 0,
         ],
     ],
 ]

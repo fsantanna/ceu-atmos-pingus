@@ -28,9 +28,9 @@
             position = [65, 0, -150],
         ],
         :exit [
-            owner_id = 0,
             position = [328, 615, -50],
             surface = [image = "exits/crystal", modifier = :ROT0],
+            owner_id = 0,
         ],
         :groundpiece [
             type = :ground,

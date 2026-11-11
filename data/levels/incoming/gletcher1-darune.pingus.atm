@@ -2,10 +2,7 @@
     version = 2,
     head = [
         levelname = "Under the guilotin",
-        description = [
-            "Find a way under the guilotin and at same time pass over the water, without ",
-            "getting too wet.",
-        ],
+        description = "Find a way under the guilotin and at same time pass over the water, without getting too wet.",
         author = "Darune",
         number_of_pingus = 50,
         number_to_save = 44,
@@ -54,9 +51,9 @@
             position = [223, 251, 0],
         ],
         :exit [
-            owner_id = 0,
             position = [1101, 471, 0],
             surface = [image = "exits/stone", modifier = :ROT0],
+            owner_id = 0,
         ],
         :groundpiece [
             type = :ground,

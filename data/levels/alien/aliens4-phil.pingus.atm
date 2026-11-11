@@ -1554,12 +1554,12 @@
             owner_id = 0,
         ],
         :exit [
-            owner_id = 0,
             position = [781, 567, 0],
             surface = [
                 image = "groundpieces/ground/sortie/plate_forme_left",
                 modifier = :ROT0,
             ],
+            owner_id = 0,
         ],
         :hotspot [
             surface = [image = "entrances/space", modifier = :ROT0],

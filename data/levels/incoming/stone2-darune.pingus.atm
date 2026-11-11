@@ -2,10 +2,7 @@
     version = 2,
     head = [
         levelname = "Dire Descent",
-        description = [
-            "The pingus descends downward to deeper caves. A large cave around halfway ",
-            "down poses a problem that the pingus must find a way around.",
-        ],
+        description = "The pingus descends downward to deeper caves. A large cave around halfway down poses a problem that the pingus must find a way around.",
         author = "darune",
         number_of_pingus = 50,
         number_to_save = 30,
@@ -383,9 +380,9 @@
             position = [513, 1684, 0],
         ],
         :exit [
-            owner_id = 0,
             position = [463, 1695, 0],
             surface = [image = "exits/stone", modifier = :ROT0],
+            owner_id = 0,
         ],
         :groundpiece [
             type = :ground,

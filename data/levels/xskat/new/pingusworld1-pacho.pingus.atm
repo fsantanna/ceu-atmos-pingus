@@ -277,9 +277,9 @@
             position = [191, 2991, 0],
         ],
         :exit [
-            owner_id = 0,
             position = [301.96, 2994.7, 0],
             surface = [image = "exits/ice2", modifier = :ROT0],
+            owner_id = 0,
         ],
         :groundpiece [
             type = :ground,

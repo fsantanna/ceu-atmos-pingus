@@ -727,9 +727,9 @@
             owner_id = 0,
         ],
         :exit [
-            owner_id = 0,
             position = [1734, 634, 0],
             surface = [image = "exits/ice", modifier = :ROT0],
+            owner_id = 0,
         ],
         :liquid [
             surface = [image = "liquids/water", modifier = :ROT0],

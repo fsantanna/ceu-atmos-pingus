@@ -76,6 +76,6 @@
             ],
             position = [531, 261, 0],
         ],
-        :solidcolor_background [color = [0, 0, 0, 1]],
+        :solidcolor_background [color = [0, 1.0, 0, 1]],
     ],
 ]

@@ -655,9 +655,9 @@
             position = [350, 320, 0],
         ],
         :exit [
-            owner_id = 0,
             position = [696, 528, 0],
             surface = [image = "exits/pwexit", modifier = :ROT0],
+            owner_id = 0,
         ],
         :entrance [
             position = [1240, 100, 0],

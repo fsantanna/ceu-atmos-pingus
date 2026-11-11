@@ -2,10 +2,7 @@
     version = 2,
     head = [
         levelname = "Lets see how good a pingu can walk",
-        description = [
-            "Developers only... ;-) Testing if the hard line breaks work...<breaking> ",
-            "Looks good... ",
-        ],
+        description = "Developers only... ;-) Testing if the hard line breaks work...<breaking> Looks good... ",
         author = "Ingo Ruhnke <grumbel@gmail.com>",
         number_of_pingus = 100,
         number_to_save = 10,
@@ -130,9 +127,9 @@
             owner_id = 0,
         ],
         :exit [
-            owner_id = 0,
             position = [828, 309, 0],
             surface = [image = "exits/desert", modifier = :ROT0],
+            owner_id = 0,
         ],
     ],
 ]

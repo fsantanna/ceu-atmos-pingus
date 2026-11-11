@@ -603,9 +603,9 @@
             owner_id = 0,
         ],
         :exit [
-            owner_id = 0,
             position = [539, 480, 0],
             surface = [image = "exits/stone", modifier = :ROT0],
+            owner_id = 0,
         ],
         :entrance [
             position = [1242, 132, 0],

@@ -46,9 +46,9 @@
             position = [71, 694, -150],
         ],
         :exit [
-            owner_id = 0,
             position = [542, 618, -100],
             surface = [image = "exits/industrial", modifier = :ROT0],
+            owner_id = 0,
         ],
         :hotspot [
             surface = [image = "entrances/industrial", modifier = :ROT0],

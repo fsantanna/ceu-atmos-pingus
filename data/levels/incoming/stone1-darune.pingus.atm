@@ -2,11 +2,7 @@
     version = 2,
     head = [
         levelname = "White pingus can't jump",
-        description = [
-            "The pingus come across three large rock formations. The pingus must somehow ",
-            "get past the one in the middle. A big rock also blocks the way just outside ",
-            "the entrance.",
-        ],
+        description = "The pingus come across three large rock formations. The pingus must somehow get past the one in the middle. A big rock also blocks the way just outside the entrance.",
         author = "darune",
         number_of_pingus = 20,
         number_to_save = 15,
@@ -272,9 +268,9 @@
             position = [770, 247, 0],
         ],
         :exit [
-            owner_id = 0,
             position = [236, 210, 0],
             surface = [image = "exits/stone", modifier = :ROT0],
+            owner_id = 0,
         ],
         :groundpiece [
             type = :ground,

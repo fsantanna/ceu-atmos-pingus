@@ -2,10 +2,7 @@
     version = 2,
     head = [
         levelname = "The Great Pyramid",
-        description = [
-            "The exit is buried deeply inside the pyramid. Beware of traps, illusions ",
-            "and maybe even ancient curses too...",
-        ],
+        description = "The exit is buried deeply inside the pyramid. Beware of traps, illusions and maybe even ancient curses too...",
         author = "Ying-Wan Lam <yingwan.lam@yale.edu>",
         number_of_pingus = 40,
         number_to_save = 30,
@@ -154,9 +151,9 @@
             parallax = 1,
         ],
         :exit [
-            owner_id = 0,
             position = [887, 355, 5],
             surface = [image = "exits/desert", modifier = :ROT0],
+            owner_id = 0,
         ],
         :hotspot [
             surface = [image = "hotspots/desert/mediummummy", modifier = :ROT0],

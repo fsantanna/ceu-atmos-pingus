@@ -181,9 +181,9 @@
         ],
         :conveyorbelt [position = [1199, 389, 0], repeat = 5, speed = 2],
         :exit [
-            owner_id = 0,
             position = [1107.63, 423.106, 0],
             surface = [image = "exits/ordina", modifier = :ROT0],
+            owner_id = 0,
         ],
         :groundpiece [
             type = :ground,

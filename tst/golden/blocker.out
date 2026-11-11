@@ -1,118 +1,99 @@
 view 581 198
-  149 pingu  0 faller     981  398
-  184 pingu  0 walker     981  504
+  150 pingu  0 faller     981  398
+  185 pingu  0 walker     981  504
   300 pingu  0 blocker   1096  504
-  300 pingu  1 faller     981  398
-  335 pingu  1 walker     981  504
-  451 pingu  2 faller     981  398
-  486 pingu  2 walker     981  504
-  602 pingu  3 faller     981  398
-  620 pingu  1 faller     696  513
-  637 pingu  3 walker     981  504
-  694 pingu  1 splashed   696 1000
+  301 pingu  1 faller     981  398
+  336 pingu  1 walker     981  504
+  452 pingu  2 faller     981  398
+  487 pingu  2 walker     981  504
+  603 pingu  3 faller     981  398
+  621 pingu  1 faller     696  513
+  638 pingu  3 walker     981  504
   695 pingu  1 splashed   696 1000
-  707 pingu  1 dead       696 1000
-  753 pingu  4 faller     981  398
-  788 pingu  4 walker     981  504
-  904 pingu  5 faller     981  398
-  922 pingu  3 faller     696  513
-  939 pingu  5 walker     981  504
-  971 pingu  2 faller     696  513
-  996 pingu  3 splashed   696 1000
+  711 pingu  1 dead       696 1000
+  754 pingu  4 faller     981  398
+  789 pingu  4 walker     981  504
+  905 pingu  5 faller     981  398
+  923 pingu  3 faller     696  513
+  940 pingu  5 walker     981  504
+  972 pingu  2 faller     696  513
   997 pingu  3 splashed   696 1000
- 1009 pingu  3 dead       696 1000
- 1045 pingu  2 splashed   696 1000
+ 1013 pingu  3 dead       696 1000
  1046 pingu  2 splashed   696 1000
- 1055 pingu  6 faller     981  398
- 1058 pingu  2 dead       696 1000
- 1090 pingu  6 walker     981  504
- 1206 pingu  7 faller     981  398
- 1224 pingu  5 faller     696  513
- 1241 pingu  7 walker     981  504
- 1273 pingu  4 faller     696  513
- 1298 pingu  5 splashed   696 1000
+ 1056 pingu  6 faller     981  398
+ 1062 pingu  2 dead       696 1000
+ 1091 pingu  6 walker     981  504
+ 1207 pingu  7 faller     981  398
+ 1225 pingu  5 faller     696  513
+ 1242 pingu  7 walker     981  504
+ 1274 pingu  4 faller     696  513
  1299 pingu  5 splashed   696 1000
- 1311 pingu  5 dead       696 1000
- 1347 pingu  4 splashed   696 1000
+ 1315 pingu  5 dead       696 1000
  1348 pingu  4 splashed   696 1000
- 1357 pingu  8 faller     981  398
- 1360 pingu  4 dead       696 1000
- 1392 pingu  8 walker     981  504
- 1508 pingu  9 faller     981  398
- 1526 pingu  7 faller     696  513
- 1543 pingu  9 walker     981  504
- 1575 pingu  6 faller     696  513
- 1600 pingu  7 splashed   696 1000
+ 1358 pingu  8 faller     981  398
+ 1364 pingu  4 dead       696 1000
+ 1393 pingu  8 walker     981  504
+ 1509 pingu  9 faller     981  398
+ 1527 pingu  7 faller     696  513
+ 1544 pingu  9 walker     981  504
+ 1576 pingu  6 faller     696  513
  1601 pingu  7 splashed   696 1000
- 1613 pingu  7 dead       696 1000
- 1649 pingu  6 splashed   696 1000
+ 1617 pingu  7 dead       696 1000
  1650 pingu  6 splashed   696 1000
- 1659 pingu 10 faller     981  398
- 1662 pingu  6 dead       696 1000
- 1694 pingu 10 walker     981  504
- 1810 pingu 11 faller     981  398
- 1828 pingu  9 faller     696  513
- 1845 pingu 11 walker     981  504
- 1877 pingu  8 faller     696  513
- 1902 pingu  9 splashed   696 1000
+ 1660 pingu 10 faller     981  398
+ 1666 pingu  6 dead       696 1000
+ 1695 pingu 10 walker     981  504
+ 1811 pingu 11 faller     981  398
+ 1829 pingu  9 faller     696  513
+ 1846 pingu 11 walker     981  504
+ 1878 pingu  8 faller     696  513
  1903 pingu  9 splashed   696 1000
- 1915 pingu  9 dead       696 1000
- 1951 pingu  8 splashed   696 1000
+ 1919 pingu  9 dead       696 1000
  1952 pingu  8 splashed   696 1000
- 1961 pingu 12 faller     981  398
- 1964 pingu  8 dead       696 1000
- 1996 pingu 12 walker     981  504
- 2112 pingu 13 faller     981  398
- 2130 pingu 11 faller     696  513
- 2147 pingu 13 walker     981  504
- 2179 pingu 10 faller     696  513
- 2204 pingu 11 splashed   696 1000
+ 1962 pingu 12 faller     981  398
+ 1968 pingu  8 dead       696 1000
+ 1997 pingu 12 walker     981  504
+ 2113 pingu 13 faller     981  398
+ 2131 pingu 11 faller     696  513
+ 2148 pingu 13 walker     981  504
+ 2180 pingu 10 faller     696  513
  2205 pingu 11 splashed   696 1000
- 2217 pingu 11 dead       696 1000
- 2253 pingu 10 splashed   696 1000
+ 2221 pingu 11 dead       696 1000
  2254 pingu 10 splashed   696 1000
- 2263 pingu 14 faller     981  398
- 2266 pingu 10 dead       696 1000
- 2298 pingu 14 walker     981  504
- 2414 pingu 15 faller     981  398
- 2432 pingu 13 faller     696  513
- 2449 pingu 15 walker     981  504
- 2481 pingu 12 faller     696  513
- 2506 pingu 13 splashed   696 1000
+ 2264 pingu 14 faller     981  398
+ 2270 pingu 10 dead       696 1000
+ 2299 pingu 14 walker     981  504
+ 2415 pingu 15 faller     981  398
+ 2433 pingu 13 faller     696  513
+ 2450 pingu 15 walker     981  504
+ 2482 pingu 12 faller     696  513
  2507 pingu 13 splashed   696 1000
- 2519 pingu 13 dead       696 1000
- 2555 pingu 12 splashed   696 1000
+ 2523 pingu 13 dead       696 1000
  2556 pingu 12 splashed   696 1000
- 2565 pingu 16 faller     981  398
- 2568 pingu 12 dead       696 1000
- 2600 pingu 16 walker     981  504
- 2716 pingu 17 faller     981  398
- 2734 pingu 15 faller     696  513
- 2751 pingu 17 walker     981  504
- 2783 pingu 14 faller     696  513
- 2808 pingu 15 splashed   696 1000
+ 2566 pingu 16 faller     981  398
+ 2572 pingu 12 dead       696 1000
+ 2601 pingu 16 walker     981  504
+ 2717 pingu 17 faller     981  398
+ 2735 pingu 15 faller     696  513
+ 2752 pingu 17 walker     981  504
+ 2784 pingu 14 faller     696  513
  2809 pingu 15 splashed   696 1000
- 2821 pingu 15 dead       696 1000
- 2857 pingu 14 splashed   696 1000
+ 2825 pingu 15 dead       696 1000
  2858 pingu 14 splashed   696 1000
- 2867 pingu 18 faller     981  398
- 2870 pingu 14 dead       696 1000
- 2902 pingu 18 walker     981  504
- 3018 pingu 19 faller     981  398
- 3036 pingu 17 faller     696  513
- 3053 pingu 19 walker     981  504
- 3085 pingu 16 faller     696  513
- 3110 pingu 17 splashed   696 1000
+ 2868 pingu 18 faller     981  398
+ 2874 pingu 14 dead       696 1000
+ 2903 pingu 18 walker     981  504
+ 3019 pingu 19 faller     981  398
+ 3037 pingu 17 faller     696  513
+ 3054 pingu 19 walker     981  504
+ 3086 pingu 16 faller     696  513
  3111 pingu 17 splashed   696 1000
- 3123 pingu 17 dead       696 1000
- 3159 pingu 16 splashed   696 1000
+ 3127 pingu 17 dead       696 1000
  3160 pingu 16 splashed   696 1000
- 3172 pingu 16 dead       696 1000
- 3338 pingu 19 faller     696  513
- 3387 pingu 18 faller     696  513
- 3412 pingu 19 splashed   696 1000
+ 3176 pingu 16 dead       696 1000
+ 3339 pingu 19 faller     696  513
+ 3388 pingu 18 faller     696  513
  3413 pingu 19 splashed   696 1000
- 3425 pingu 19 dead       696 1000
- 3461 pingu 18 splashed   696 1000
+ 3429 pingu 19 dead       696 1000
  3462 pingu 18 splashed   696 1000
- 3474 pingu 18 dead       696 1000
+ 3478 pingu 18 dead       696 1000

@@ -56,9 +56,9 @@
             owner_id = 0,
         ],
         :exit [
-            owner_id = 0,
             position = [413, 459, 0],
             surface = [image = "special/pacman/pacman", modifier = :ROT0],
+            owner_id = 0,
         ],
         :hotspot [
             surface = [image = "special/pacman/blinky", modifier = :ROT0],

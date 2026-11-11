@@ -27,9 +27,9 @@
             position = [197, 41, -150],
         ],
         :exit [
-            owner_id = 0,
             position = [634, 214, -50],
             surface = [image = "exits/sortie", modifier = :ROT0],
+            owner_id = 0,
         ],
         :groundpiece [
             type = :ground,

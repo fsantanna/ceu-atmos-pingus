@@ -22,9 +22,9 @@
             scroll_y = 0,
             para_x = 0,
             para_y = 0,
-            stretch_x = 0,
-            stretch_y = 1,
-            keep_aspect = 1,
+            stretch_x = false,
+            stretch_y = true,
+            keep_aspect = true,
             position = [-294, -39, -150],
         ],
         :groundpiece [
@@ -41,9 +41,9 @@
             position = [383, 201, 0],
         ],
         :exit [
-            owner_id = 0,
             position = [84, 294, 0],
             surface = [image = "exits/ice2", modifier = :ROT0],
+            owner_id = 0,
         ],
         :groundpiece [
             type = :ground,

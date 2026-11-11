@@ -269,9 +269,9 @@
             position = [640, 444, 0],
         ],
         :exit [
-            owner_id = 0,
             position = [368, 211, 0],
             surface = [image = "exits/industrial", modifier = :ROT0],
+            owner_id = 0,
         ],
         :entrance [
             position = [1013, 371, 0],

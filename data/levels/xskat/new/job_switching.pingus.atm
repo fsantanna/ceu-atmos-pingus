@@ -43,9 +43,9 @@
             owner_id = 0,
         ],
         :exit [
-            owner_id = 0,
             position = [795, 216, 0],
             surface = [image = "exits/ordina", modifier = :ROT0],
+            owner_id = 0,
         ],
         :groundpiece [
             type = :solid,

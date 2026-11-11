@@ -2,10 +2,7 @@
     version = 2,
     head = [
         levelname = "Matrix of the death",
-        description = [
-            "Take a piece of paper. Now pingus have to enter the matrix of the death. ",
-            "This is a maze, bad ways are protect by jaws.",
-        ],
+        description = "Take a piece of paper. Now pingus have to enter the matrix of the death. This is a maze, bad ways are protect by jaws.",
         author = [],
         number_of_pingus = 100,
         number_to_save = 50,
@@ -1604,12 +1601,12 @@
             owner_id = 0,
         ],
         :exit [
-            owner_id = 0,
             position = [769, 574, 0],
             surface = [
                 image = "groundpieces/ground/sortie/plate_forme_left",
                 modifier = :ROT0,
             ],
+            owner_id = 0,
         ],
         :hotspot [
             surface = [image = "entrances/space", modifier = :ROT0],

@@ -3,7 +3,12 @@
 # One-time converter of the data of Pingus, from s-expressions to
 # Atmos data, which the game reads with `X.load`.
 #
-#   tools/convert.py <data of fsantanna/pingus@036852a> <data of the port>
+#   tools/merge-data.sh <data of fsantanna/pingus@036852a> \
+#                       <data of Pingus/pingus@ffe3851> /tmp/src
+#   tools/convert.py /tmp/src <data of the port>
+#
+# The source is the data of the 2018 fork, with the levels of the
+# official game on top (see tools/merge-data.sh).
 #
 # Reads every s-expression file in the source (levels, demos, sprites,
 # prefabs, levelsets, worldmaps, stories, controllers, fonts), and
@@ -48,11 +53,11 @@ import re
 import sys
 
 KINDS = {
-    '.pingus':      447,
+    '.pingus':      523,
     '.pingus-demo': 159,
     '.sprite':      362,
     '.prefab':       17,
-    '.levelset':     15,
+    '.levelset':     16,
     '.worldmap':      2,
     '.story':         2,
     '.scm':           5,
@@ -81,6 +86,8 @@ OBJECTS = {
 ACTIONS = {
     'basher', 'blocker', 'bomber', 'bridger', 'climber', 'digger',
     'floater', 'jumper', 'miner', 'slider',
+    # after the official game, not in the Céu rewrite
+    'angel', 'boarder', 'superman',
 }
 
 ID  = re.compile(r'^[A-Za-z_][A-Za-z0-9_]*$')
@@ -464,8 +471,12 @@ def main (src, dst):
                 continue
             counts[ext] += 1
             rel = os.path.relpath(os.path.join(dir,f), src)
-            with open(os.path.join(src,rel), encoding='utf-8') as fd:
-                exprs = sexp_read(fd.read())
+            raw = open(os.path.join(src,rel), 'rb').read()
+            try:
+                txt = raw.decode('utf-8')
+            except UnicodeDecodeError:
+                txt = raw.decode('latin-1')     # a few old levels
+            exprs = sexp_read(txt)
             out = atm_write(file_to_atm(exprs, rel)) + '\n'
 
             # round trip, from the text that is written

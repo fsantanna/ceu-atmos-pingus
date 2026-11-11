@@ -89,9 +89,9 @@
             position = [608, 223, 0],
         ],
         :exit [
-            owner_id = 0,
             position = [676, 223, 0],
             surface = [image = "exits/crystal", modifier = :ROT0],
+            owner_id = 0,
         ],
         :groundpiece [
             type = :solid,

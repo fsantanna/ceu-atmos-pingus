@@ -278,9 +278,9 @@
             position = [545, 308, 0],
         ],
         :exit [
-            owner_id = 0,
             position = [379, 463, 0],
             surface = [image = "exits/stone", modifier = :ROT0],
+            owner_id = 0,
         ],
         :groundpiece [
             type = :ground,

@@ -93,14 +93,14 @@
             owner_id = 0,
         ],
         :exit [
-            owner_id = 0,
             position = [469, 215, 0],
             surface = [image = "exits/sweetexit", modifier = :ROT0],
+            owner_id = 0,
         ],
         :exit [
-            owner_id = 0,
             position = [118, 346, 0],
             surface = [image = "exits/sortie_anim", modifier = :ROT0],
+            owner_id = 0,
         ],
         :hotspot [
             surface = [image = "entrances/space", modifier = :ROT0],

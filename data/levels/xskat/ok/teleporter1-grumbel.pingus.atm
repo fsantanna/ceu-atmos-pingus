@@ -289,9 +289,9 @@
             owner_id = 0,
         ],
         :exit [
-            owner_id = 0,
             position = [1005, 679, 0],
             surface = [image = "exits/space", modifier = :ROT0],
+            owner_id = 0,
         ],
         :teleporter [target_id = "id2442322", position = [457, 344, 0]],
         :teleporter_target [id = "id2442322", position = [483, 150, 0]],

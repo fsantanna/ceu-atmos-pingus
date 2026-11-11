@@ -163,9 +163,9 @@
             position = [625, 673, 0],
         ],
         :exit [
-            owner_id = 0,
             position = [1119, 482, 0],
             surface = [image = "exits/sortie_anim", modifier = :ROT0],
+            owner_id = 0,
         ],
         :entrance [
             position = [277, 660, 0],

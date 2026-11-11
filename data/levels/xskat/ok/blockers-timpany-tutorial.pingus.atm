@@ -2,10 +2,7 @@
     version = 2,
     head = [
         levelname = "Blockers and crowd control",
-        description = [
-            "Use a blocker to keep the Pingus from walking off the cliff. Afterwards you ",
-            "can make them stop by giving them another job. ",
-        ],
+        description = "Use a blocker to keep the Pingus from walking off the cliff. Afterwards you can make them stop by giving them another job. ",
         author = [],
         number_of_pingus = 50,
         number_to_save = 20,
@@ -192,9 +189,9 @@
             owner_id = 0,
         ],
         :exit [
-            owner_id = 0,
             position = [727, 425, 0],
             surface = [image = "exits/stone", modifier = :ROT0],
+            owner_id = 0,
         ],
         :liquid [
             surface = [image = "liquids/water", modifier = :ROT0],

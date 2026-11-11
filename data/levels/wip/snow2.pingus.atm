@@ -918,9 +918,9 @@
             owner_id = 0,
         ],
         :exit [
-            owner_id = 0,
             position = [4621, 456, 0],
             surface = [image = "exits/ice2", modifier = :ROT0],
+            owner_id = 0,
         ],
     ],
 ]

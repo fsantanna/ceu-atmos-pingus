@@ -25,9 +25,9 @@
     ],
     objects = [
         :exit [
-            owner_id = 0,
             position = [1432, 248, -1100],
             surface = [image = "exits/ice", modifier = :ROT0],
+            owner_id = 0,
         ],
         :surface_background [
             surface = [image = "textures/stars", modifier = :ROT0],

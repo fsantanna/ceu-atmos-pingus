@@ -2,10 +2,7 @@
     version = 2,
     head = [
         levelname = "Technique",
-        description = [
-            "In this room, all the technique of the cave is controlled. Can you blow up ",
-            "enough tubes to reach the exit?",
-        ],
+        description = "In this room, all the technique of the cave is controlled. Can you blow up enough tubes to reach the exit?",
         author = "Michael Wand <mwand@gmx.de>",
         number_of_pingus = 50,
         number_to_save = 25,
@@ -946,9 +943,9 @@
             owner_id = 0,
         ],
         :exit [
-            owner_id = 0,
             position = [81, 390, 0],
             surface = [image = "exits/ice", modifier = :ROT0],
+            owner_id = 0,
         ],
         :liquid [
             surface = [image = "liquids/water", modifier = :ROT0],

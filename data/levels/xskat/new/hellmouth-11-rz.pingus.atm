@@ -2,10 +2,7 @@
     version = 2,
     head = [
         levelname = "The Ones",
-        description = [
-            "During their way through the volcano, the pingus stumbles upon the number ",
-            "11, cut out in stone.",
-        ],
+        description = "During their way through the volcano, the pingus stumbles upon the number 11, cut out in stone.",
         author = "Rune Zedeler <rz@daimi.au.dk>",
         number_of_pingus = 20,
         number_to_save = 11,
@@ -123,9 +120,9 @@
             position = [248, 211, 0],
         ],
         :exit [
-            owner_id = 0,
             position = [821, 798, 0],
             surface = [image = "exits/stone", modifier = :ROT0],
+            owner_id = 0,
         ],
         :groundpiece [
             type = :ground,

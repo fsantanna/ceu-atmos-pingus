@@ -2,11 +2,7 @@
     version = 2,
     head = [
         levelname = "Bombs away",
-        description = [
-            "The pingus come across a cave with some strange vegetations. Stranded with ",
-            "only a few propellers and no digging tools and bridges how will the pingus ",
-            "move on ?",
-        ],
+        description = "The pingus come across a cave with some strange vegetations. Stranded with only a few propellers and no digging tools and bridges how will the pingus move on ?",
         author = "darune",
         number_of_pingus = 50,
         number_to_save = 1,
@@ -309,14 +305,14 @@
             position = [499, 989, 0],
         ],
         :exit [
-            owner_id = 0,
             position = [440, 1000, 0],
             surface = [image = "exits/stone", modifier = :ROT0],
+            owner_id = 0,
         ],
         :exit [
-            owner_id = 0,
             position = [798, 993, 0],
             surface = [image = "exits/stone", modifier = :ROT0],
+            owner_id = 0,
         ],
         :groundpiece [
             type = :ground,

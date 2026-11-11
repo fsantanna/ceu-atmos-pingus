@@ -116,10 +116,10 @@
                 source = "leveldot_1",
                 destination = "leveldot_2",
                 positions = [
-                    :position [84, 360, 0],
-                    :position [108, 353, 0],
-                    :position [132, 350, 0],
-                    :position [154, 352, 0],
+                    :point [pos = [84, 360, 0]],
+                    :point [pos = [108, 353, 0]],
+                    :point [pos = [132, 350, 0]],
+                    :point [pos = [154, 352, 0]],
                 ],
             ],
             :edge [
@@ -133,8 +133,8 @@
                 source = "leveldot_3",
                 destination = "leveldot_4",
                 positions = [
-                    :position [284, 347, 0],
-                    :position [309, 335, 0],
+                    :point [pos = [284, 347, 0]],
+                    :point [pos = [309, 335, 0]],
                 ],
             ],
             :edge [
@@ -178,11 +178,11 @@
                 source = "leveldot_10",
                 destination = "leveldot_15",
                 positions = [
-                    :position [377, 406, 0],
-                    :position [401, 428, 0],
-                    :position [423, 449, 0],
-                    :position [468, 451, 0],
-                    :position [494, 449, 0],
+                    :point [pos = [377, 406, 0]],
+                    :point [pos = [401, 428, 0]],
+                    :point [pos = [423, 449, 0]],
+                    :point [pos = [468, 451, 0]],
+                    :point [pos = [494, 449, 0]],
                 ],
             ],
             :edge [
@@ -196,9 +196,9 @@
                 source = "leveldot_10",
                 destination = "leveldot_11",
                 positions = [
-                    :position [394, 377, 0],
-                    :position [433, 375, 0],
-                    :position [465, 377, 0],
+                    :point [pos = [394, 377, 0]],
+                    :point [pos = [433, 375, 0]],
+                    :point [pos = [465, 377, 0]],
                 ],
             ],
             :edge [
@@ -206,7 +206,7 @@
                 source = "leveldot_11",
                 destination = "leveldot_12",
                 positions = [
-                    :position [538, 405, 0],
+                    :point [pos = [538, 405, 0]],
                 ],
             ],
             :edge [
@@ -214,8 +214,8 @@
                 source = "leveldot_12",
                 destination = "leveldot_13",
                 positions = [
-                    :position [621, 398, 0],
-                    :position [653, 392, 0],
+                    :point [pos = [621, 398, 0]],
+                    :point [pos = [653, 392, 0]],
                 ],
             ],
             :edge [
@@ -229,7 +229,7 @@
                 source = "leveldot_15",
                 destination = "leveldot_16",
                 positions = [
-                    :position [591, 453, 0],
+                    :point [pos = [591, 453, 0]],
                 ],
             ],
             :edge [
@@ -237,7 +237,7 @@
                 source = "leveldot_13",
                 destination = "leveldot_16",
                 positions = [
-                    :position [665, 419, 0],
+                    :point [pos = [665, 419, 0]],
                 ],
             ],
         ],
