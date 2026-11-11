@@ -43,7 +43,7 @@ task ActionButton (g, i, act, n) {
             await :sdl.mouse.motion until inside(r, it.x, it.y)
             watching :sdl.mouse.motion until !inside(r, it.x, it.y) {
                 loop on :sdl.draw {
-                    text(FONT.pingus_small, ACTION_NAME@(act), r.x + r.w + 5, r.y + 9)
+                    text(FONT.pingus_small, tr(ACTION_NAME@(act)), r.x + r.w + 5, r.y + 9)
                 }
             }
         }
@@ -73,7 +73,7 @@ task Counters (g) {
     spawn Sprite("core/buttons/info", [x=W//2, y=0], [anchor=:top_center])
     loop on :sdl.draw {
         text(FONT.pingus_small,
-            string.format("Released:%3d/%d   Out:%3d   Saved:%3d/%d",
+            string.format(tr("Released:%3d/%d   Out:%3d   Saved:%3d/%d"),
                 c.released, c.allowed, c.alive, c.exited, c.to_save),
             W//2, -2, :center)
     }

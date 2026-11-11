@@ -71,7 +71,7 @@ func level_objects (lvl) {
 ;; The time of the level in ticks of the world (20ms), as a text.
 func time_str (ticks) {
     if ticks < 0 {
-        "unlimited"
+        tr("unlimited")
     } else {
         val secs = (ticks * 20) // 1000
         string.format("%2d:%02d", secs // 60, secs % 60)

@@ -309,6 +309,33 @@ func break_lines (f, s, w) {
     vector.join(lines, "\n")
 }
 
+;;; TRANSLATIONS ;;;
+
+;; The texts of the current language, from `data/po/` (see tools/po.py),
+;; or nil for English, the language of the data.
+var LANG = nil
+
+func tr (s) {
+    (LANG && LANG@(s)) || s
+}
+
+func lang_set (code) {
+    set LANG = if (code == nil) || (code == "en") => nil =>
+        data_load("data/po/" ++ code ++ ".po.atm").texts
+}
+
+;; The languages with enough texts, with English first.
+func langs () {
+    val v = ["en"]
+    val idx = data_load("data/po/index.atm")
+    loop _, l in idx {
+        if l.texts >= 100 {
+            vector.insert(v, l.lang)
+        }
+    }
+    v
+}
+
 ;;; SOUNDS ;;;
 
 func sound (name, vol) {

@@ -23,7 +23,7 @@ func result_message (r) {
 
 task Result (r) {
     val ok = r.saved >= r.needed
-    val msg = result_message(r)
+    val msg = tr(result_message(r))
     val left = if r.limit < 0 => "-" => time_str(math.max(0, r.limit - r.time))
     spawn Board()
     music(if ok => "success_1.it" => "pingus-2.it")
@@ -31,14 +31,14 @@ task Result (r) {
         val f = FONT.chalk_normal
         val cx, cy = W//2, H//2
         loop on :sdl.draw {
-            text(FONT.chalk_large, r.name, cx, cy - 200, :center)
-            text(FONT.chalk_large, if ok => "Success!" => "Failure!", cx, cy - 140, :center)
+            text(FONT.chalk_large, tr(r.name), cx, cy - 200, :center)
+            text(FONT.chalk_large, tr(if ok => "Success!" => "Failure!"), cx, cy - 140, :center)
             text(f, msg, cx, cy - 70, :center)
-            text(f, "Saved: ", cx - 100, cy + 10)
+            text(f, tr("Saved: "), cx - 100, cy + 10)
             text(f, r.saved ++ "/" ++ r.needed, cx + 100, cy + 10, :right)
-            text(f, "Died: ", cx - 100, cy + 40)
+            text(f, tr("Died: "), cx - 100, cy + 40)
             text(f, r.killed, cx + 100, cy + 40, :right)
-            text(f, "Time left: ", cx - 100, cy + 70)
+            text(f, tr("Time left: "), cx - 100, cy + 70)
             text(f, left, cx + 100, cy + 70, :right)
         }
     }
@@ -51,8 +51,8 @@ task Result (r) {
         }
         false
     } else {
-        spawn Label("Retry", OK_R.x + (OK_R.w//2), OK_R.y - 24)
-        spawn Label("Give Up", BACK_R.x + (BACK_R.w//2), BACK_R.y - 4)
+        spawn Label(tr("Retry"), OK_R.x + (OK_R.w//2), OK_R.y - 24)
+        spawn Label(tr("Give Up"), BACK_R.x + (BACK_R.w//2), BACK_R.y - 4)
         par :any {
             await Ok()
             true

@@ -10,10 +10,10 @@
 ;; arrows, and each change restarts the visible items.
 task List (items, per, height, title, draw, can, marker) {
     spawn Board()
-    spawn Label("Back", BACK_R.x + (BACK_R.w//2), BACK_R.y)
+    spawn Label(tr("Back"), BACK_R.x + (BACK_R.w//2), BACK_R.y)
     spawn {
         loop on :sdl.draw {
-            text(FONT.chalk_large, title, BOARD.x + (BOARD.w//2), BOARD.y + 40, :center)
+            text(FONT.chalk_large, tr(title), BOARD.x + (BOARD.w//2), BOARD.y + 40, :center)
         }
     }
     val uw, uh = res_frame_size("core/menu/arrow_up")
@@ -131,10 +131,10 @@ task Levelsets () {
     val sets = levelsets()
     await List(sets, 4, 95, "Levelsets", \(ls, i, r) {
         pg.draw(res_surface(ls.image), r.x + 25, r.y)
-        text(FONT.chalk_normal, ls.title, r.x + 105, r.y + 15)
-        text(FONT.chalk_small, ls.description, r.x + 105, r.y + 40)
-        text(FONT.chalk_normal, "Solved: " ++ levelset_solved(ls) ++ "%", r.x + r.w - 25, r.y + 15, :right)
-        text(FONT.chalk_normal, #ls.paths ++ " levels", r.x + r.w - 25, r.y + 40, :right)
+        text(FONT.chalk_normal, tr(ls.title), r.x + 105, r.y + 15)
+        text(FONT.chalk_small, tr(ls.description), r.x + 105, r.y + 40)
+        text(FONT.chalk_normal, tr("Solved:") ++ " " ++ levelset_solved(ls) ++ "%", r.x + r.w - 25, r.y + 15, :right)
+        text(FONT.chalk_normal, #ls.paths ++ " " ++ tr("levels"), r.x + r.w - 25, r.y + 40, :right)
     }, nil, res_surface("core/menu/marker"))
 }
 
@@ -149,7 +149,7 @@ task Levels (ls) {
     await List(heads, 10, 32, ls.title, \(l, i, r) {
         val ok = level_open(ls, i)
         pg.draw(if !ok => locked => (if level_solved(l.path) => solved => open), r.x + 10, r.y)
-        text(FONT.chalk_normal, l.name, r.x + 40, r.y + 4)
+        text(FONT.chalk_normal, tr(l.name), r.x + 40, r.y + 4)
     }, \(l, i) { level_open(ls, i) }, res_surface("core/menu/marker2"))
 }
 

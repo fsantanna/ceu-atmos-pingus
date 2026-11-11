@@ -3,11 +3,12 @@
 ;; Each option is a check box: its value is data of the player, which
 ;; the box shows and changes.
 
-val OPTIONS_DEFAULT = [ music = true, sound = true ]
+val OPTIONS_DEFAULT = [ music = true, sound = true, lang = "en" ]
 
 func options_apply () {
     val o = SAVE.options
     pg.volume(if o.sound => 1.0 => 0.0, if o.music => 1.0 => 0.0)
+    lang_set(o.lang)
 }
 
 set SAVE.options = OPTIONS_DEFAULT ++ (SAVE.options || [])
@@ -29,7 +30,29 @@ task CheckBox (key, s, x, y) {
     } with {
         loop on :sdl.draw {
             pg.draw(if SAVE.options@(key) => yes => no, x, y)
-            text(FONT.chalk_normal, s, x + w + 15, y)
+            text(FONT.chalk_normal, tr(s), x + w + 15, y)
+        }
+    }
+}
+
+;; Language(x, y): the language, which changes at each click, in the
+;; order of the languages.
+task Language (x, y) {
+    val ls = langs()
+    val r = [x=x, y=y, w=300, h=24]
+    par {
+        loop {
+            await Click(r)
+            val i = loop i, l in ls {
+                until l == SAVE.options.lang, i
+            } || 0
+            set SAVE.options.lang = ls@((i + 1) % #ls)
+            options_apply()
+            save()
+        }
+    } with {
+        loop on :sdl.draw {
+            text(FONT.chalk_normal, tr("Language") ++ ": " ++ SAVE.options.lang, x, y)
         }
     }
 }
@@ -38,12 +61,13 @@ task Options () {
     spawn Board()
     spawn {
         loop on :sdl.draw {
-            text(FONT.chalk_large, "Options", BOARD.x + (BOARD.w//2), BOARD.y + 40, :center)
+            text(FONT.chalk_large, tr("Options"), BOARD.x + (BOARD.w//2), BOARD.y + 40, :center)
         }
     }
     spawn CheckBox(:music, "Music", BOARD.x + 120, BOARD.y + 150)
     spawn CheckBox(:sound, "Sound effects", BOARD.x + 120, BOARD.y + 190)
-    spawn Label("Back", BACK_R.x + (BACK_R.w//2), BACK_R.y)
+    spawn Language(BOARD.x + 120, BOARD.y + 250)
+    spawn Label(tr("Back"), BACK_R.x + (BACK_R.w//2), BACK_R.y)
     par :any {
         await Back()
     } with {

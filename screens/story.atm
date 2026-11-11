@@ -9,7 +9,7 @@ task Story (path) {
     music(st.music)
     spawn {
         loop on :sdl.draw {
-            text(FONT.chalk_large, st.title, W//2, (H//2) - 200, :center)
+            text(FONT.chalk_large, tr(st.title), W//2, (H//2) - 200, :center)
         }
     }
     val nr = board_at("core/misc/next", :right_bottom, -50, -60)
@@ -18,7 +18,7 @@ task Story (path) {
             val img = page.surface.image
             val iw, ih = res_frame_size(img)
             val all = if page.text ?? :table => vector.join(page.text, "") => page.text
-            val txt = break_lines(FONT.chalk_normal, all, 560)
+            val txt = break_lines(FONT.chalk_normal, tr(all), 560)
             spawn Sprite(img, [x=(W//2) - (iw//2), y=(H//2) + 10 - ih])
             ;; the text, letter by letter, until it is all there or the
             ;; player wants it all
@@ -50,7 +50,7 @@ task Story (path) {
         }
         true
     } with {
-        await LabelButton("skip", W - 60, H - 30)
+        await LabelButton(tr("skip"), W - 60, H - 30)
         true
     } with {
         await Key("Escape")

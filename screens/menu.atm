@@ -33,7 +33,7 @@ task MenuButton (x, y, s) {
     spawn Hover(r, "core/menu/menuitem_highlight", "tick")
     spawn {
         loop on :sdl.draw {
-            text(FONT.chalk_large, s, r.x + (r.w//2), r.y + (r.h//2) - 28, :center)
+            text(FONT.chalk_large, tr(s), r.x + (r.w//2), r.y + (r.h//2) - 28, :center)
         }
     }
     await Click(r)

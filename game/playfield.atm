@@ -97,7 +97,7 @@ task Playfield (g) {
                 val y = q.y - 16 - CAM.y
                 center(if allowed(q.act, g.next) => good => bad, x, y)
                 center(if q.dir == -1 => left => right, x, y)
-                var s = ACTION_NAME@(q.act)
+                var s = tr(ACTION_NAME@(q.act))
                 if q.act == :bridger {
                     set s = s ++ " (" ++ (q.bricks || 0) ++ ")"
                 }

@@ -166,7 +166,7 @@ task WmDot (wm, n) {
                         }
                     } with {
                         loop on :sdl.draw {
-                            text(FONT.chalk_small, if open => name => "???", n.x - CAM.x, n.y - CAM.y - 40, :center)
+                            text(FONT.chalk_small, if open => tr(name) => "???", n.x - CAM.x, n.y - CAM.y - 40, :center)
                         }
                     } with {
                         loop {
@@ -205,7 +205,7 @@ task WmView (wm) {
     }
     spawn {
         loop on :sdl.draw {
-            text(FONT.chalk_large, wm.head.name, W//2, 10, :center)
+            text(FONT.chalk_large, tr(wm.head.name), W//2, 10, :center)
         }
     }
     par :any {
