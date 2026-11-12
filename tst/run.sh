@@ -11,6 +11,7 @@
 #   - the engine: a sprite, a text, and a scripted click;
 #   - the screens: screenshots at fixed frames, compared with tst/shots/;
 #   - the mouse: tst/clicks.sh, buttons and clicks on a pingu;
+#   - the options: tst/options.sh, the screen, the save, the scrolling;
 #   - the levels: the scripted levels of tst/levels.txt, whose traces are
 #     compared with tst/golden/.
 
@@ -79,6 +80,19 @@ check clicks "$OUT/clicks.out"
 # the worldmap: a click walks the pingu to an open dot
 tst/worldmap.sh > "$OUT/worldmap.out" 2>&1
 check worldmap "$OUT/worldmap.out"
+
+# the options: the screen, the save, the scrolling, the overlay
+OUT="$OUT" tst/options.sh > "$OUT/options.out" 2>&1
+check options "$OUT/options.out"
+for s in options overlay; do
+    if [ "$UPDATE" = 1 ]; then
+        cp "$OUT/$s.png" "tst/shots/$s.png"
+    elif cmp -s "$OUT/$s.png" "tst/shots/$s.png"; then
+        echo "ok      shot $s"
+    else
+        echo "FAIL    shot $s ($OUT/$s.png)"; FAIL=1
+    fi
+done
 
 # levels, 4 at a time
 grep -v '^#' tst/levels.txt | grep -v '^\s*$' | \

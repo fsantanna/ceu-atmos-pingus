@@ -1,0 +1,7 @@
+[options=[fullscreen=false, grab=false, cursor=true, autoscroll=true, dragdrop=false, fps=true, resolution="800x600", lang="ca", master=0, sound=100, music=100], levels=[]]
+auto: scrolled
+noauto: still
+nograb: still
+drag: scrolled
+band: scrolled
+drag != band
