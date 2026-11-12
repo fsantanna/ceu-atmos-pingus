@@ -39,25 +39,53 @@ task Playfield (g) {
             }
         }
     } with {
-        ;; scrolling: drag with the right button, as the original
+        ;; scrolling: drag with the right button, as the original: the
+        ;; level follows the mouse (drag and drop), or scrolls at a speed
+        ;; from the point of the click (a band)
         loop {
             val e = await :sdl.mouse.dn until it.but == 3
             watching :sdl.mouse.up until it.but == 3 {
-                par {
-                    loop us on :clock {
-                        set CAM.x += trunc((MOUSE.x - e.x) * 0.2)
-                        set CAM.y += trunc((MOUSE.y - e.y) * 0.2)
+                if OPTIONS.dragdrop {
+                    val cx, cy = CAM.x, CAM.y
+                    loop on :sdl.mouse.motion {
+                        set CAM.x = cx + (e.x - MOUSE.x)
+                        set CAM.y = cy + (e.y - MOUSE.y)
                         cam_clamp(g)
                     }
-                } with {
-                    loop on :sdl.draw {
-                        pg.line(0x00FF00FF, MOUSE.x, MOUSE.y, e.x, e.y-15)
-                        pg.line(0x0000FFFF, MOUSE.x, MOUSE.y, e.x, e.y+15)
-                        pg.line(0x00FFFFFF, MOUSE.x, MOUSE.y, e.x+15, e.y)
-                        pg.line(0xFFFF00FF, MOUSE.x, MOUSE.y, e.x-15, e.y)
-                        pg.line(0xFF0000FF, MOUSE.x, MOUSE.y, e.x, e.y)
+                } else {
+                    par {
+                        loop us on :clock {
+                            set CAM.x += trunc((MOUSE.x - e.x) * 0.2)
+                            set CAM.y += trunc((MOUSE.y - e.y) * 0.2)
+                            cam_clamp(g)
+                        }
+                    } with {
+                        loop on :sdl.draw {
+                            pg.line(0x00FF00FF, MOUSE.x, MOUSE.y, e.x, e.y-15)
+                            pg.line(0x0000FFFF, MOUSE.x, MOUSE.y, e.x, e.y+15)
+                            pg.line(0x00FFFFFF, MOUSE.x, MOUSE.y, e.x+15, e.y)
+                            pg.line(0xFFFF00FF, MOUSE.x, MOUSE.y, e.x-15, e.y)
+                            pg.line(0xFF0000FF, MOUSE.x, MOUSE.y, e.x, e.y)
+                        }
                     }
                 }
+            }
+        }
+    } with {
+        ;; scrolling: at the borders of the screen, 800 pixels per second,
+        ;; in fullscreen or with the mouse grabbed, as the original
+        loop us on :clock {
+            if OPTIONS.autoscroll && MOUSE.moved && (OPTIONS.fullscreen || OPTIONS.grab) {
+                val d = (800 * us) // 1000000
+                ifs {
+                    MOUSE.x < 10      => set CAM.x -= d
+                    MOUSE.x > (W - 10) => set CAM.x += d
+                }
+                ifs {
+                    MOUSE.y < 10      => set CAM.y -= d
+                    MOUSE.y > (H - 10) => set CAM.y += d
+                }
+                cam_clamp(g)
             }
         }
     } with {
