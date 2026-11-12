@@ -106,6 +106,8 @@ par :any {
         emit :screens [true]
     }
 } with {
+    await Overlay()         ;; the cursor of the game, the frames
+} with {
     await :sdl.quit
 }
 ```
@@ -116,3 +118,23 @@ par :any {
 - The menu asks for the options with a global event,
   `emit @(:global) :go.options`, since the menu is a task deep inside
   the paused block, and the options are outside it.
+- A change of an option is announced with `emit @(:global) :options`.
+  The overlay, the last branch so that it draws over all the others,
+  shows the cursor of the game or the frames per second while their
+  options are on, and restarts at each change:
+
+  ```
+  loop {
+      if OPTIONS.cursor {
+          watching :options {
+              await Sprite("core/cursors/animcross", MOUSE)
+          }
+      } else {
+          await :options
+      }
+  }
+  ```
+
+  In C++, the screen manager checks `globals::software_cursor` and
+  `globals::print_fps` at each frame; here the option selects which
+  task runs, and nothing is checked while it does not change.

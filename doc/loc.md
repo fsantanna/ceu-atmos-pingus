@@ -16,7 +16,7 @@ grep -v '^\s*$' FILES | grep -v '^\s*//' | wc -l     # Céu, C
 | World objects (10 of Céu) | 864 | 223 | Céu has C++ in native blocks for the reading of the data |
 | World objects (12 new) | --- | 315 | not in the Céu rewrite |
 | Game screen: game, panel, playfield, level | 937 | 607 | |
-| Other screens and main | 3368 | 872 | the options of Céu have 741 lines; the port has a reduced one |
+| Other screens and main | 3368 | 872 | the options of Céu have 741 lines (measured with the reduced options of the first version) |
 
 The C of the port, which takes the place of the C++ that the Céu code
 called (display, fonts, sounds, collision and ground maps):
@@ -76,11 +76,11 @@ sprite screens, the configuration files.
 | action superman | 40 | --- | 8 | 218 | --- | 81 |
 | pingu core | 1773 | 663 | 221 | 10047 | 5257 | 1529 |
 | world objects, weather | 1767 | 744 | 540 | 13600 | 5579 | 4436 |
-| game: world, panel, playfield, level, ground | 2965 | 663 | 640 | 17883 | 4914 | 4671 |
-| screens: menu, start, result, story, credits, levels, worldmap | 4781 | 2409 | 830 | 27672 | 17013 | 6200 |
-| **total, game logic** | **12794** | **5233** | **2706** | **77370** | **38748** | **20162** |
-| options (reduced in the port) | 652 | 598 | 63 | 4811 | 4615 | 481 |
-| engine (C++ engine / Céu engine / C + Atmos) | 7838 | 532 | 1189 | 47054 | 3365 | 10090 |
+| game: world, panel, playfield, level, ground | 2965 | 663 | 664 | 17883 | 4914 | 4838 |
+| screens: menu, start, result, story, credits, levels, worldmap | 4781 | 2409 | 832 | 27672 | 17013 | 6207 |
+| **total, game logic** | **12794** | **5233** | **2732** | **77370** | **38748** | **20336** |
+| options (all but the renderer) | 652 | 598 | 177 | 4811 | 4615 | 1496 |
+| engine (C++ engine / Céu engine / C + Atmos) | 7838 | 532 | 1219 | 47054 | 3365 | 10335 |
 
 17 actions in common: C++ 1320 / Céu 754 / Atmos 424 lines, 7073 / 5985 / 2877 tokens
 
@@ -100,6 +100,8 @@ sprite screens, the configuration files.
   turns the s-expressions into Atmos data once (380 lines of Python,
   not counted), and `X.load` reads them. The C++ counts include its
   readers (`pingus_level`, `plf_res_mgr`, `prefab_file`).
+- The options are all of the official game but its choice of renderer:
+  177 lines and 1496 tokens in Atmos, 0.31x the tokens of the C++.
 - The engine is not like for like: the C++ engine does more (OpenGL
   renderer, GUI, input configuration, sound backends); the port has
   its C over SDL2 and the Atmos wrappers.

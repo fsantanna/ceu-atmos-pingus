@@ -111,10 +111,10 @@ UNITS += [
          "screens/credits.atm", "screens/levels.atm", "screens/worldmap.atm"]),
 ]
 
-# not like for like: the options are reduced in the port, and the
+# apart: the options (the port has no choice of renderer), and the
 # engine of the port is its own C over SDL2
 OTHERS = [
-    ("options (reduced in the port)", cpp("pingus/screens/option_menu",
+    ("options (all but the renderer)", cpp("pingus/screens/option_menu",
             "pingus/components/label", "pingus/components/check_box",
             "pingus/components/choice_box", "pingus/components/slider_box"),
         rglob(CEU, "ceu/pingus/screens/options/*.ceu"),

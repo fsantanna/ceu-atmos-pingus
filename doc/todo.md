@@ -11,7 +11,7 @@ cannot happen by construction), **open**, or **out** (out of scope).
 | gfx: menu icebergs, fade, credits below blackboard | fixed (icebergs, credits) | the layers of the menu move; the credits are only drawn inside the board |
 | BUG: playfield lines, background does not repeat | fixed | the background is tiled in both directions, with its parallax |
 | TODO: configuration of input events, controllers | out | the keys of the original are fixed in `game/game.atm` |
-| TODO: cursor | open | the system cursor is used |
+| TODO: cursor | fixed | the option *Software Cursor* draws the cursor of the game, over all the screens (`Overlay` in `screens/options.atm`) |
 | TODO: fast forward in the worldmap | open | |
 | TODO: border of the worldmap | open | |
 | TODO: read/write inputs (demos) | partly | the demos of the original are read: `tools/demo.py` turns them into the orders of the test mode (`PINGUS_ORDERS`); recording is out |

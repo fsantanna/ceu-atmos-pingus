@@ -133,7 +133,8 @@ fixed random seed, and scripted keys and mouse:
       tick on its demos, 142 of 154 with the same trace
       ([doc/fidelity.md](doc/fidelity.md))
 - [x] Translations: the `.po` files of the game, chosen in the options
-- [ ] The full options screen, input configuration, controllers
+- [x] The options of the official game (all but its choice of renderer)
+- [ ] Input configuration, controllers
 
 ## License
 
