@@ -1,76 +1,211 @@
-;; Options: a reduced screen of options, saved with the progress.
+;; Options: the screen of options of the official game, saved with the
+;; progress.
 ;;
-;; Each option is a check box: its value is data of the player, which
-;; the box shows and changes.
+;; The options are the data `OPTIONS` (engine/engine.atm). Each widget
+;; shows one option and changes it: a change applies at once (display,
+;; volumes, language), is saved, and is announced with `:options`, which
+;; the tasks that depend on an option await (the cursor, the frames per
+;; second). The layout is the one of the original: two columns of rows
+;; of 32 pixels. The renderer of the original (sdl or opengl) has no
+;; counterpart here: the port has one renderer.
 
-val OPTIONS_DEFAULT = [ music = true, sound = true, lang = "en" ]
+val LANG_NAMES = [
+    en="English", ast="Asturian", bg="Bulgarian", ca="Catalan", cs="Czech",
+    da="Danish", de="German", eo="Esperanto", es="Spanish", fi="Finnish",
+    fr="French", gd="Scottish Gaelic", gl="Galician", hu="Hungarian",
+    it="Italian", ja="Japanese", lt="Lithuanian", pl="Polish",
+    pt="Portuguese", ru="Russian", sq="Albanian", sr="Serbian",
+    sv="Swedish", th="Thai", tr="Turkish", uk="Ukrainian",
+]
+
+val RESOLUTIONS = ["800x600", "1024x768", "1280x960", "1280x720", "1600x900", "1920x1080"]
 
 func options_apply () {
-    val o = SAVE.options
-    pg.volume(if o.sound => 1.0 => 0.0, if o.music => 1.0 => 0.0)
+    val o = OPTIONS
+    pg.volume((o.master * o.sound) / 10000.0, (o.master * o.music) / 10000.0)
     lang_set(o.lang)
+    val r = string.split(o.resolution, "x")
+    pg.display(o.fullscreen, tonumber(r@0) || W, tonumber(r@1) || H, o.grab, o.cursor)
 }
 
-set SAVE.options = OPTIONS_DEFAULT ++ (SAVE.options || [])
+;; the saved options over the defaults, if of the same type (the saves of
+;; the first version had `sound` and `music` as booleans)
+loop k, v in (SAVE.options || []) {
+    if type(v) == type(OPTIONS@(k)) {
+        set OPTIONS@(k) = v
+    }
+}
+set SAVE.options = OPTIONS
 options_apply()
 
-;; CheckBox(key, s, x, y): a check box for the option `key`.
-task CheckBox (key, s, x, y) {
+func option_set (key, v) {
+    set OPTIONS@(key) = v
+    options_apply()
+    save()
+    emit @(:global) :options [key=key]
+}
+
+;; The rectangle of a row of a column, as `add_item` of the original.
+func option_at (col, row) {
+    [x=80 + (col * 320), y=140 + (row * 32), w=320, h=32]
+}
+
+;; CheckBox(key, s, col, row): a box, and its label at its right.
+task CheckBox (key, s, col, row) {
+    val r = option_at(col, row)
     val yes = res_surface("core/menu/checkbox_marked_small")
     val no  = res_surface("core/menu/checkbox_small")
-    val w, h = pg.size(yes)
-    val r = [x=x, y=y, w=w, h=h]
+    val box = [x=r.x, y=r.y, w=32, h=32]
     par {
         loop {
-            await Click(r)
-            set SAVE.options@(key) = !SAVE.options@(key)
-            options_apply()
-            save()
+            await Click(box)
+            option_set(key, !OPTIONS@(key))
         }
     } with {
         loop on :sdl.draw {
-            pg.draw(if SAVE.options@(key) => yes => no, x, y)
-            text(FONT.chalk_normal, tr(s), x + w + 15, y)
+            pg.draw(if OPTIONS@(key) => yes => no, r.x, r.y)
+            text(FONT.chalk_normal, tr(s), r.x + 40, r.y)
         }
     }
 }
 
-;; Language(x, y): the language, which changes at each click, in the
-;; order of the languages.
-task Language (x, y) {
-    val ls = langs()
-    val r = [x=x, y=y, w=300, h=24]
+;; ChoiceBox(key, s, choices, col, row [, names]): `< choice >`; a click
+;; on the left half goes back, on the right half goes forward, in a
+;; cycle. `names` shows a choice by another name.
+task ChoiceBox (key, s, choices, col, row, names) {
+    val r = option_at(col, row)
+    val box = [x=r.x + 140, y=r.y, w=r.w - 140, h=r.h]
     par {
         loop {
-            await Click(r)
-            val i = loop i, l in ls {
-                until l == SAVE.options.lang, i
+            val e = await :sdl.mouse.dn until (it.but == 1) && inside(box, it.x, it.y)
+            val i = loop i, c in choices {
+                until c == OPTIONS@(key), i
             } || 0
-            set SAVE.options.lang = ls@((i + 1) % #ls)
-            options_apply()
-            save()
+            val d = if (e.x - box.x) > (box.w // 2) => 1 => (#choices - 1)
+            option_set(key, choices@((i + d) % #choices))
         }
     } with {
         loop on :sdl.draw {
-            text(FONT.chalk_normal, tr("Language") ++ ": " ++ SAVE.options.lang, x, y)
+            val f = FONT.chalk_normal
+            text(f, tr(s), r.x, r.y)
+            text(f, "<", box.x, box.y)
+            text(f, ">", box.x + box.w, box.y, :right)
+            val v = OPTIONS@(key)
+            text(f, (names && names@(v)) || v, box.x + (box.w // 2), box.y, :center)
+        }
+    }
+}
+
+;; SliderBox(key, s, col, row): a volume from 0 to 100, in 20 steps,
+;; dragged with the left button.
+task SliderBox (key, s, col, row) {
+    val STEPS = 20
+    val r = option_at(col, row)
+    val box = [x=r.x + 140, y=r.y, w=r.w - 140, h=r.h]
+    val func value (x) {
+        val v = (STEPS * (x - box.x)) // (box.w - 12)
+        math.max(0, math.min(STEPS, v)) * (100 // STEPS)
+    }
+    par {
+        loop {
+            val e = await :sdl.mouse.dn until (it.but == 1) && inside(box, it.x, it.y)
+            option_set(key, value(e.x))
+            watching :sdl.mouse.up until it.but == 1 {
+                loop m on :sdl.mouse.motion {
+                    val v = value(m.x)
+                    if v != OPTIONS@(key) {
+                        option_set(key, v)
+                    }
+                }
+            }
+        }
+    } with {
+        loop on :sdl.draw {
+            val f = FONT.chalk_normal
+            val n = OPTIONS@(key) // (100 // STEPS)
+            text(f, tr(s), r.x, r.y)
+            if n == 0 {
+                text(f, tr("off"), box.x + (box.w // 2), box.y, :center)
+            } else {
+                loop i in (0, n) {
+                    text(f, "|", box.x + ((i * (box.w - 12)) // STEPS) + 6, box.y)
+                }
+            }
+            text(f, "[", box.x, box.y)
+            text(f, "]", box.x + box.w, box.y, :right)
         }
     }
 }
 
 task Options () {
+    spawn Wood()
     spawn Board()
     spawn {
         loop on :sdl.draw {
-            text(FONT.chalk_large, tr("Options"), BOARD.x + (BOARD.w//2), BOARD.y + 40, :center)
+            text(FONT.chalk_large, tr("Option Menu"), W // 2, (H // 2) - 240, :center)
+            text(FONT.chalk_normal, tr("Close"), (W // 2) + 245 + 30, (H // 2) + 150 - 20, :center)
         }
     }
-    spawn CheckBox(:music, "Music", BOARD.x + 120, BOARD.y + 150)
-    spawn CheckBox(:sound, "Sound effects", BOARD.x + 120, BOARD.y + 190)
-    spawn Language(BOARD.x + 120, BOARD.y + 250)
-    spawn Label(tr("Back"), BACK_R.x + (BACK_R.w//2), BACK_R.y)
+    spawn CheckBox(:fullscreen, "Fullscreen",          0, 0)
+    spawn CheckBox(:grab,       "Mouse Grab",          0, 1)
+    spawn CheckBox(:cursor,     "Software Cursor",     0, 3)
+    spawn CheckBox(:autoscroll, "Autoscrolling",       0, 4)
+    spawn CheckBox(:dragdrop,   "Drag&Drop Scrolling", 0, 5)
+    spawn CheckBox(:fps,        "Print FPS",           0, 7)
+    spawn ChoiceBox(:resolution, "Resolution:", RESOLUTIONS, 1, 0)
+    spawn ChoiceBox(:lang,       "Language:",   langs(),     1, 3, LANG_NAMES)
+    spawn SliderBox(:master, "Master Volume:", 1, 5)
+    spawn SliderBox(:sound,  "Sound Volume:",  1, 6)
+    spawn SliderBox(:music,  "Music Volume:",  1, 7)
+    val ok = do {
+        val w, h = res_frame_size("core/start/ok")
+        [x=(W // 2) + 245, y=(H // 2) + 150, w=w, h=h]
+    }
     par :any {
-        await Back()
+        await Button(ok, "core/start/ok", "core/start/ok_hover", "core/start/ok_clicked")
+        sound "yipee"
     } with {
         await Key("Escape")
+    }
+}
+
+;; Overlay(): on top of every screen, the cursor of the game and the
+;; frames per second, while their options are on.
+task Overlay () {
+    par {
+        loop {
+            if OPTIONS.cursor {
+                watching :options {
+                    await Sprite("core/cursors/animcross", MOUSE)
+                }
+            } else {
+                await :options
+            }
+        }
+    } with {
+        loop {
+            if OPTIONS.fps {
+                watching :options {
+                    var n, s, odd = 0, "", false
+                    par {
+                        loop {
+                            await 1s
+                            set s = tostring(n) ++ " fps"
+                            set n = 0
+                        }
+                    } with {
+                        ;; alternates each frame, as the original, so that
+                        ;; a frame still on the screen shows
+                        loop on :sdl.draw {
+                            set n += 1
+                            set odd = !odd
+                            text(FONT.pingus_small, if odd => s => "+ " ++ s ++ " +", W // 2, 35, :center)
+                        }
+                    }
+                }
+            } else {
+                await :options
+            }
+        }
     }
 }

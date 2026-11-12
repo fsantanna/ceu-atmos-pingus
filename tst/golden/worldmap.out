@@ -1,1 +1,1 @@
-[levels=[@("data/levels/tutorial/digger-tutorial2-grumbel.pingus.atm")=[solved=true, saved=6]], stories=[@("stories/tutorial_intro.story")=true], options=[music=true, sound=true, lang="en"], worldmaps=[tutorial="leveldot_2"]]
+[levels=[@("data/levels/tutorial/digger-tutorial2-grumbel.pingus.atm")=[solved=true, saved=6]], stories=[@("stories/tutorial_intro.story")=true], options=[fullscreen=false, grab=false, cursor=false, autoscroll=true, dragdrop=false, fps=false, resolution="800x600", lang="en", master=100, sound=100, music=100], worldmaps=[tutorial="leveldot_2"]]

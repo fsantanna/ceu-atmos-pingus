@@ -9,7 +9,9 @@
 ;; it returns selects the next one.
 ;;
 ;; The options are global: F5, or the button of the menu, pause the
-;; screens (a `toggle` block) and show the options over them.
+;; screens (a `toggle` block) and show the options over them. The
+;; overlay (the cursor of the game, the frames per second) is the last
+;; branch, so that it draws over all the others.
 
 include "engine/engine.atm"
 include "game/game.atm"
@@ -80,6 +82,9 @@ par :any {
         await Options()
         emit :screens [true]
     }
+} with {
+    ;; on top of all the screens: the cursor of the game, the frames
+    await Overlay()
 } with {
     await :sdl.quit
 }
