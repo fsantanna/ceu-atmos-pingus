@@ -367,6 +367,29 @@ static void pg_volume (double snd, double mus) {
 
 static double PG_SND_VOL = 1.0;
 
+///////////////////////////////////////////////////////////////////////////////
+// DISPLAY
+///////////////////////////////////////////////////////////////////////////////
+
+// The display of the options. The game always draws at 800x600, and SDL
+// scales it to the window: `full` takes the size of the desktop, else
+// the window is `w` x `h`. `grab` keeps the mouse in the window, and
+// `soft` hides the cursor of the system (the game draws its own). The
+// test mode keeps its window of 800x600, so that its screenshots do not
+// depend on the options.
+static void pg_display (int full, int w, int h, int grab, int soft) {
+    SDL_RenderSetLogicalSize(PG_REN, PG_W, PG_H);
+    if (!PG_TEST) {
+        SDL_SetWindowFullscreen(PG_WIN, full ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0);
+        if (!full && w>0 && h>0) {
+            SDL_SetWindowSize(PG_WIN, w, h);
+            SDL_SetWindowPosition(PG_WIN, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+        }
+    }
+    SDL_SetWindowGrab(PG_WIN, grab ? SDL_TRUE : SDL_FALSE);
+    SDL_ShowCursor(soft ? SDL_DISABLE : SDL_ENABLE);
+}
+
 static Mix_Music* PG_MUS = NULL;
 static char*      PG_MUS_PATH = NULL;
 

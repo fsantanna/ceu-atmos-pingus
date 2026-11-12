@@ -100,6 +100,11 @@ val pg = [
     volume = func (snd, mus) {
         `pg_volume(a_dbl($snd), a_dbl($mus));`
     },
+    ;; pg.display(full, w, h, grab, soft): see `pg_display`
+    display = func (full, w, h, grab, soft) {
+        val f, g, c = (if full => 1 => 0), (if grab => 1 => 0), (if soft => 1 => 0)
+        `pg_display(pg_int($f), pg_int($w), pg_int($h), pg_int($g), pg_int($c));`
+    },
     music_stop = func () {
         `pg_music_stop();`
     },

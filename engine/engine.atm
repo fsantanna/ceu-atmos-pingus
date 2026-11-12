@@ -354,14 +354,34 @@ func music (name) {
 
 ;; The last position of the mouse, for the tasks that need it between
 ;; its events.
-val MOUSE = [x=0, y=0]
+val MOUSE = [x=0, y=0, moved=false]
 
 spawn {
     loop e on :sdl.mouse.motion {
         set MOUSE.x = e.x
         set MOUSE.y = e.y
+        set MOUSE.moved = true
     }
 }
+
+;;; OPTIONS ;;;
+
+;; The options of the player, with the defaults of the official game.
+;; `screens/options.atm` loads the saved ones over these, and changes
+;; them; the game reads them here (the scrolling of the playfield).
+val OPTIONS = [
+    fullscreen = false,         ;; the size of the desktop
+    grab       = false,         ;; the mouse stays in the window
+    cursor     = false,         ;; the cursor drawn by the game
+    autoscroll = true,          ;; scroll at the borders (fullscreen or grab)
+    dragdrop   = false,         ;; the right button drags the level
+    fps        = false,         ;; the frames per second, on top
+    resolution = "800x600",     ;; the size of the window
+    lang       = "en",
+    master     = 100,           ;; volumes, 0 to 100
+    sound      = 100,
+    music      = 100,
+]
 
 func inside (r, x, y) {
     (x >= r.x) && (x < r.x+r.w) && (y >= r.y) && (y < r.y+r.h)
