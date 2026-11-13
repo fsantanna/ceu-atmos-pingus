@@ -17,9 +17,12 @@ of 154 demos with the same trace), the benchmark.
    and the link of the plan, which points to the old branch
    `ccr-566b5373-ag7186`; the plan is now in `ia-atmos/lang`, `main`,
    `.claude/plans/261110-pingus.md`), `doc/compiler.md`.
+   This repository moved too: `fsantanna/ceu-atmos-pingus` is now
+   `ia-atmos/pingus` (GitHub redirects pushes; the remote of the
+   checkout still has the old address).
    *Recommended:* wait for the renaming of the repositories of the
    organization (this one may become `sdl-pingus`), and update all the
-   names in one commit then.
+   names, and the remote, in one commit then.
 2. **The workarounds the compiler no longer needs** (`ia-atmos/lang`
    `b3cf341`): `[loop=false]` is accepted, so the options `once` and
    `cycle` of `Sprite` could go back to `loop`; `"a\"b"` is accepted, so
