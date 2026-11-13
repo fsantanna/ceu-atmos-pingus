@@ -11,37 +11,32 @@ of 154 demos with the same trace), the benchmark.
 
 ## A. Decisions waiting for the author
 
-1. **The name of the compiler in the port.** The compiler moved from
-   `fsantanna/ceu-atmos` to `ia-atmos/lang`. Places: `run.sh` (looks for
-   `../ceu-atmos` and `../fsantanna/ceu-atmos`), `README.md` (links,
-   and the link of the plan, which points to the old branch
-   `ccr-566b5373-ag7186`; the plan is now in `ia-atmos/lang`, `main`,
-   `.claude/plans/261110-pingus.md`), `doc/compiler.md`.
-   This repository moved too: `fsantanna/ceu-atmos-pingus` is now
-   `ia-atmos/pingus` (GitHub redirects pushes; the remote of the
-   checkout still has the old address).
-   *Recommended:* wait for the renaming of the repositories of the
-   organization (this one may become `sdl-pingus`), and update all the
-   names, and the remote, in one commit then.
-2. **The workarounds the compiler no longer needs** (`ia-atmos/lang`
+1. **The workarounds the compiler no longer needs** (`ia-atmos/lang`
    `b3cf341`): `[loop=false]` is accepted, so the options `once` and
    `cycle` of `Sprite` could go back to `loop`; `"a\"b"` is accepted, so
    `'"'` could be written as in the original. `doc/compiler.md` still
    lists both as errors of the compiler.
-   *Recommended:* do it with item 1, and mark them fixed in
-   `doc/compiler.md`, with the commit of the compiler.
-3. **The 12 demos whose traces differ from the official game.** Late,
+   Waits for the author (said by the compiler session).
+   *Recommended:* do it, and mark them fixed in `doc/compiler.md`, with
+   the commit of the compiler.
+2. **The 12 demos whose traces differ from the official game.** Late,
    small differences (one pixel, one tick, the order of deaths in a
    tick), listed in `doc/fidelity.md`.
    *Recommended:* investigate the 3 with an early difference
    (`intensiv-timpany` tick 301, `real6` 630, `stone5-grumbel` 936)
    with `PINGUS_TRACE=2` in both games; leave the rest.
-4. **A line in `doc/bench.md` for the new compiler** (`b3cf341`): the
+3. **A line in `doc/bench.md` for the new compiler** (`b3cf341`): the
    same results, no measurable difference in speed or memory (noise of
    about 10%), binary 8 KB smaller.
    *Recommended:* add it, two lines.
 
 ## B. Work known and not done
+
+0. The remote of the checkout still has the old address
+   (`fsantanna/ceu-atmos-pingus`); GitHub redirects the pushes.
+   Changing it (`git remote set-url origin
+   https://github.com/ia-atmos/sdl-pingus`) was refused by the
+   permissions of the session: the author may do it, or allow it.
 
 1. Input configuration and controllers: the only unchecked item of the
    README; the keys of the original are fixed in `game/game.atm`.
@@ -79,12 +74,14 @@ of 154 demos with the same trace), the benchmark.
    159 traces byte-identical, the benchmark unchanged (sent to the
    compiler session and to the author).
 3. The tips for a port of SuperTux (sent to the compiler session).
-4. The question of item A.1 (now or with the renaming), asked of the
-   author, not answered.
 
 ## D. Older items
 
 1. `doc/fidelity.md`: the counts between 39 and 142 identical traces
    were not recorded; only the measured ones are in the table.
 2. The address of the compiler: `../fsantanna/ceu-atmos` in this
-   container, a checkout of `main`.
+   container, a checkout of `main`; `run.sh` finds it by its former
+   names too.
+3. Done: the names of the repositories (`ia-atmos/sdl-pingus`,
+   `ia-atmos/lang`, the link of the plan) in `run.sh`, `README.md`,
+   `doc/compiler.md`, `tools/bench/README.md`.

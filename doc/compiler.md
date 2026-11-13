@@ -1,6 +1,7 @@
 # What the port found in the compiler
 
-The plan listed what the port might need from `ceu-atmos`. What the
+The plan listed what the port might need from the compiler
+(`ia-atmos/lang`, then named `ceu-atmos`). What the
 work found, in the order it was found:
 
 ## Worked around

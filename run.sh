@@ -4,19 +4,21 @@
 #   ./run.sh [file.atm] [args]      (default: main.atm)
 #
 # Environment:
-#   ATMOS     the compiler (default: ../ceu-atmos/atmos, or `atmos`)
+#   ATMOS     the compiler (default: ../lang/atmos, a checkout of
+#             ia-atmos/lang next to this one, or `atmos`)
 #   ATMOS_ASAN=1 builds with the address sanitizer
 
 ROOT=$(cd "$(dirname "$0")" && pwd)
 
 if [ -z "$ATMOS" ]; then
-    if [ -x "$ROOT/../ceu-atmos/atmos" ]; then
-        ATMOS="$ROOT/../ceu-atmos/atmos"
-    elif [ -x "$ROOT/../fsantanna/ceu-atmos/atmos" ]; then
-        ATMOS="$ROOT/../fsantanna/ceu-atmos/atmos"
-    else
-        ATMOS=atmos
-    fi
+    ATMOS=atmos
+    # the checkout of ia-atmos/lang, by its name or by its former names
+    for d in lang ia-atmos/lang ceu-atmos fsantanna/ceu-atmos; do
+        if [ -x "$ROOT/../$d/atmos" ]; then
+            ATMOS="$ROOT/../$d/atmos"
+            break
+        fi
+    done
 fi
 
 FILE=${1:-main.atm}

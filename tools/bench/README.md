@@ -9,7 +9,7 @@
 ```
 git clone https://github.com/Pingus/pingus official
 git -C official checkout ffe3851
-git -C official apply ../ceu-atmos-pingus/tools/bench/official.patch
+git -C official apply ../sdl-pingus/tools/bench/official.patch
 apt-get install libsdl2-dev libsdl2-image-dev libsigc++-2.0-dev \
     libglm-dev libgl-dev libglu1-mesa-dev libpng-dev libopenal-dev \
     libvorbis-dev libogg-dev libmpg123-dev libopusfile-dev \

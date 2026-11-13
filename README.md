@@ -1,6 +1,6 @@
-# ceu-atmos-pingus
+# sdl-pingus
 
-Pingus in [Atmos](https://github.com/fsantanna/ceu-atmos): a port of
+Pingus in [Atmos](https://github.com/ia-atmos/lang): a port of
 [Pingus](https://pingus.seul.org/), a free puzzle game by Ingo Ruhnke
 and others, to a language of structured synchronous concurrency.
 
@@ -17,15 +17,15 @@ and others, to a language of structured synchronous concurrency.
       of s-expressions with their own reader.
 
 The plan, with the settled decisions and the milestones, is in
-[fsantanna/ceu-atmos][plan].
+[ia-atmos/lang][plan].
 
 [ceu]:  https://github.com/fsantanna/pingus/tree/036852a7718d860baaf2db33cb8c469043df0253
-[plan]: https://github.com/fsantanna/ceu-atmos/blob/ccr-566b5373-ag7186/.claude/plans/261110-pingus.md
+[plan]: https://github.com/ia-atmos/lang/blob/main/.claude/plans/261110-pingus.md
 
 ## Run
 
-It requires a checkout of [ceu-atmos](https://github.com/fsantanna/ceu-atmos),
-built with `make`, next to this one (`../ceu-atmos`), or its compiler
+It requires a checkout of the compiler, [ia-atmos/lang](https://github.com/ia-atmos/lang),
+built with `make`, next to this one (`../lang`), or its compiler
 in `ATMOS`; and the development files of SDL2, SDL2_image, and
 SDL2_mixer:
 
