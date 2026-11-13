@@ -1,2 +1,3 @@
 *.png.tmp
 /out/
+__pycache__/
