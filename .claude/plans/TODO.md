@@ -65,6 +65,17 @@ of 154 demos with the same trace), the benchmark.
     position), clocks as values (timings by arithmetic), `f32`. None is
     asked; the port works around them.
 
+11. **Work to come: the shared environment `ia-atmos/env-sdl`** (plan:
+    `ia-atmos/lang`, `.claude/plans/261113-env-sdl.md`; written by the
+    session `env-sdl`). The three games over SDL (this one, SNKRX,
+    Flare) will use it instead of a platform layer of their own. First,
+    that session inventories `engine/sdl.atm` and `engine/pingus.h` and
+    may ask what a function is for: answer it. Later, when it has what
+    Pingus needs, move the platform part of the layer there (driver,
+    images, fonts, sounds, test mode), with the 159 traces identical;
+    Pingus is planned to be the first. What is of the game stays here:
+    the ground and collision maps and the mover in C.
+
 ## C. Reported, not acknowledged
 
 1. The full options (commits `4280bbe` to `32a88e7`): all the options
