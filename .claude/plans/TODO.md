@@ -30,6 +30,25 @@ of 154 demos with the same trace), the benchmark.
    about 10%), binary 8 KB smaller.
    *Recommended:* add it, two lines.
 
+4. **Expressiveness over exactness, after full fidelity** (a rule of
+   the author for every port, relayed by the compiler session): once a
+   port is identical to its original on its runs, it may relax the
+   exactness in favor of expressiveness, if the intent of the original
+   author stays. Until then, a difference is a defect. This port is not
+   there yet: 142 of the 154 demos that the official game plays give the
+   same trace, 12 differ (A.2), 5 cannot be compared. An option, not a
+   task. Candidates, the four places that read poorly because they copy
+   the original (objects that poll every tick, the order of reactions in
+   a tick by the order of spawns, the teleporter writing a position,
+   clocks by arithmetic), and the floats of 32 bits.
+   *Recommended:* first decide A.2 (whether to reach 154 of 154, or
+   accept the 12 as the limit); then tag the faithful commit, and relax
+   in small commits, each with what it gives up and gains, the outputs
+   replaced in the same commit, and a document of the deliberate
+   differences; never mixed with the move to `env-sdl` (B.11), which
+   must keep the outputs identical. Ask the author what to relax before
+   a large change.
+
 ## B. Work known and not done
 
 0. The remote of the checkout still has the old address
